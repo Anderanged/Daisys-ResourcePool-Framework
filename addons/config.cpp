@@ -1,8 +1,9 @@
+#include "defines.hpp"
 class CfgPatches
 {
-	class DSY_ef
+	class PREFIX
 	{
-		name="Daisy's Energy Framework";
+		name="Daisy's ResourcePool Framework";
 		units[]={};
 		weapons[]={};
 		requiredVersion=0.1;
@@ -17,14 +18,15 @@ class CfgPatches
 };
 class cfgFunctions
 {
-	class DSY // change irrelevent classes
+	class DSY
 	{
-        tag="DSY_ef";
+        tag=STR(PREFIX);
         class Functions {
             file="\functions";
-            class alterEnergy;
+            class alterPool;
             class initPool;
-            class rechargeLoop;
+            class loopPool;
+			class raiseEvent;
         };
     };
 };
