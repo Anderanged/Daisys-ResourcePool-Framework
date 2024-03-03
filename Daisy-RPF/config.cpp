@@ -21,25 +21,10 @@ class cfgFunctions
 	class PREFIX
 	{
         tag=STR(PREFIX);
-        class baseFuncs {
-            file="Daisy-RPF\base\functions";
-			class alterPool;
-            class initPool;
-            class loopPool;
-			class raiseEvent;
-        };
-		class baseHandle {
-			file="Daisy-RPF\base\functions\handlers";
-			class handleGreater;
-			class handleLess;
-		};
-		class module {
-			file="Daisy-RPF\modules\functions";
-		};
-		class HLS {
-			file="Daisy-RPF\HLS\functions";
-		};
+        #include "base\baseFunctions.hpp"
+		#include "HLS\hlsFunctions.hpp"
+		#include "modules\moduleFunctions.hpp"
     };
 };
-#include "Daisy-RPF\modules\CfgFactionClasses.hpp"
-#include "Daisy-RPF\modules\CfgVehicles.hpp"
+#include "modules\CfgFactionClasses.hpp"
+#include "modules\CfgVehicles.hpp"

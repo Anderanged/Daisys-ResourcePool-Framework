@@ -9,13 +9,15 @@ _obj		-	<OBJECT>	-	object called on
 _varName	-	<STRING>	-	varName of pool to alter value of _limits		-	<ARRAY>		-	array of bounds
 							+	format [lowerBound, upperBound]
 _rate		- 	<ARRAY>		-	array of values to alter pool with	
-							+	format [amount, time]
-_methodM	-	<NUMBER>	-	methodMath ; operation to perform	
-							+	[0 = add (default), 1 = subtract, 2 = multiply, 3 = divide]
-_methodA	-	<BOOLEAN>	-	methodAlter ; method of incrementation
-							+	[false = chunk, true = smooth]
-_methodO	-	<BOOLEAN>	-	methodOverflow ; method of handling overflow
-							+	[false = clamp, true = reject]
+							+	format [amount, time (seconds)]
+_method		- 	<ARRAY>		-	array of methods
+							+	format [_methodM,_methodA,_methodO]								
+	_methodM	-	<NUMBER>	-	methodMath ; operation to perform	
+								+	[0 = add (default), 1 = subtract, 2 = multiply, 3 = divide]
+	_methodA	-	<BOOLEAN>	-	methodAlter ; method of incrementation
+								+	[false = chunk, true = smooth]
+	_methodO	-	<BOOLEAN>	-	methodOverflow ; method of handling overflow
+								+	[false = clamp, true = reject]
 
 Do I clamp values that are below the _bound? or reject the addition?
 Since this only provides the framework, I think it falls to the modder to make that check.
@@ -35,7 +37,10 @@ params [
 	["_rate",[10,1],[[]]],				// default [10,1]
 	["_methods",[0,false,false],[[]]]
 ];
-
+/*_rate params [
+	["_amnt",2,[0]],
+	["_time",1,[0]]
+];*/
 _methods params [	
 	["_methodM",0,[0]],				// default add
 	["_methodA",false,[false]],		// default chunk

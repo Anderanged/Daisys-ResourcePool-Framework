@@ -2,21 +2,10 @@
 /*
 Author: Daisy
 
-Description:  	initializes energy pool from options given.
-
-options:
-
-object to initialize on
-pool max
-pool min
-if renewable 
-recharge rate
-recharge methods
-[methodM,methodA,methodO]
-
+Description:  	initializes resource pool from options given.
 
 Params:
-
+_obj 
 
 Returns: 
 nothing
@@ -33,9 +22,17 @@ params [
 ];
 
 // check limits
-if ((_limits # 0) < 0 || (_limits # 1) < 0) exitWith {
-	RPTDEBUG(__FILE__,__LINE__,"ERROR","Invalid bound (less than 0) in limit array "+str _limits);
-	false;
+_limits params ["_lBound","_uBound"];
+switch (_limits) do {
+	case (_lBound < 0 || _uBound < 0):{
+		exitWith {RPTDEBUG(__FILE__,__LINE__,"ERROR","Invalid bound (less than 0) in limit array "+str _limits);
+		false;};
+	};
+	case (_lBound > RPFLIM_MAX || _uBound > RPFLIM_MAX): {
+		exitWith {RPTDEBUG(__FILE__,__LINE__,"ERROR","Invalid bound (greater than 2^14) in limit array "+str _limits);
+		false;};
+	};
+	default {};
 };
 
 //lookup obj in mission hash log
@@ -52,14 +49,13 @@ if _array then { // if not present, set key value pair
 missionNamespace setVariable [QPVAR(resourcePools),_hash];
 
 // init pool variable
-_obj setVariable [_varName,_limits#1];
+_obj setVariable [_varName,_uBound];
 // predef variable storage array (limits, renew, rate, methods)
 
 // if is renewable
-if (_renew) then { // add rate and methods
-	// need a function that can be called here to take these 4 args
+if (_renew) then {
 	// creates a loop on the pool that renews it by _amnt every _delay
-	[_obj,_limits,_rate,_methods] call FUNC(renewPool);
+	[_obj,_varName,_rate,_methods] call FUNC(renewPool);
 };
 // init pool variable storage
 _obj setVariable [QUJOIN(_varName,"limits"),_limits]; // if _varName == varName, variable is named "varName_vars"

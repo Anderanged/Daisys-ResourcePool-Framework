@@ -1,3 +1,4 @@
+#include "defines.hpp"
 /* 
 // limits, cval, nval, amnt, time, methodO, eParam
 
