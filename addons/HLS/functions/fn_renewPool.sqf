@@ -1,4 +1,4 @@
-#include "defines.hpp"
+#include "\DSY-RPF\defines.hpp"
 // obj, delay, args, loopcon, contcon, event, ehInfo
 params [
 	["_obj",objNull,[objNull]],

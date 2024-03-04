@@ -24,14 +24,14 @@ class CfgVehicles
 	class DSY_rpf_module_base: Module_F
 	{
 		// Standard object definitions:
-		scope = 2;											// Editor visibility; 2 will show it in the menu, 1 will hide it.
-		displayName = "Initialize Resource Pool";			// Name displayed in the menu
+		scope = 1;											// Editor visibility; 2 will show it in the menu, 1 will hide it.
+		displayName = "";			// Name displayed in the menu
 		icon = "";											// Map icon. Delete this entry to use the default icon.
 		category = "DSY_rpf";
 
-		function = "DSY_rpf_fnc_initPool";	// Name of function triggered once conditions are met
-		functionPriority = 1;				// Execution priority, modules with lower number are executed first. 0 is used when the attribute is undefined
-		isGlobal = 1;						// 0 for server only execution, 1 for global execution, 2 for persistent global execution
+		function = "";	// Name of function triggered once conditions are met
+		functionPriority = 4;				// Execution priority, modules with lower number are executed first. 0 is used when the attribute is undefined
+		isGlobal = 0;						// 0 for server only execution, 1 for global execution, 2 for persistent global execution
 		isTriggerActivated = 1;				// 1 for module waiting until all synced triggers are activated
 		isDisposable = 1;					// 1 if modules is to be disabled once it is activated (i.e. repeated trigger activation will not work)
 		is3DEN = 0;							// 1 to run init function in Eden Editor as well
@@ -49,14 +49,18 @@ class CfgVehicles
 			isRectangle = 0;				// Sets if the default shape should be a rectangle or ellipse
 		};
 
+		// Helping pages 
+		// https://community.bistudio.com/wiki/Eden_Editor:_Configuring_Attributes:_Controls#Slider
+		// https://community.bistudio.com/wiki/Modules 
+		// https://github.com/acemod/ACE3/blob/62055d2605839c1254a75c33eacaecef0d414873/addons/fortify/CfgVehicles.hpp 
 		// Module attributes (uses https://community.bistudio.com/wiki/Eden_Editor:_Configuring_Attributes#Entity_Specific):
 		class Attributes : AttributesBase
 		{
 			// Arguments shared by specific module type (have to be mentioned in order to be present):
-			class Units : Units
+			/*class Units : Units
 			{
 				property = "TAG_Module_Nuke_Units";
-			};
+			};*/
 
 			// Module-specific arguments:
 			class Yield : Combo

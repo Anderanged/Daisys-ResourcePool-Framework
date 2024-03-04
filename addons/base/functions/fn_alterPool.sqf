@@ -1,4 +1,4 @@
-#include "defines.hpp"
+#include "\defines.hpp"
 /*
 Author: Daisy
 
@@ -82,7 +82,7 @@ private _loopArgs = [
 		false
 	},
 	{ // event
-		params[["_args",[],[[]]]];
+		params[["_obj",objNull,[objNull]],["_args",[],[[]]]];
 		_obj setVariable [_args # 0, _args # 1];
 	},
 	[QPVAR(alter),_eParam]
