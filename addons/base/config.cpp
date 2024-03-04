@@ -3,7 +3,7 @@ class CfgPatches
 {
 	class PREFIX
 	{
-		name="Daisy's ResourcePool Framework";
+		name="Daisy's Resource Pool Framework - Base";
 		units[]={};
 		weapons[]={};
 		requiredVersion=0.1;
@@ -16,15 +16,21 @@ class CfgPatches
         };
     };
 };
-class cfgFunctions
-{
-	class PREFIX
-	{
-        tag=STR(PREFIX);
-        #include "base\baseFunctions.hpp"
-		#include "HLS\hlsFunctions.hpp"
-		#include "modules\moduleFunctions.hpp"
-    };
+class CfgFunctions {
+	class PREFIX {
+		class base {
+			file="functions";
+			class alterPool;
+			class initPool;
+			class loopPool;
+			class raiseEvent;
+		};
+		class handle {
+			file="functions\handlers";
+			class handleGreater;
+			class handleLess;
+		};
+	};
 };
 #include "modules\CfgFactionClasses.hpp"
 #include "modules\CfgVehicles.hpp"

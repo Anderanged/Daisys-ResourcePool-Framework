@@ -3,7 +3,7 @@ class CfgPatches
 {
 	class PREFIX
 	{
-		name="Daisy's Resource Pool Framework - High Level Systems";
+		name="Daisy's ResourcePool Framework";
 		units[]={};
 		weapons[]={};
 		requiredVersion=0.1;
@@ -21,9 +21,11 @@ class cfgFunctions
 	class PREFIX
 	{
         tag=STR(PREFIX);
-		class funcs {
+        class modules {
 			file="functions";
-			class renewPool;
-		};
+			class alterPoolModule;
+		}
     };
 };
+#include "CfgFactionClasses.hpp"
+#include "CfgVehicles.hpp"
