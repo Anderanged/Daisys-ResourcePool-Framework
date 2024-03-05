@@ -2,5 +2,92 @@ implement an energy system and the relevant functions required to allow modders 
 
 # Energy System
 - able to be initialized on any object
-- static amount, value that decreases over time, value that increases over time
-    - if increase or decrease, add togglable pause check to be called by function
+- can be frozen to prevent alteration of resource {DSY_rpf_freeze var and EH}
+- can define a loop func to renew or decay the pool over time
+- init options:
+    - object to init on <OBJ>
+        - object
+    - custom pool name <STR>
+        - "name"
+    - limits of pool <ARRAY>
+        - [lower, upper]
+    - renew/decay/neither deliniator <NUM>
+        - static = 0
+        - renew  = 1
+        - decay  = 2
+
+## Operations
+- addition
+- subtraction
+- [OPTIONAL] multiplication
+- [OPTIONAL] division
+    - mult and div are both in practice not useful. addition and subtraction are used most frequently.
+    - Niche cases for mult and div are at most just interesting, but not practical.
+    - Thus, operation deliniator var can be <BOOL>
+
+## Functions
+- initPool
+    - initializes vars on pool from args
+        - args 
+            - object to init on <OBJ>
+                - obj
+            - custom pool name <STR> Default: [DSY_rpf_pool]
+                - "name"
+            - limits of pool <ARRAY>
+                - [lower, upper]
+            - renew/decay/neither deliniator <NUM>
+                - static = 0
+                - renew  = 1
+                - decay  = 2
+        - vars
+            - "name", register for resource amount <NUM>
+            - "name_limits", register for limits of pool <ARRAY>
+            - "name_frozen", register for frozen property of pool <BOOL>
+- alterPool
+    - alters resource in a chunk.
+        - args
+            - object to change pool on <OBJ>
+            - pool name <STR>
+            - amount <NUM>
+            - methods to use <ARRAY>
+                - [method Math, method Overflow]
+                    - methodMath <BOOL>
+                        - addition    = false
+                        - subtraction = true
+                    - methodOverflow <BOOL>
+                        - clamp     = false
+                        - reject    = true
+- alterPoolSmooth
+    - alters resource smoothly over time when given a rate.
+        - args
+            - object to change pool on <OBJ>
+            - pool name <STR>
+            - rate of alteration <ARRAY>
+                - [amount, time]
+                    - amount <NUM>
+                    - time (seconds) <NUM>
+            - methods to use <ARRAY>
+                - [method Math, method Overflow]
+                    - methodMath <BOOL>
+                        - addition    = false
+                        - subtraction = true
+                    - methodOverflow <BOOL>
+                        - clamp     = false
+                        - reject    = true
+- loopPool
+    - executes a given event while given a loop and continue condition
+        - args
+            - object to change pool on <OBJ>
+            - delay <NUM>
+            - arguments <ARRAY>
+                - player defined array of args. passed to every code argument.
+            - loop condition <CODE>
+                - while loop will execute as long as this code returns true
+            - continue condition <CODE>
+                - while loop will skip execution of event as long as this code returns true
+            - event <CODE>
+                - event to execute
+            - event handler information <ARRAY>
+                - [name, arguments]
+                    - name of event to call <STR>
+                    - arguments to pass to eventHandlers <ARRAY>
