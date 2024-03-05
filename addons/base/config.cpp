@@ -1,7 +1,7 @@
 #include "defines.hpp"
 class CfgPatches
 {
-	class PREFIX
+	class ADDON
 	{
 		name="Daisy's Resource Pool Framework - Base";
 		units[]={};
@@ -18,19 +18,15 @@ class CfgPatches
 };
 class CfgFunctions {
 	class PREFIX {
-		class base {
-			file="functions";
+		class COMPONENT {
+			file="base\functions";
 			class alterPool;
+			class handleGreater;
+			class handleLess;
 			class initPool;
 			class loopPool;
 			class raiseEvent;
 		};
-		class handle {
-			file="functions\handlers";
-			class handleGreater;
-			class handleLess;
-		};
 	};
 };
-#include "modules\CfgFactionClasses.hpp"
-#include "modules\CfgVehicles.hpp"
+//#include "CfgEventhandlers.hpp"

@@ -1,4 +1,4 @@
-#include "\defines.hpp"
+#include "defines.hpp"
 /* 
 // limits, cval, nval, amnt, time, methodO, eParam
 
@@ -9,7 +9,7 @@ params["_bound","_cVal","_total","_loopArgs","_methodO","_eParam"];
 
 switch (true) do { // check if overflow
 	case (_cVal == _bound) : {[QPVAR(bound),_eParam,0] call FUNC(raiseEvent);};
-	case (_total > _bound)  : {
+	case (_total < _bound)  : {
 		// reject
 		if (_methodO) exitWith {[QPVAR(reject),_eParam,0] call FUNC(raiseEvent);};
 		// clamp
@@ -19,7 +19,7 @@ switch (true) do { // check if overflow
 		_loopArgs call FUNC(loopPool);
 		[QPVAR(clamp),_eParam,0] call FUNC(raiseEvent);
 	};
-	case (_total <= _bound)  : {
+	case (_total >= _bound)  : {
 		// loop go here
 		_loopArgs call FUNC(loopPool);
 		[QPVAR(alter),_eParam,0] call FUNC(raiseEvent);
