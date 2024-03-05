@@ -24,15 +24,19 @@ params [
 // check limits
 _limits params ["_lBound","_uBound"];
 switch (_limits) do {
-	case (_lBound < 0 || _uBound < 0):{
-		exitWith {RPTDEBUG(__FILE__,__LINE__,"ERROR","Invalid bound (less than 0) in limit array "+str _limits);
-		false;};
+	case (_lBound < 0 || _uBound#1 < 0): {
+		exitWith {
+			RPT_DTAIL(ERROR,"Invalid bound (less than 0) in limit array "+str _limits,__FILE__,__LINE__);
+			false;
+		};
 	};
 	case (_lBound > RPFLIM_MAX || _uBound > RPFLIM_MAX): {
-		exitWith {RPTDEBUG(__FILE__,__LINE__,"ERROR","Invalid bound (greater than 2^14) in limit array "+str _limits);
-		false;};
+		exitWith {
+			RPT_DTAIL(ERROR,"Invalid bound (greater than 2^14) in limit array "+str _limits,__FILE__,__LINE__);
+			false;
+		};
 	};
-	default {};
+	default {nil};
 };
 
 //lookup obj in mission hash log
@@ -58,7 +62,8 @@ if (_renew) then {
 	[_obj,_varName,_rate,_methods] call FUNC(renewPool);
 };
 // init pool variable storage
-_obj setVariable [QUJOIN(_varName,"limits"),_limits]; // if _varName == varName, variable is named "varName_vars"
+_obj setVariable [SUJOIN(_varName,"limits"),_limits]; // if _varName == varName, variable is named "varName_vars"
+_obj setVariable [SUJOIN(_varName,"frozen"),false];	
 
 _obj addEventHandler ["Killed",{
 	params ["_unit", "_killer", "_instigator", "_useEffects"];
@@ -67,7 +72,8 @@ _obj addEventHandler ["Killed",{
 	private _array = _hash get _unit;
 	{// remove all vars related to being a pool
 		_unit setVariable [_x, nil];
-		_unit setVariable [QUJOIN(_x,"limits"), nil];
+		_unit setVariable [SUJOIN(_x,"limits"), nil];
+		_unit setVariable [SUJOIN(_x,"frozen"), nil];
 	} forEach _array;
 	// remove from and update hashmap
 	_hash deleteAt _unit;

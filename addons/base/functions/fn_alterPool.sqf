@@ -5,26 +5,25 @@ Author: Daisy
 Description:  	alters energy pool by the amount and method given
 
 Params:
-_obj		-	<OBJECT>	-	object called on
-_varName	-	<STRING>	-	varName of pool to alter value of _limits		-	<ARRAY>		-	array of bounds
-							+	format [lowerBound, upperBound]
-_rate		- 	<ARRAY>		-	array of values to alter pool with	
-							+	format [amount, time (seconds)]
-_method		- 	<ARRAY>		-	array of methods
-							+	format [_methodM,_methodA,_methodO]								
-	_methodM	-	<NUMBER>	-	methodMath ; operation to perform	
-								+	[0 = add (default), 1 = subtract, 2 = multiply, 3 = divide]
-	_methodA	-	<BOOLEAN>	-	methodAlter ; method of incrementation
-								+	[false = chunk, true = smooth]
-	_methodO	-	<BOOLEAN>	-	methodOverflow ; method of handling overflow
-								+	[false = clamp, true = reject]
+_obj 
+_varName
+_amount
+_methods
 
-Do I clamp values that are below the _bound? or reject the addition?
-Since this only provides the framework, I think it falls to the modder to make that check.
-But I see no reason why I shouldn't do it too.
-
-alterPoolClamp		-	Clamps pool to bound if new value would cross the bound
-alterPoolReject		-	Rejects operation if it would cross the bound
+- alterPool
+    - alters resource in a chunk.
+        - args
+            - object to change pool on <OBJ>
+            - pool name <STR>
+            - amount <NUM>
+            - methods to use <ARRAY>
+                - [method Math, method Overflow]
+                    - methodMath <BOOL>
+                        - addition    = false
+                        - subtraction = true
+                    - methodOverflow <BOOL>
+                        - clamp     = false
+                        - reject    = true
 
 Returns: 
 true on success, false on failure
@@ -34,77 +33,56 @@ Public: yes
 params [
 	["_obj",objNull,[objNull]], 		// default objNull
 	["_varName",QPVAR(pool),[""]], 		// default DSY_rpf_pool
-	["_rate",[10,1],[[]]],				// default [10,1]
-	["_methods",[0,false,false],[[]]]
+	["_amount",0,[0]],				// default [10,1]
+	["_methods",[false,false],[[]]]
 ];
-/*_rate params [
-	["_amnt",2,[0]],
-	["_time",1,[0]]
-];*/
 _methods params [	
-	["_methodM",0,[0]],				// default add
-	["_methodA",false,[false]],		// default chunk
+	["_methodM",false,[false]],				// default add
 	["_methodO",false,[false]]		// default clamp
 ];
-//check varname
+
+//check obj
 if (_obj == objNull) exitWith {
-	RPTDEBUG(__FILE__,__LINE__,"ERROR","Invalid object specified: "+str _obj);
+	//RPTDEBUG(__FILE__,__LINE__,"ERROR","Invalid object specified: "+str _obj);
 	false;
 };
 
-//grab vars
-private _cVal 		= _obj getVariable _varName;
-private _limits 	= _obj getVariable QUJOIN(_varName,"limits");
-
-//predefine and compile vars
-private _amnt 		= _rate # 0;
-private _amntAbs	= _amnt;
-private _time 		= _rate # 1;
-private _eParam		= [_obj,_varName, _limits,_rate,_cVal,_methods];
-private _loopCon 	= compile LOOPCON_C;
-
-// check for smooth
-if (_methodA) then {
-	_amnt = 1;
-	_time = (_rate # 1) / (_rate # 0);
-	// clamp sleep to smallest value
-	if (_time < 0.001) then {_time = 0.001;};
-	_loopCon = compile LOOPCON_S;
+// check if frozen
+private _ice = _obj getVariable QUJOIN(_varName,frozen);
+if (_ice) exitWith {
+	private _message = "Pool " + _varName + " on object " + str _obj + "is frozen. Alteration not performed.";
+	RPT_DTAIL(INFO,_message,__FILE__,__LINE__);
+	[QPVAR(onIce),[_obj,_varName,_amount,_methods],1] call FUNC(raiseEvent);
+	false;
 };
 
-// predefine arguments to pass to loop in handleG & handleL functions
-private _loopArgs = [
-	_obj,
-	_time,
-	[_varName,_amnt,_amntAbs],
-	_loopCon,
-	{ // continue condition
-		false
-	},
-	{ // event
-		params[["_obj",objNull,[objNull]],["_args",[],[[]]]];
-		_obj setVariable [_args # 0, _args # 1];
-	},
-	[QPVAR(alter),_eParam]
-];
-
-switch (_methodM) do { // check math operation
-	case 0 : { // addition
-		// bound, cval, nval, total, loopArgs, methodO, eParam
-		[(_limits # 1), _cVal, (_cVal + _amntAbs), _loopArgs, _methodO, _eParam] call FUNC(handleGreater);
-	};
-	case 1 : { // subtraction
-		[(_limits # 0), _cVal, (_cVal - _amntAbs), _loopArgs, _methodO, _eParam] call FUNC(handleLess);
-	};
-	case 2 : { // multiplication
-		[(_limits # 1), _cVal, (_cVal * _amntAbs), _loopArgs, _methodO, _eParam] call FUNC(handleGreater);
-	};
-	case 3 : { // division
-		[(_limits # 0), _cVal, (_cVal / _amntAbs), _loopArgs, _methodO, _eParam] call FUNC(handleLess);
-	};
-	default	 {
-		private _message = "Invalid math method: "+str _methodM;
-		RPTDEBUG(__FILE__,__LINE__,"ERROR",_message;
-		[QPVAR(error),[__FILE__,__LINE__,"ERROR",_message],1] call FUNC(raiseEvent);};
+//grab vars & check if pool was initialized
+private _cVal 		= _obj getVariable [_varName,true];
+if _cVal exitWith {
+	private _message = "Pool " + _varName + " not initialized on " + str _obj;
+	RPT_DTAIL(ERROR,_message,__FILE__,__LINE__);
+	false;
 };
+
+// grab and predef vars
+private _limits 	= _obj getVariable QUJOIN(_varName,limits);
+_limits params ["_lBound","_uBound"];
+private _eParams = [_obj,_varName,_amount,_methods];
+private _result = 0;
+// if subtraction
+if (_methodM) exitWith {
+	// call func
+	_result = [_lBound,_cVal,_cVal - _amount,_methodO,_eParams] call FUNC(handleLess);
+	// if rejected and no alteration need be done, exit
+	if _result exitWith {false;};
+	// otherwise change var
+	_obj setVariable [_varName,_result];
+	[QPVAR(alter),_eParams,0] call FUNC(raiseEvent);
+	true;
+};
+// else addition
+_result = [_uBound,_cVal,_cVal + _amount,_methodO,_eParams] call FUNC(handleGreater);
+if _result exitWith {false;};
+_obj setVariable [_varName,_result];
+[QPVAR(alter),_eParams,0] call FUNC(raiseEvent);
 true;

@@ -17,7 +17,7 @@ S will always stand for STRING. These macros only take strings as arguments.
 // concatenating variables / strings with an underscore
 #define UJOIN(VAR1,VAR2) VAR1##_##VAR2
 #define QUJOIN(VAR1,VAR2) STR(UJOIN(VAR1,VAR2))
-#define SUJOIN(STR1,STR2) STR1##"_"##STR2
+#define SUJOIN(STR1,STR2) STR1+"_"+STR2
 
 // adds your defined prefix to a variable. 
 #define PVAR(VAR) UJOIN(PREFIX,VAR)
@@ -25,30 +25,19 @@ S will always stand for STRING. These macros only take strings as arguments.
 
 // concatenates fnc_ at the end of prefix
 #define PFNC UJOIN(PREFIX,fnc) // DSY_rpf_fnc
-#define FUNC(NAME) UJOIN(PFNC,NAME) //DSY_rpf_fnc_NAME
-//#define FNC_PREF functions\fnc_
-//#define FNC_SFFX .sqf
-//#define FNC_FILE(NAME) STR(JOIN(JOIN(FNC_PREF,NAME),FNC_SFFX))
-//#define FNC_FILE(NAME) STR(UJOIN(functions\fnc,NAME).sqf)
-
-#define FNC_CLASS(NAME) class NAME {\
-	file = STR(UJOIN(x\Daisys-ResourcePool-Framework\addons\base\functions\fnc,NAME).sqf);\
-	recompile = 1;\
-}
-#define FNC_CLASS_EXT(NAME,PRE,POST,START) class NAME {\
-    file = STR(UJOIN(functions\fnc,NAME).sqf);\
-	preInit = PRE;\
-	postInit = POST;\
-	preStart = START;\
-	recompile = 1;\
-}
+#define FUNC(NAME) UJOIN(DSY_rpf_fnc,NAME) //DSY_rpf_fnc_NAME
 
 // debug specific manipulation
-#define LABELDEF(LABEL) "["+LABEL+"]"
-#define QLINE(LINE) "(Line " + #LINE + ")"
+#define LABELDEF(LABEL) [##LABEL##]
+#define LINEDEF(LINE) (Line:##LINE##)
 #define LOG(DATA) diag_log DATA
 #define QLOG(DATA) LOG(#DATA)
 
+#define JOIN_DIV(var1,var2) var1##|##var2
+#define JOIN3_DIV(var1,var2,var3) var1##|##var2##|##var3
+#define QJOIN3_DIV(var1,var2,var3) STR(JOIN3_DIV(var1,var2,var3))
+#define SJOIN_DIV(str1,str2) str1 + "|" + str2
 // debug macros
-#define RPTDEBUG(FILE,LINE,LABEL,INFO) LOG(QJOIN(QJOIN(QJOIN(STR(PREFIX),FILE),QLINE(LINE)),QJOIN(LABELDEF(LABEL),INFO))))
-#define HINTDEBUG(LABEL,INFO) hint QJOIN(LABELDEF(LABEL),INFO)
+#define RPT_BASIC(label,info) LOG(SJOIN_DIV(LABELDEF(label),info))
+#define RPT_DTAIL(label,info,file,line) LOG(SJOIN_DIV(QJOIN3_DIV(LABELDEF(label),file,line),info))
+//#define DBGJOIN(file,line,label,info) JOIN4_DBG(STR(LABELDEF(label)),STR(file),STR(LINEDEF(line)),info)

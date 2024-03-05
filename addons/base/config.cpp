@@ -1,4 +1,5 @@
 #include "defines.hpp"
+#include "version.hpp"
 class CfgPatches
 {
 	class ADDON
@@ -6,7 +7,7 @@ class CfgPatches
 		name="Daisy's Resource Pool Framework - Base";
 		units[]={};
 		weapons[]={};
-		requiredVersion=0.1;
+		requiredVersion=REQ_VERSION;
 		requiredAddons[]={
 			"cba_main"
 		};
@@ -26,6 +27,7 @@ class CfgFunctions {
 			class initPool;
 			class loopPool;
 			class raiseEvent;
+			class freezePool;
 		};
 	};
 };
