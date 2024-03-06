@@ -19,15 +19,18 @@ class CfgPatches
 };
 class CfgFunctions {
 	class PREFIX {
+		tag=STR(PREFIX);
 		class COMPONENT {
 			file="base\functions";
 			class alterPool;
+			class alterPoolSmooth;
+			class freezePool;
 			class handleGreater;
 			class handleLess;
+			class hashInit {preInit = 1;};
 			class initPool;
 			class loopPool;
 			class raiseEvent;
-			class freezePool;
 		};
 	};
 };
