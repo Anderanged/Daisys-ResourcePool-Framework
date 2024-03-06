@@ -38,37 +38,37 @@ params [
 ];
 _methods params [	
 	["_methodM",false,[false]],				// default add
-	["_methodO",false,[false]]		// default clamp
+	["_methodO",false,[false]]				// default clamp
 ];
 
 //check obj
 if (_obj == objNull) exitWith {
-	//RPTDEBUG(__FILE__,__LINE__,"ERROR","Invalid object specified: "+str _obj);
+	RPT_DTAIL(ERROR,"Invalid object specified: "+str _obj,__FILE__,__LINE__);
 	false;
 };
 
-// check if frozen
-private _ice = _obj getVariable QUJOIN(_varName,frozen);
-if (_ice) exitWith {
-	private _message = "Pool " + _varName + " on object " + str _obj + "is frozen. Alteration not performed.";
+// check if init'd and frozen
+private _ice = _obj getVariable SUJOIN(_varName,"frozen");
+if (isNull _ice) exitWith { // was pool init'd?
+	private _message = ["Pool ",_varName," not initialized on ",str _obj] joinString "";
+	RPT_DTAIL(ERROR,_message,__FILE__,__LINE__);
+	false;
+};
+if (_ice) exitWith { // is pool frozen?
+	private _message = ["Pool ",_varName," on object ",str _obj," is frozen. Alteration not performed."] joinString "";
 	RPT_DTAIL(INFO,_message,__FILE__,__LINE__);
 	[QPVAR(onIce),[_obj,_varName,_amount,_methods],1] call FUNC(raiseEvent);
 	false;
 };
 
-//grab vars & check if pool was initialized
-private _cVal 		= _obj getVariable [_varName,true];
-if _cVal exitWith {
-	private _message = "Pool " + _varName + " not initialized on " + str _obj;
-	RPT_DTAIL(ERROR,_message,__FILE__,__LINE__);
-	false;
-};
-
 // grab and predef vars
-private _limits 	= _obj getVariable QUJOIN(_varName,limits);
-_limits params ["_lBound","_uBound"];
+private _cVal 		= _obj getVariable [_varName,true];
+private _limits 	= _obj getVariable SUJOIN(_varName,"limits");
 private _eParams = [_obj,_varName,_amount,_methods];
-private _result = 0;
+_limits params ["_lBound","_uBound"];
+private "_result";
+
+// start chunk func
 // if subtraction
 if (_methodM) exitWith {
 	// call func
