@@ -1,14 +1,16 @@
 #include "addon_defines.hpp"
+#include "version.hpp"
 class CfgPatches
 {
-	class PREFIX
+	class ADDON
 	{
-		name="Daisy's ResourcePool Framework";
+		name="Daisy's ResourcePool Framework - Modules";
 		units[]={};
 		weapons[]={};
-		requiredVersion=0.1;
+		requiredVersion=REQ_VERSION;
 		requiredAddons[]={
-			"cba_main"
+			"cba_main",
+			"DSY_rpf_base"
 		};
 		authors[]=
         {
@@ -22,10 +24,13 @@ class cfgFunctions
 	{
         tag=STR(PREFIX);
         class modules {
-			file="functions";
+			file="modules\functions";
 			class alterPoolModule;
+			class freezePoolModule;
+			class initPoolModule;
+			class loopPool;
 		}
     };
 };
-#include "CfgFactionClasses.hpp"
-#include "CfgVehicles.hpp"
+#include "modules\config\CfgFactionClasses.hpp"
+#include "modules\config\CfgVehicles.hpp"

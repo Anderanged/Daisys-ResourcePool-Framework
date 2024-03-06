@@ -40,4 +40,5 @@ S will always stand for STRING. These macros only take strings as arguments.
 // debug macros
 #define RPT_BASIC(label,info) LOG(SJOIN_DIV(LABELDEF(label),info))
 #define RPT_DTAIL(label,info,file,line) LOG(SJOIN_DIV(QJOIN3_DIV(LABELDEF(label),file,line),info))
-//#define DBGJOIN(file,line,label,info) JOIN4_DBG(STR(LABELDEF(label)),STR(file),STR(LINEDEF(line)),info)
+
+#define ADDON UJOIN(PREFIX,COMPONENT)
