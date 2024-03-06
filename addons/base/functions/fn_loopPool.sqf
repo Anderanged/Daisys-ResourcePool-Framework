@@ -32,7 +32,7 @@ params [
 	["_args",[],[[]]],
 	["_loopCon",{params[["_args",[],[[]]],["_i",0,[0]]];true;},[{}]],
 	["_contCon",{params[["_args",[],[[]]]];false;},[{}]],
-	["_event",{params[["_obj",objNull,[objNull]],["_args",[],[[]]]];},[{}]],
+	["_event",{params[["_obj",objNull,[objNull]],["_args",[],[[]]],["_i",0,[0]]];},[{}]],
 	["_ehInfo",[QPVAR(loopEvent),[]],[[]]]
 ];
 
@@ -55,7 +55,7 @@ if !(isNull _ehInfo) then {_ehBool = true;_ehInfo = _ehInfo append 0;};
 		// if not cont, event
 		if (_args call _contCon) then {continue;};
 		// execute event and raise event if defined
-		[_obj,_args] call _event;
+		[_obj,_args,_i] call _event;
 		if (_ehBool) then {_ehInfo call FUNC(raiseEvent);};
 		// iterate up
 		_i = _i + 1;
