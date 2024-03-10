@@ -1,5 +1,4 @@
-#include "defines.hpp"
-#include "version.hpp"
+#include "addon_defines.hpp"
 class CfgPatches
 {
 	class ADDON
