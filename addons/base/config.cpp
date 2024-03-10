@@ -23,7 +23,7 @@ class CfgFunctions {
 		class COMPONENT {
 			file="base\functions";
 			class alterPool;
-			class alterPoolSmooth;
+			class editPool;
 			class freezePool;
 			class handleGreater;
 			class handleLess;
@@ -31,7 +31,8 @@ class CfgFunctions {
 			class initPool;
 			class loopPool;
 			class raiseEvent;
+			class removePool;
+			class wipePools;
 		};
 	};
 };
-//#include "CfgEventhandlers.hpp"
