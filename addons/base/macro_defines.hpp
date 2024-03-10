@@ -28,6 +28,8 @@ S will always stand for STRING. These macros only take strings as arguments.
 #define FUNC(NAME) UJOIN(DSY_rpf_fnc,NAME) //DSY_rpf_fnc_NAME
 
 // debug specific manipulation
+#define ERROR "[ERROR]"
+#define INFO "[INFO]"
 #define LABELDEF(LABEL) [##LABEL##]
 #define LINEDEF(LINE) (Line:##LINE##)
 #define LOG(DATA) diag_log DATA
@@ -39,6 +41,6 @@ S will always stand for STRING. These macros only take strings as arguments.
 #define SJOIN_DIV(str1,str2) str1 + "|" + str2
 // debug macros
 #define RPT_BASIC(label,info) LOG(SJOIN_DIV(LABELDEF(label),info))
-#define RPT_DTAIL(label,info,file,line) LOG(SJOIN_DIV(QJOIN3_DIV(LABELDEF(label),file,line),info))
+#define RPT_DTAIL(label,info,file,line) LOG(SJOIN_DIV(QJOIN3_DIV(label,file,line),info))
 
 #define ADDON UJOIN(PREFIX,COMPONENT)
