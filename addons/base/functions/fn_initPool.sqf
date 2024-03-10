@@ -5,7 +5,12 @@ Author: Daisy
 Description:  	initializes resource pool from options given.
 
 Params:
-_obj 
+_obj
+_varName
+_limits
+_renew
+_rate
+[false,false]
 
 Returns: 
 nothing
@@ -15,10 +20,13 @@ Public: yes
 params [
 	["_obj",objNull,[objNull]],
 	["_varName",QPVAR(pool),[""]],
-	["_limits",[0,RPFLIM_MAX],[[]]], 
-	["_renew",false,[true]],
-	["_rate",[],[[]]], 
-	["_methods",[],[[]]]
+	["_limits",[0,RPFLIM_MAX],[[]],2], 
+	["_renew",0,[0]],// default no effect
+	["_rate",[],[[]],2]
+];
+_rate params [
+	["_amount",2,[0]],
+	["_time",1,[0]]
 ];
 
 // check limits
@@ -56,13 +64,43 @@ missionNamespace setVariable [QPVAR(resourcePools),_hash];
 _obj setVariable [_varName,_uBound];
 // predef variable storage array (limits, renew, rate, methods)
 
-// if is renewable
-if (_renew) then {
-	// creates a loop on the pool that renews it by _amnt every _delay
-	[_obj,_varName,_rate,_methods] call FUNC(renewPool);
+switch (_renew) do {
+	case 0 : { // no effect
+		_obj setVariable [SUJOIN(_varName,"renew"),[0,[]]];
+	}; 
+	case 1 : { // renews
+		[	_obj,
+			_time,
+			[_obj,_varName,_amount,[false,false]],
+			{true},
+			{false},
+			{
+				_args = param [1,[],[[]]];
+				_args call FUNC(alterPool);
+			},
+			[QPVAR(renewed),[_obj,_varName,_rate,[false,false]]]
+		] call FUNC(loopPool);
+		_obj setVariable [SUJOIN(_varName,"renew"),[1,_rate]];
+	};
+	case 2 : { // decays
+		[	_obj,
+			_time,
+			[_obj,_varName,_amount,[true,false]],
+			{true},
+			{false},
+			{
+				_args = param [1,[],[[]]];
+				_args call FUNC(alterPool);
+			},
+			[QPVAR(renewed),[_obj,_varName,_rate,[false,false]]]
+		] call FUNC(loopPool);
+		_obj setVariable [SUJOIN(_varName,"renew"),[2,_rate]];
+	};
+	default {};
 };
+
 // init pool variable storage
-_obj setVariable [SUJOIN(_varName,"limits"),_limits]; // if _varName == varName, variable is named "varName_vars"
+_obj setVariable [SUJOIN(_varName,"limits"),_limits]; // if _varName == varName, variable is named "varName_limits"
 _obj setVariable [SUJOIN(_varName,"frozen"),false];	
 
 _obj addEventHandler ["Killed",{
@@ -72,6 +110,7 @@ _obj addEventHandler ["Killed",{
 	private _array = _hash get _unit;
 	{// remove all vars related to being a pool
 		_unit setVariable [_x, nil];
+		_unit setVariable [SUJOIN(_x,"renew"), nil];
 		_unit setVariable [SUJOIN(_x,"limits"), nil];
 		_unit setVariable [SUJOIN(_x,"frozen"), nil];
 	} forEach _array;
@@ -81,3 +120,6 @@ _obj addEventHandler ["Killed",{
 	// remove this eventHandler
 	_unit removeEventHandler _thisEventHandler;
 }];
+
+// if all other code above executes, the pool will get it's poolInit verification
+_obj setVariable [SUJOIN(_varName,"poolInit"),true];
