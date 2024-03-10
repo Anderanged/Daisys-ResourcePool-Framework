@@ -26,7 +26,7 @@ _methods
                         - reject    = true
 
 Returns: 
-true on success, false on failure
+true on failure, resulting number on success
 
 Public: yes
 */
@@ -34,31 +34,33 @@ params [
 	["_obj",objNull,[objNull]], 		// default objNull
 	["_varName",QPVAR(pool),[""]], 		// default DSY_rpf_pool
 	["_amount",0,[0]],				// default [10,1]
-	["_methods",[false,false],[[]]]
+	["_methods",[false,false],[[]],2]
 ];
 _methods params [	
 	["_methodM",false,[false]],				// default add
 	["_methodO",false,[false]]				// default clamp
 ];
 
-//check obj
+// check obj
 if (_obj == objNull) exitWith {
 	RPT_DTAIL(ERROR,"Invalid object specified: "+str _obj,__FILE__,__LINE__);
-	false;
+	true
 };
 
-// check if init'd and frozen
-private _ice = _obj getVariable SUJOIN(_varName,"frozen");
-if (isNull _ice) exitWith { // was pool init'd?
+// was pool init'd?
+if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
 	private _message = ["Pool ",_varName," not initialized on ",str _obj] joinString "";
 	RPT_DTAIL(ERROR,_message,__FILE__,__LINE__);
-	false;
+	true
 };
-if (_ice) exitWith { // is pool frozen?
+
+// is pool frozen?
+private _ice = _obj getVariable SUJOIN(_varName,"frozen");
+if (_ice) exitWith { // if so:
 	private _message = ["Pool ",_varName," on object ",str _obj," is frozen. Alteration not performed."] joinString "";
 	RPT_DTAIL(INFO,_message,__FILE__,__LINE__);
 	[QPVAR(onIce),[_obj,_varName,_amount,_methods],1] call FUNC(raiseEvent);
-	false;
+	true
 };
 
 // grab and predef vars
@@ -73,16 +75,17 @@ private "_result";
 if (_methodM) exitWith {
 	// call func
 	_result = [_lBound,_cVal,_cVal - _amount,_methodO,_eParams] call FUNC(handleLess);
-	// if rejected and no alteration need be done, exit
-	if _result exitWith {false;};
+	// if rejected and no alteration need be done, exit and return true
+	if _result exitWith {true};
 	// otherwise change var
 	_obj setVariable [_varName,_result];
 	[QPVAR(alter),_eParams,0] call FUNC(raiseEvent);
-	true;
+	// return result
+	_result
 };
 // else addition
 _result = [_uBound,_cVal,_cVal + _amount,_methodO,_eParams] call FUNC(handleGreater);
-if _result exitWith {false;};
+if _result exitWith {true};
 _obj setVariable [_varName,_result];
 [QPVAR(alter),_eParams,0] call FUNC(raiseEvent);
-true;
+_result
