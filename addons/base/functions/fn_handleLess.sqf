@@ -11,21 +11,21 @@ switch (true) do { // check if overflow: priority = bound, <= bound, > bound
 		// raise event only locally to the obj
 		[QPVAR(bound),_eParams,0] call FUNC(raiseEvent);
 		// return value
-		true;
+		true
 	};
 	case (_total >= _bound)  : {
 		[QPVAR(alter),_eParams,0] call FUNC(raiseEvent);
-		_total;
+		_total
 	};
 	case (_total < _bound)  : { // is less than bound?
 		// reject
 		if (_methodO) exitWith {
 			[QPVAR(reject),_eParams,0] call FUNC(raiseEvent);
-			true;
+			true
 		};
 		// clamp
 		[QPVAR(clamp),_eParams,0] call FUNC(raiseEvent);
-		_total;
+		_total
 	};
 	default {
 		// debug here
