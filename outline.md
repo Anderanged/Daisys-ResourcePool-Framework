@@ -57,6 +57,26 @@ implement an energy system and the relevant functions required to allow modders 
                     - methodOverflow <BOOL>
                         - clamp     = false
                         - reject    = true
+### note : this is stupid
+    Altering pools should be a one time addition or subtraction action to lesson CPU load. HUD or GUI elements could make use of a smoothing function though. It would load vars into itself and check against them each time it works, and only calls for an alter func once it stops being used (i.e. key stops being held down)
+    NOTE: Two types of smoothing functions. One that functions when a key is pressed, and another that functions given a set rate.
+        1: Needs to track the total amount increased/decreased to make the call
+            E.G. Armor Lock or other functions that have the potential to exit early
+        2: Can call once, then call a gui function to smooth the numbers down.
+            E.G. A display for your SupplyHub on some item that can display images (billboard とか、texturable thing)
+### how to track keystokes?
+    1: With addition of CBA Keybinds, we can assign functions to different keys
+    Thus, we can have a function that actions on key down and one that actions on key up
+    - Activation should start smooth function with player-specified parameters  
+    - smoothKeyLoop should be used here:
+        - first we grab all vars needed
+        - then do all calcs in-loop
+        - update display every time
+    - Deactivation should break loop and call alter function
+EVENTS:
+    1: Key pressed
+    2: Smoothing function (key press) is called
+    3: Smoothing function tracks amount it smooths
 - alterPoolSmooth
     - alters resource smoothly over time when given a rate.
         - args
@@ -91,3 +111,5 @@ implement an energy system and the relevant functions required to allow modders 
                 - [name, arguments]
                     - name of event to call <STR>
                     - arguments to pass to eventHandlers <ARRAY>
+# Also COnsider
+-   function that allows curators to see current value of Supply Hubs. Put in base? Or GUI?
