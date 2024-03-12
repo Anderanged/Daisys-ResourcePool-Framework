@@ -34,17 +34,17 @@ _limits params ["_lBound","_uBound"];
 switch (_limits) do {
 	case (_lBound < 0 || _uBound#1 < 0): {
 		exitWith {
-			RPT_DTAIL(ERROR,"Invalid bound (less than 0) in limit array "+str _limits,__FILE__,__LINE__);
-			false;
+			//RPT_DTAIL(ERROR,"Invalid bound (less than 0) in limit array "+str _limits,__FILE__,__LINE__);
+			false
 		};
 	};
 	case (_lBound > RPFLIM_MAX || _uBound > RPFLIM_MAX): {
 		exitWith {
-			RPT_DTAIL(ERROR,"Invalid bound (greater than 2^14) in limit array "+str _limits,__FILE__,__LINE__);
-			false;
+			//RPT_DTAIL(ERROR,"Invalid bound (greater than 2^14) in limit array "+str _limits,__FILE__,__LINE__);
+			false
 		};
 	};
-	default {nil};
+	default {};
 };
 
 //lookup obj in mission hash log
@@ -123,3 +123,4 @@ _obj addEventHandler ["Killed",{
 
 // if all other code above executes, the pool will get it's poolInit verification
 _obj setVariable [SUJOIN(_varName,"poolInit"),true];
+true

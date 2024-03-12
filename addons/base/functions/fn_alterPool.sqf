@@ -10,21 +10,6 @@ _varName
 _amount
 _methods
 
-- alterPool
-    - alters resource in a chunk.
-        - args
-            - object to change pool on <OBJ>
-            - pool name <STR>
-            - amount <NUM>
-            - methods to use <ARRAY>
-                - [method Math, method Overflow]
-                    - methodMath <BOOL>
-                        - addition    = false
-                        - subtraction = true
-                    - methodOverflow <BOOL>
-                        - clamp     = false
-                        - reject    = true
-
 Returns: 
 true on failure, resulting number on success
 
@@ -41,26 +26,28 @@ _methods params [
 	["_methodO",false,[false]]				// default clamp
 ];
 
+_amount = abs (floor _amount);
+
 // check obj
 if (_obj == objNull) exitWith {
-	RPT_DTAIL(ERROR,"Invalid object specified: "+str _obj,__FILE__,__LINE__);
-	true
+	//RPT_DTAIL(ERROR,"Invalid object specified: "+str _obj,__FILE__,__LINE__);
+	false
 };
 
 // was pool init'd?
 if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
 	private _message = ["Pool ",_varName," not initialized on ",str _obj] joinString "";
-	RPT_DTAIL(ERROR,_message,__FILE__,__LINE__);
-	true
+	//RPT_DTAIL(ERROR,_message,__FILE__,__LINE__);
+	false
 };
 
 // is pool frozen?
 private _ice = _obj getVariable SUJOIN(_varName,"frozen");
 if (_ice) exitWith { // if so:
 	private _message = ["Pool ",_varName," on object ",str _obj," is frozen. Alteration not performed."] joinString "";
-	RPT_DTAIL(INFO,_message,__FILE__,__LINE__);
+	//RPT_DTAIL(INFO,_message,__FILE__,__LINE__);
 	[QPVAR(onIce),[_obj,_varName,_amount,_methods],1] call FUNC(raiseEvent);
-	true
+	false
 };
 
 // grab and predef vars
@@ -76,7 +63,7 @@ if (_methodM) exitWith {
 	// call func
 	_result = [_lBound,_cVal,_cVal - _amount,_methodO,_eParams] call FUNC(handleLess);
 	// if rejected and no alteration need be done, exit and return true
-	if _result exitWith {true};
+	if (_result isEqualType true) exitWith {false};
 	// otherwise change var
 	_obj setVariable [_varName,_result];
 	[QPVAR(alter),_eParams,0] call FUNC(raiseEvent);
@@ -85,7 +72,7 @@ if (_methodM) exitWith {
 };
 // else addition
 _result = [_uBound,_cVal,_cVal + _amount,_methodO,_eParams] call FUNC(handleGreater);
-if _result exitWith {true};
+if (_result isEqualType true) exitWith {false};
 _obj setVariable [_varName,_result];
 [QPVAR(alter),_eParams,0] call FUNC(raiseEvent);
 _result

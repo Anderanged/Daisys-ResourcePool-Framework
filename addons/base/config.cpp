@@ -23,7 +23,9 @@ class CfgFunctions {
 			file="base\functions";
 			class alterPool;
 			class editPool;
+			class file;
 			class freezePool;
+			class grabPools;
 			class handleGreater;
 			class handleLess;
 			class hashInit {preInit = 1;};
