@@ -14,7 +14,7 @@ if (_obj == objNull) exitWith {
 private _result = [];
 // grab hash
 private _hash = missionNamespace getVariable QPVAR(resourcePools);
-private _array = _hash get _obj;
+private _array = _hash get str _obj;
 // not initialized lmao
 if (isNil _array) exitWith {};
 {

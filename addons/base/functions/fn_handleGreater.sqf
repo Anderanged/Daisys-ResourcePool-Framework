@@ -14,7 +14,7 @@ switch (true) do { // check if overflow: priority = bound, <= bound, > bound
 		false
 	};
 	case (_total <= _bound)  : {
-		//[QPVAR(alter),_eParams,0] call FUNC(raiseEvent);
+		[QPVAR(alter),_eParams,0] call FUNC(raiseEvent);
 		_total
 	};
 	case (_total > _bound)  : { // is greater to bound?
@@ -25,7 +25,7 @@ switch (true) do { // check if overflow: priority = bound, <= bound, > bound
 		};
 		// clamp
 		[QPVAR(clamp),_eParams,0] call FUNC(raiseEvent);
-		_total
+		_bound
 	};
 	default {
 		// debug here

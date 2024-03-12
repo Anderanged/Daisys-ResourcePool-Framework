@@ -3,7 +3,7 @@ params [
 	["_obj",objNull,[objNull]]
 ];
 private _hash = missionNamespace getVariable QPVAR(resourcePools);
-private _array = _hash get _obj;
+private _array = _hash get str _obj;
 if (isNil _array) exitWith {false};
 {// remove all vars related to being a pool
 	_obj setVariable [SUJOIN(_x,"renew"), nil];
@@ -15,6 +15,6 @@ if (isNil _array) exitWith {false};
 // event
 [QPVAR(wiped),[_obj],0] call FUNC(raiseEvent);
 // remove from and update hashmap
-_hash deleteAt _obj;
+_hash deleteAt str _obj;
 missionNamespace setVariable [QPVAR(resourcePools),_hash];
 true
