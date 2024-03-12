@@ -32,14 +32,14 @@ _rate params [
 // check limits
 _limits params ["_lBound","_uBound"];
 switch (_limits) do {
-	case (_lBound < 0 || _uBound#1 < 0): {
-		exitWith {
+	case (_lBound < 0 || _uBound < 0): {
+		if true exitWith {
 			//RPT_DTAIL(ERROR,"Invalid bound (less than 0) in limit array "+str _limits,__FILE__,__LINE__);
 			false
 		};
 	};
 	case (_lBound > RPFLIM_MAX || _uBound > RPFLIM_MAX): {
-		exitWith {
+		if true exitWith {
 			//RPT_DTAIL(ERROR,"Invalid bound (greater than 2^14) in limit array "+str _limits,__FILE__,__LINE__);
 			false
 		};
@@ -113,6 +113,7 @@ _obj addEventHandler ["Killed",{
 		_unit setVariable [SUJOIN(_x,"renew"), nil];
 		_unit setVariable [SUJOIN(_x,"limits"), nil];
 		_unit setVariable [SUJOIN(_x,"frozen"), nil];
+		_unit setVariable [SUJOIN(_x,"poolInit"), nil];
 	} forEach _array;
 	// remove from and update hashmap
 	_hash deleteAt _unit;

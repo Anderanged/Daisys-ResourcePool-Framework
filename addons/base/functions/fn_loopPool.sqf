@@ -33,7 +33,7 @@ params [
 	["_loopCon",{params[["_args",[],[[]]],["_i",0,[0]]];true;},[{}]],
 	["_contCon",{params[["_args",[],[[]]],["_i",0,[0]]];false;},[{}]],
 	["_event",{params[["_obj",objNull,[objNull]],["_args",[],[[]]],["_i",0,[0]]];},[{}]],
-	["_ehInfo",[QPVAR(loopEvent),[]],[[]]]
+	["_ehInfo",[QPVAR(loopEvent),[]],[[]],2]
 ];
 
 //clamp delay to 1 frame

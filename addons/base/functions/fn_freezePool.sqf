@@ -20,7 +20,7 @@ private _ice = _obj getVariable SUJOIN(_varName,"frozen");
 // broadcast events locally
 switch _ice do {
 	case (isNil _ice): {
-		exitWith {
+		if true exitWith {
 			//RPT_DTAIL(ERROR,str _obj + "does not have " + _varName + " initialized as a resource pool.",__FILE__,__LINE__);
 		};
 	};
