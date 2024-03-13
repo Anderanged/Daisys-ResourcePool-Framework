@@ -22,7 +22,7 @@ S will always stand for STRING. These macros only take strings as arguments.
 // concatenating variables / strings with an underscore
 #define UJOIN(VAR1,VAR2) VAR1##_##VAR2
 #define QUJOIN(VAR1,VAR2) STR(UJOIN(VAR1,VAR2))
-#define SUJOIN(STR1,STR2) STR1+"_"+STR2
+#define SUJOIN(STR1,STR2) [STR1,STR2] joinString "_"
 
 // adds your defined prefix to a variable. 
 #define PVAR(VAR) UJOIN(PREFIX,VAR)

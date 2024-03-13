@@ -16,6 +16,7 @@ _this params [
 	["_newRenew",_renew # 0,[0]],// default no effect
 	["_newRate",_rate,[[]]]
 ];
+
 // only set if we need to
 if (_limits != _newLimits) then {_obj setVariable [SUJOIN(_varName,"limits"),_newLimits];};
 

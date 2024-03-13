@@ -5,15 +5,15 @@ params [
 ];
 
 if (_obj == objNull) exitWith {
-	//RPT_DTAIL(ERROR,"Invalid object specified: "+str _obj,__FILE__,__LINE__);
-	true
+	RPT_DTAIL(ERROR,SJOIN("Invalid object specified: ",str _obj,""),__FILE__,__LINE__);
+	false
 };
 
 // was pool init'd?
 if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
-	private _message = ["Pool ",_varName," not initialized on ",str _obj] joinString "";
-	//RPT_DTAIL(ERROR,_message,__FILE__,__LINE__);
-	true
+	private _message = SJOIN4("Pool ",_varName," not initialized on ",str _obj,"");
+	RPT_DTAIL(ERROR,_message,__FILE__,__LINE__);
+	false
 };
 
 private _ice = _obj getVariable SUJOIN(_varName,"frozen");
@@ -29,4 +29,5 @@ switch _ice do {
 };
 //set var to opposite
 _obj setVariable [SUJOIN(_varName,"frozen"),!_ice];
+//return value that was set
 !_ice

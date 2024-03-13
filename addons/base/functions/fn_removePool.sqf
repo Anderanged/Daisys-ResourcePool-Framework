@@ -5,8 +5,8 @@ params [
 ];
 private _key 	= str _obj;
 if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
-	private _message = ["Pool ",_varName," not initialized on ",_key] joinString "";
-	//RPT_DTAIL(ERROR,_message,__FILE__,__LINE__);
+	private _message = SJOIN4("Pool ",_varName," not initialized on ",str _obj,"");
+	RPT_DTAIL(ERROR,_message,__FILE__,__LINE__);
 	false
 };
 // get hash
@@ -25,4 +25,5 @@ _obj setVariable [_varName, nil];
 _array deleteAt _index;
 _hash set [_key,_array];
 missionNamespace setVariable [QPVAR(resourcePools),_hash];
+RPT_BASIC(INFO,SJOIN5("Object",_key,"has had resource pool",_varName,"manually removed."," "));
 true

@@ -30,22 +30,22 @@ _amount = abs (floor _amount);
 
 // check obj
 if (_obj == objNull) exitWith {
-	//RPT_DTAIL(ERROR,"Invalid object specified: "+str _obj,__FILE__,__LINE__);
+	RPT_DTAIL(ERROR,SJOIN("Invalid object specified: ",str _obj,""),__FILE__,__LINE__);
 	false
 };
 
 // was pool init'd?
 if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
-	private _message = ["Pool ",_varName," not initialized on ",str _obj] joinString "";
-	//RPT_DTAIL(ERROR,_message,__FILE__,__LINE__);
+	private _message = SJOIN4("Pool ",_varName," not initialized on ",str _obj,"");
+	RPT_DTAIL(ERROR,_message,__FILE__,__LINE__);
 	false
 };
 
 // is pool frozen?
 private _ice = _obj getVariable SUJOIN(_varName,"frozen");
 if (_ice) exitWith { // if so:
-	private _message = ["Pool ",_varName," on object ",str _obj," is frozen. Alteration not performed."] joinString "";
-	//RPT_DTAIL(INFO,_message,__FILE__,__LINE__);
+	private _message = SJOIN5("Pool ",_varName," on object ",str _obj," is frozen. Alteration not performed.","");
+	RPT_DTAIL(INFO,_message,__FILE__,__LINE__);
 	[QPVAR(onIce),[_obj,_varName,_amount,_methods],1] call FUNC(raiseEvent);
 	false
 };

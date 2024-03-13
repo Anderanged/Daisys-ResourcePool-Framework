@@ -3,7 +3,7 @@
 // limits, cval, nval, amnt, time, methodO, eParam
 
 return: 
-true if rejected, number if not
+false if rejected, number if not
 */
 params["_bound","_cVal","_total","_methodO","_eParams"];
 switch (true) do { // check if overflow: priority = bound, <= bound, > bound
@@ -29,7 +29,7 @@ switch (true) do { // check if overflow: priority = bound, <= bound, > bound
 	};
 	default {
 		// debug here
-		//RPT_DTAIL(ERROR,"How did you do that?",__FILE__,__LINE__);
+		RPT_DTAIL(ERROR,"How did you do that?",__FILE__,__LINE__);
 		[QPVAR(error),[__FILE__,__LINE__,"ERROR","How did you do that?"],0] call FUNC(raiseEvent);
 	};
 };
