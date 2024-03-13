@@ -12,7 +12,12 @@ S will always stand for STRING. These macros only take strings as arguments.
 // concatenating variables / strings
 #define JOIN(VAR1,VAR2) VAR1##VAR2
 #define QJOIN(VAR1,VAR2) STR(JOIN(VAR1,VAR2))
-//#define SJOIN(STR1,STR2) STR1 + STR2
+
+#define SJOIN(one,two,sep) [one,two] joinString sep
+#define SJOIN3(one,two,three,sep) [one,two,three] joinString sep
+#define SJOIN4(one,two,three,four,sep) [one,two,three,four] joinString sep
+#define SJOIN5(one,two,three,four,five,sep) [one,two,three,four,five] joinString sep
+#define SJOIN6(one,two,three,four,five,six,sep) [one,two,three,four,five,six] joinString sep
 
 // concatenating variables / strings with an underscore
 #define UJOIN(VAR1,VAR2) VAR1##_##VAR2
@@ -30,17 +35,12 @@ S will always stand for STRING. These macros only take strings as arguments.
 // debug specific manipulation
 #define ERROR "[ERROR]"
 #define INFO "[INFO]"
-#define LABELDEF(LABEL) [##LABEL##]
-#define LINEDEF(LINE) (Line:##LINE##)
-#define LOG(DATA) diag_log DATA
-#define QLOG(DATA) LOG(#DATA)
+#define LOG(data) diag_log data
 
-#define JOIN_DIV(var1,var2) var1##|##var2
-#define JOIN3_DIV(var1,var2,var3) var1##|##var2##|##var3
-#define QJOIN3_DIV(var1,var2,var3) STR(JOIN3_DIV(var1,var2,var3))
-#define SJOIN_DIV(str1,str2) str1 + "|" + str2
 // debug macros
-#define RPT_BASIC(label,info) LOG(SJOIN_DIV(LABELDEF(label),info))
-#define RPT_DTAIL(label,info,file,line) LOG(SJOIN_DIV(QJOIN3_DIV(label,file,line),info))
+#define RPT_BASIC(label,info) LOG(SJOIN(label,info,"|"))
+#define RPT_DTAIL(label,info,file,line) LOG(SJOIN4(label,info,file,line,"|"))
+#define HINT_BASIC(label,info) hint SJOIN(label,info,"|")
+#define HINT_DTAIL(label,info,file,line) hint SJOIN4(label,info,file,line,"|"))
 
 #define ADDON UJOIN(PREFIX,COMPONENT)
