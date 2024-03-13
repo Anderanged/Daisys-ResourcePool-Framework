@@ -19,11 +19,6 @@ if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
 private _ice = _obj getVariable SUJOIN(_varName,"frozen");
 // broadcast events locally
 switch _ice do {
-	case (isNil _ice): {
-		if true exitWith {
-			//RPT_DTAIL(ERROR,str _obj + "does not have " + _varName + " initialized as a resource pool.",__FILE__,__LINE__);
-		};
-	};
 	case (_ice):	   {
 		[QPVAR(unfreeze),[_obj,_varName],0] call FUNC(raiseEvent);
 	};

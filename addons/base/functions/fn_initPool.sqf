@@ -48,14 +48,15 @@ switch (_limits) do {
 };
 
 //lookup obj in mission hash log
-private _hash = missionNamespace getVariable QPVAR(resourcePools);
-private _array = _hash get str _obj;
+private _key 	= str _obj;
+private _hash 	= missionNamespace getVariable QPVAR(resourcePools);
+private _array 	= _hash get _key;
 
 if (isNil _array) then { // if not present, set key value pair
-	_hash set [str _obj,[_varName]];
+	_hash set [_key,[_varName]];
 } else { // if present, append new variable name to hash
 	_nArray = _array + [_varName];
-	_hash set [str _obj,_nArray];
+	_hash set [_key,_nArray];
 };
 // update mission hash log
 missionNamespace setVariable [QPVAR(resourcePools),_hash];
@@ -106,8 +107,9 @@ _obj setVariable [SUJOIN(_varName,"frozen"),false];
 _obj addEventHandler ["Killed",{
 	params ["_unit", "_killer", "_instigator", "_useEffects"];
 	// get hash
-	private _hash = missionNamespace getVariable QPVAR(resourcePools);
-	private _array = _hash get str _unit;
+	private _key	= str _unit;
+	private _hash 	= missionNamespace getVariable QPVAR(resourcePools);
+	private _array 	= _hash get _key;
 	{// remove all vars related to being a pool
 		_unit setVariable [_x, nil];
 		_unit setVariable [SUJOIN(_x,"renew"), nil];
@@ -116,7 +118,7 @@ _obj addEventHandler ["Killed",{
 		_unit setVariable [SUJOIN(_x,"poolInit"), nil];
 	} forEach _array;
 	// remove from and update hashmap
-	_hash deleteAt str _unit;
+	_hash deleteAt _key;
 	missionNamespace setVariable [QPVAR(resourcePools),_hash];
 	// remove this eventHandler
 	_unit removeEventHandler _thisEventHandler;
