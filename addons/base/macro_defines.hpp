@@ -13,16 +13,16 @@ S will always stand for STRING. These macros only take strings as arguments.
 #define JOIN(VAR1,VAR2) VAR1##VAR2
 #define QJOIN(VAR1,VAR2) STR(JOIN(VAR1,VAR2))
 
-#define SJOIN(one,two,sep) [one,two] joinString sep
-#define SJOIN3(one,two,three,sep) [one,two,three] joinString sep
-#define SJOIN4(one,two,three,four,sep) [one,two,three,four] joinString sep
-#define SJOIN5(one,two,three,four,five,sep) [one,two,three,four,five] joinString sep
-#define SJOIN6(one,two,three,four,five,six,sep) [one,two,three,four,five,six] joinString sep
+#define SJOIN(one,two,sep) ([one,two] joinString sep)
+#define SJOIN3(one,two,three,sep) ([one,two,three] joinString sep)
+#define SJOIN4(one,two,three,four,sep) ([one,two,three,four] joinString sep)
+#define SJOIN5(one,two,three,four,five,sep) ([one,two,three,four,five] joinString sep)
+#define SJOIN6(one,two,three,four,five,six,sep) ([one,two,three,four,five,six] joinString sep)
 
 // concatenating variables / strings with an underscore
 #define UJOIN(VAR1,VAR2) VAR1##_##VAR2
 #define QUJOIN(VAR1,VAR2) STR(UJOIN(VAR1,VAR2))
-#define SUJOIN(STR1,STR2) [STR1,STR2] joinString "_"
+#define SUJOIN(STR1,STR2) ([STR1,STR2] joinString "_")
 
 // adds your defined prefix to a variable. 
 #define PVAR(VAR) UJOIN(PREFIX,VAR)
