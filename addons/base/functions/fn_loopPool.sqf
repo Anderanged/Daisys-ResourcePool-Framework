@@ -22,25 +22,23 @@ _ehInfo		-	array in format [name, [param1,param2]] where [param1,param2] should 
 Returns: 
 N/A
 
-how to allow the player to define and use their own counter variable
-
 Public: yes
 */
 params [
 	["_obj",objNull,[objNull]],
 	["_delay",1,[0]],
 	["_args",[],[[]]],
-	["_loopCon",{params[["_args",[],[[]]],["_i",0,[0]]];true;},[{}]],
-	["_contCon",{params[["_args",[],[[]]],["_i",0,[0]]];false;},[{}]],
-	["_event",{params[["_obj",objNull,[objNull]],["_args",[],[[]]],["_i",0,[0]]];},[{}]],
-	["_ehInfo",[QPVAR(loopEvent),[]],[[]],2]
+	["_loopCon",{true},[{}]], 	// params[["_args",[],[[]]],["_i",0,[0]]];
+	["_contCon",{false},[{}]], 	// params[["_args",[],[[]]],["_i",0,[0]]];
+	["_event",{},[{}]], 		// params[["_obj",objNull,[objNull]],["_args",[],[[]]],["_i",0,[0]]];
+	["_ehInfo",[QPVAR(loopEvent),[]],[[]]]
 ];
 
 //clamp delay to 1 frame
 if (_delay < 0.001) then {_delay = 0.001;};
 
 private _ehBool = false;
-if !(isNull _ehInfo) then {_ehBool = true;_ehInfo = _ehInfo append 0;};
+if !(isNil _ehInfo) then {_ehBool = true;_ehInfo = _ehInfo append 0;};
 
 // eh for while loop begin
 [QPVAR(loopBegin),[_obj,_delay,_args,_loopCon,_contCon,_event,_ehInfo],0] call FUNC(raiseEvent);
