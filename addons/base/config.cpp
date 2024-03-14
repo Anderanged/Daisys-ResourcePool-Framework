@@ -21,6 +21,7 @@ class CfgFunctions {
 		tag=STR(PREFIX);
 		class COMPONENT {
 			file="base\functions";
+			class accessHash;
 			class alterPool;
 			class editPool;
 			class freezePool;
