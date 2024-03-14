@@ -63,7 +63,7 @@ if (_methodM) exitWith {
 	// call func
 	_result = [_lBound,_cVal,_cVal - _amount,_methodO,_eParams] call FUNC(handleLess);
 	// if rejected and no alteration need be done, exit and return true
-	if (_result isEqualType true) exitWith {false};
+	if (_result isEqualType false) exitWith {false};
 	// otherwise change var
 	_obj setVariable [_varName,_result];
 	[QPVAR(alter),_eParams,0] call FUNC(raiseEvent);
@@ -72,7 +72,7 @@ if (_methodM) exitWith {
 };
 // else addition
 _result = [_uBound,_cVal,_cVal + _amount,_methodO,_eParams] call FUNC(handleGreater);
-if (_result isEqualType true) exitWith {false};
+if (_result isEqualType false) exitWith {false};
 _obj setVariable [_varName,_result];
 [QPVAR(alter),_eParams,0] call FUNC(raiseEvent);
 _result
