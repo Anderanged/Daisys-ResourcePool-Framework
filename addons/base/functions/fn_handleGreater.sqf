@@ -9,7 +9,7 @@ params["_bound","_cVal","_total","_methodO","_eParams"];
 switch (true) do { // check if overflow: priority = bound, <= bound, > bound
 	case (_cVal == _bound) : { // is equal to bound?
 		// raise event only locally to the obj
-		[QPVAR(bound),_eParams,0] call FUNC(raiseEvent);
+		[QPVAR(uBound),_eParams,0] call FUNC(raiseEvent);
 		// return value
 		false
 	};
