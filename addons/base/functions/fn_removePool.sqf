@@ -3,17 +3,24 @@ params [
 	["_obj",objNull,[objNull]],
 	["_varName",QPVAR(pool),[""]]
 ];
-private _key 	= str _obj;
+// is pool init'd
 if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
-	private _message = SJOIN4("Pool ",_varName," not initialized on ",str _obj,"");
-	RPT_DTAIL(ERROR,_message,__FILE__,__LINE__);
+	RPT_DTAIL(ERROR,SJOIN4("Pool ",_varName," not initialized on ",str _obj,""),__FILE__,__LINE__);
 	false
 };
-// get hash
-private _hash 	= missionNamespace getVariable QPVAR(resourcePools);
-private _array 	= _hash get _key;
+// get hash & check
+private _array 	= [_obj,"r"] call FUNC(accessHash);
+if (_array isEqualType false) exitWith {
+	RPT_DTAIL(ERROR,SJOIN3("Object ",str _obj," has no pools initialized.",""),__FILE__,__LINE__);
+	false
+};
+// find variable pool
 private _index 	= _array find _varName;
-if (_index == -1) exitWith {false};
+if (_index == -1) exitWith {
+	RPT_DTAIL(ERROR,SJOIN4("Hashmap does not have variable ",_varName," assigned to ",str _obj,""),__FILE__,__LINE__);
+	false
+};
+// remove vars
 _obj setVariable [SUJOIN(_varName,"renew"), nil];
 _obj setVariable [SUJOIN(_varName,"limits"), nil];
 _obj setVariable [SUJOIN(_varName,"frozen"), nil];
@@ -21,9 +28,8 @@ _obj setVariable [SUJOIN(_varName,"poolInit"), nil];
 _obj setVariable [_varName, nil];
 // broadcast event
 [QPVAR(removed),[_obj,_varName],0] call FUNC(raiseEvent);
-// remove from array and update hashmap
+// update hashmap with new array
 _array deleteAt _index;
-_hash set [_key,_array];
-missionNamespace setVariable [QPVAR(resourcePools),_hash];
-RPT_BASIC(INFO,SJOIN5("Object",_key,"has had resource pool",_varName,"manually removed."," "));
+[_obj,"w",_array] call FUNC(accessHash);
+RPT_BASIC(INFO,SJOIN5("Object",str _obj,"has had resource pool",_varName,"manually removed."," "));
 true
