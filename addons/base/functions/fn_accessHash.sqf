@@ -14,7 +14,7 @@ params [
 ];
 
 // variable def
-private ["_hash","_key","_return","_varArray","_check"];
+private ["_hash","_key","_return","_varArray"];
 _hash 	= missionNamespace getVariable QPVAR(resourcePools);
 _key 	= str _obj;
 
@@ -38,21 +38,22 @@ switch _access do {
 			RPT_DTAIL(INFO,"Hashmap had no key to append to. Data written.",__FILE__,__LINE__);
 			true
 		};
-		private _chkArr = [];
+		private _check = false;
 		// otherwise, do pushBackUnique for each element in _data
 		{
 			private _index = _varArray pushBackUnique _x;
-			_chkArr append _index;
+			if (_index != -1) exitWith {_check = true;} // exit as soon as we know there is a new element
 		} forEach _data;
-		if (_chkArr findIf {_x > -1} != -1) exitWith {
-			// immediately append data if find a new element
+		if (_check) then {
+			// append data if there was a new element
 			_hash set [_key,_varArray];
 			missionNamespace setVariable [QPVAR(resourcePools),_hash,true];
-			true
-		};
+			_return = true;
+		} else {
 		RPT_DTAIL(INFO,SJOIN3("No new values found in ",str _data,". Append failed.",""),__FILE__,__LINE__);
 		// otherwise return false. no data appended.
 		_return = false;
+		};
 	};
 	case "d" : {
 		_hash deleteAt _key;
