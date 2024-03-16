@@ -22,17 +22,19 @@ class CfgFunctions {
 		class COMPONENT {
 			file="base\functions";
 			class accessHash;
+			class alterAllPools;
 			class alterPool;
+			class decayPool;
 			class editPool;
 			class freezePool;
 			class handleGreater;
 			class handleLess;
 			class hashInit {preInit = 1;};
 			class initPool;
-			class loopPool;
 			class raiseEvent;
+			class removeAllPools;
 			class removePool;
-			class wipePools;
+			class renewPool;
 		};
 	};
 };
