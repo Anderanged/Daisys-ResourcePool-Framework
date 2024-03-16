@@ -25,7 +25,7 @@ _array params [
 		}; // if it aint renewable, BREAK THE CYCLE
 		// otherwise, take the blue pill
 		[_obj,_varName,(_rate # 0),ADD_CLAMP] call FUNC(alterPool);
-		[_obj,_varName,_rate] call FUNC(renewPool);
+		[_obj,_varName] call FUNC(renewPool);
 	},
 	[
 		// arguments to pass to the above
