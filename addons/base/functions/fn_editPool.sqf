@@ -1,62 +1,68 @@
 #include "defines.hpp"
+/*
+returns true if settings were altered, false if not
+*/
+private _return 	= [false,false];
 private _obj 		= _this param [0,objNull,[objNull]];
 private _varName 	= _this param [1,QPVAR(pool),[""]];
-if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith {
-	// obj not initialized
+if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
+	RPT_DTAIL(ERROR,SJOIN4("Pool ",_varName," not initialized on ",str _obj,""),__FILE__,__LINE__);
 	false
 };
-private _limits 	= _obj getVariable [SUJOIN(_varName,"limits"),true];
-private _renew 		= _obj getVariable [SUJOIN(_varName,"renew")];
-private _rate		= [];
-if ((_renew # 0) > 0) then {_rate = _renew param [1,[2,1],[[]],2];};
+private _limit 		= _obj getVariable SUJOIN(_varName,"limit");
+private _renew 		= _obj getVariable SUJOIN(_varName,"RD_Array");
+private _renewType	= _renew # 0;
+private _rate		= _renew # 1;
+if (_renewType > 0) then {_rate = _renew param [1,[2,1],[[]],2];};
 _this params [
 	["_obj",objNull,[objNull]],
 	["_varName",QPVAR(pool),[""]],
-	["_newLimits",_limits,[[]],2], 
-	["_newRenew",_renew # 0,[0]],// default no effect
-	["_newRate",_rate,[[]]]
+	["_newLimit",_limit,[0]], 
+	["_newRenew",_renewType,[0]],// default no effect
+	["_newRate",_rate,[[]],2]
 ];
+_newLimit = abs (floor _newLimit);
+
+_newRate 	params ["_nAmount","_nTime"];
+_rate 		params ["_amount","_time"];
+_nAmount 	= abs (floor _nAmount);
+_nTime 		= abs (ceil _nTime);
+private _isOldRate = (_amount == _nAmount && _time == _nTime);
 
 // only set if we need to
-if (_limits != _newLimits) then {_obj setVariable [SUJOIN(_varName,"limits"),_newLimits];};
+if (_limit != _newLimit) then {_obj setVariable [SUJOIN(_varName,"limit"),_newLimit];_return set [0,true];};
 
 switch _newRenew do {
 	case 0 : { // no effect
-		if (_renew#0 == 0) exitWith {};
-		_obj setVariable [SUJOIN(_varName,"renew"),[0,[]]];
-	}; 
+		if (_renewType == 0) then {
+			hint "RD already 0";
+		} else {
+		_obj setVariable [SUJOIN(_varName,"RD_Array"),[0,[]]];
+		_return set [1,true];
+		hint "";
+		}; 
+	};
 	case 1 : { // renews
-		if (_renew#0 == 1) exitWith {};
-		[	_obj,
-			_rate # 1,
-			[_obj,_varName,_rate # 0,[false,false]],
-			{true},
-			{false},
-			{
-				_args = param [1,[],[[]]];
-				_args call FUNC(alterPool);
-			},
-			[QPVAR(renewed),[_obj,_varName,_rate,[false,false]]]
-		] call FUNC(loopPool);
-		_obj setVariable [SUJOIN(_varName,"renew"),[1,_rate]];
+		if (_renewType == 1 && _isOldRate) then {
+			hint "RD already 1 & old rate";
+		} else {
+		_obj setVariable [SUJOIN(_varName,"RD_Array"),[1,_newRate]];
+		[_obj,_varName] call FUNC(renewPool);
+		_return set [1,true];
+		hint SJOIN("RD was set to renew with rate of",_newRate," ");
+		};
 	};
 	case 2 : { // decays
-		if (_renew#0 == 2) exitWith {};
-		[	_obj,
-			_rate # 1,
-			[_obj,_varName,_rate # 0,[true,false]],
-			{true},
-			{false},
-			{
-				_args = param [1,[],[[]]];
-				_args call FUNC(alterPool);
-			},
-			[QPVAR(decayed),[_obj,_varName,_rate,[false,false]]]
-		] call FUNC(loopPool);
-		_obj setVariable [SUJOIN(_varName,"renew"),[2,_rate]];
+		if (_renewType == 2 && _isOldRate) then {
+			hint "RD already 2 & old rate";
+		} else {
+		_obj setVariable [SUJOIN(_varName,"RD_Array"),[2,_newRate]];
+		[_obj,_varName] call FUNC(decayPool);
+		_return set [1,true];
+		hint SJOIN("RD was set to decay with rate of",_newRate," ");
+		};
 	};
-	default {false};
+	default {};
 };
-_obj setVariable [SUJOIN(_varName,"renew"),[_newRenew,_newRate]];
-[QPVAR(edited),[_obj,_varName,[_limits,_renew],[_newLimits,[_newRenew,_newRate]]],0] call FUNC(raiseEvent);
-true
+[QPVAR(edited),[_obj,_varName,[_limit,_renew],[_newLimit,[_newRenew,_newRate]]],0] call FUNC(raiseEvent);
+_return
