@@ -21,10 +21,10 @@ if (_index == -1) exitWith {
 	false
 };
 // remove vars
-_obj setVariable [SUJOIN(_varName,"renew"), nil];
-_obj setVariable [SUJOIN(_varName,"limits"), nil];
-_obj setVariable [SUJOIN(_varName,"frozen"), nil];
+_obj setVariable [SUJOIN(_varName,"limit"),    nil];
+_obj setVariable [SUJOIN(_varName,"frozen"),   nil];
 _obj setVariable [SUJOIN(_varName,"poolInit"), nil];
+_obj setVariable [SUJOIN(_varName,"RD_Array"), nil];
 _obj setVariable [_varName, nil];
 // broadcast event
 [QPVAR(removed),[_obj,_varName],0] call FUNC(raiseEvent);
