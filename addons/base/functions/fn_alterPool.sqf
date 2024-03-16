@@ -15,6 +15,7 @@ true on failure, resulting number on success
 
 Public: yes
 */
+
 params [
 	["_obj",objNull,[objNull]], 		// default objNull
 	["_varName",QPVAR(pool),[""]], 		// default DSY_rpf_pool
@@ -36,32 +37,29 @@ if (_obj == objNull) exitWith {
 
 // was pool init'd?
 if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
-	private _message = SJOIN4("Pool ",_varName," not initialized on ",str _obj,"");
-	RPT_DTAIL(ERROR,_message,__FILE__,__LINE__);
+	RPT_DTAIL(ERROR,SJOIN4("Pool ",_varName," not initialized on ",str _obj,""),__FILE__,__LINE__);
 	false
 };
 
 // is pool frozen?
 private _ice = _obj getVariable SUJOIN(_varName,"frozen");
 if (_ice) exitWith { // if so:
-	private _message = SJOIN5("Pool ",_varName," on object ",str _obj," is frozen. Alteration not performed.","");
-	RPT_DTAIL(INFO,_message,__FILE__,__LINE__);
+	RPT_DTAIL(INFO,SJOIN5("Pool ",_varName," on object ",str _obj," is frozen. Alteration not performed.",""),__FILE__,__LINE__);
 	[QPVAR(onIce),[_obj,_varName,_amount,_methods],1] call FUNC(raiseEvent);
 	false
 };
 
 // grab and predef vars
-private _cVal 		= _obj getVariable [_varName,true];
-private _limits 	= _obj getVariable SUJOIN(_varName,"limits");
-private _eParams = [_obj,_varName,_amount,_methods];
-_limits params ["_lBound","_uBound"];
+private _cVal 		= _obj getVariable _varName;
+private _limit 		= _obj getVariable SUJOIN(_varName,"limit");
+private _eParams 	= [_obj,_varName,_amount,_methods];
 private "_result";
 
 // start chunk func
 // if subtraction
 if (_methodM) exitWith {
 	// call func
-	_result = [_lBound,_cVal,_cVal - _amount,_methodO,_eParams] call FUNC(handleLess);
+	_result = [0,_cVal,_cVal - _amount,_methodO,_eParams] call FUNC(handleLess);
 	// if rejected and no alteration need be done, exit and return true
 	if (_result isEqualType false) exitWith {false};
 	// otherwise change var
@@ -71,7 +69,7 @@ if (_methodM) exitWith {
 	_result
 };
 // else addition
-_result = [_uBound,_cVal,_cVal + _amount,_methodO,_eParams] call FUNC(handleGreater);
+_result = [_limit,_cVal,_cVal + _amount,_methodO,_eParams] call FUNC(handleGreater);
 if (_result isEqualType false) exitWith {false};
 _obj setVariable [_varName,_result];
 [QPVAR(alter),_eParams,0] call FUNC(raiseEvent);
