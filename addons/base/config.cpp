@@ -1,4 +1,4 @@
-#include "addon_defines.hpp"
+#include "macros\addon_defines.hpp"
 class CfgPatches
 {
 	class ADDON
