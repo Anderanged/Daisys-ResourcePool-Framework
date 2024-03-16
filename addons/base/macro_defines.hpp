@@ -33,14 +33,15 @@ S will always stand for STRING. These macros only take strings as arguments.
 #define FUNC(NAME) UJOIN(DSY_rpf_fnc,NAME) //DSY_rpf_fnc_NAME
 
 // debug specific manipulation
-#define ERROR "[ERROR]"
-#define INFO "[INFO]"
+#define ERROR "[RPF:ERROR]"
+#define INFO "[RPF:INFO]"
 #define LOG(data) diag_log data
+#define LOGSEP " }{ "
 
 // debug macros
-#define RPT_BASIC(label,info) LOG(SJOIN(label,info,"|"))
-#define RPT_DTAIL(label,info,file,line) LOG(SJOIN4(label,info,file,line,"|"))
-#define HINT_BASIC(label,info) hint SJOIN(label,info,"|")
-#define HINT_DTAIL(label,info,file,line) hint SJOIN4(label,info,file,line,"|"))
+#define RPT_BASIC(label,info) LOG(SJOIN(label,info,LOGSEP))
+#define RPT_DTAIL(label,info,file,line) LOG(SJOIN4(label,info,file,SJOIN("Line",line," "),LOGSEP))
+#define HINT_BASIC(label,info) hint SJOIN(label,info,LOGSEP)
+#define HINT_DTAIL(label,info,file,line) hint SJOIN4(label,info,file,SJOIN("Line",line," "),LOGSEP))
 
 #define ADDON UJOIN(PREFIX,COMPONENT)
