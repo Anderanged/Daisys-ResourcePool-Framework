@@ -2,6 +2,11 @@
 /*
 returns true if settings were altered, false if not
 */
+if (isDedicated) exitWith {
+	RPT_DTAIL(INFO,"Local functions will not execute on dedicated server.",__FILE__,__LINE__);
+	[E_LOCSERV,[__FILE__],1] call FUNC(raiseEvent);
+	false
+};
 private _return 	= [false,false];
 private _obj 		= _this param [0,objNull,[objNull]];
 private _varName 	= _this param [1,QPVAR(pool),[""]];
@@ -31,14 +36,14 @@ _newRate 	= [_nAmount,_nTime];
 private _isOldRate = (_amount == _nAmount && _time == _nTime);
 
 // only set if we need to
-if (_limit != _newLimit) then {_obj setVariable [SUJOIN(_varName,"limit"),_newLimit,true];_return set [0,true];};
+if (_limit != _newLimit) then {_obj setVariable [SUJOIN(_varName,"limit"),_newLimit];_return set [0,true];};
 
 switch _newRenew do {
 	case 0 : { // no effect
 		if (_renewType == 0) then {
 			hint "RD already 0";
 		} else {
-		_obj setVariable [SUJOIN(_varName,"RD_Array"),[0,[]],true];
+		_obj setVariable [SUJOIN(_varName,"RD_Array"),[0,[]]];
 		_return set [1,true];
 		hint "";
 		}; 
@@ -47,8 +52,8 @@ switch _newRenew do {
 		if (_renewType == 1 && _isOldRate) then {
 			hint "RD already 1 & old rate";
 		} else {
-		_obj setVariable [SUJOIN(_varName,"RD_Array"),[1,_newRate],true];
-		[_obj,_varName] call FUNC(renewPool);
+		_obj setVariable [SUJOIN(_varName,"RD_Array"),[1,_newRate]];
+		[_obj,_varName] call FUNC(renewPoolLocal);
 		_return set [1,true];
 		hint SJOIN("RD was set to renew with rate of",_newRate," ");
 		};
@@ -57,13 +62,13 @@ switch _newRenew do {
 		if (_renewType == 2 && _isOldRate) then {
 			hint "RD already 2 & old rate";
 		} else {
-		_obj setVariable [SUJOIN(_varName,"RD_Array"),[2,_newRate],true];
-		[_obj,_varName] call FUNC(decayPool);
+		_obj setVariable [SUJOIN(_varName,"RD_Array"),[2,_newRate]];
+		[_obj,_varName] call FUNC(decayPoolLocal);
 		_return set [1,true];
 		hint SJOIN("RD was set to decay with rate of",_newRate," ");
 		};
 	};
 	default {};
 };
-[E_EDITED,[_obj,_varName,[_limit,_renew],[_newLimit,[_newRenew,_newRate]]],1] call FUNC(raiseEvent);
+[E_EDITED,[_obj,_varName,[_limit,_renew],[_newLimit,[_newRenew,_newRate]]],0] call FUNC(raiseEvent);
 _return

@@ -1,4 +1,10 @@
 #include "defines.hpp"
+
+if (isDedicated) exitWith {
+	RPT_DTAIL(INFO,"Local functions will not execute on dedicated server.",__FILE__,__LINE__);
+	[E_LOCSERV,[__FILE__],1] call FUNC(raiseEvent);
+	false
+};
 params [
 	["_obj",objNull,[objNull]],
 	["_varName",QPVAR(pool),[""]]
@@ -18,14 +24,14 @@ if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
 
 private _ice = _obj getVariable SUJOIN(_varName,"frozen");
 //set var to opposite
-_obj setVariable [SUJOIN(_varName,"frozen"),!_ice,true];
+_obj setVariable [SUJOIN(_varName,"frozen"),!_ice];
 // broadcast events locally
 switch _ice do {
 	case (_ice):	   {
-		[E_UNFROZEN,[_obj,_varName],1] call FUNC(raiseEvent);
+		[E_UNFROZEN,[_obj,_varName],0] call FUNC(raiseEvent);
 	};
 	case (!_ice):	   {
-		[E_FROZEN,[_obj,_varName],1] call FUNC(raiseEvent)
+		[E_FROZEN,[_obj,_varName],0] call FUNC(raiseEvent)
 	};
 	default {};
 };

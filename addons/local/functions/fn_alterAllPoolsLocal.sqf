@@ -1,4 +1,9 @@
 #include "defines.hpp"
+if (isDedicated) exitWith {
+	RPT_DTAIL(INFO,"Local functions will not execute on dedicated server.",__FILE__,__LINE__);
+	[E_LOCSERV,[__FILE__],1] call FUNC(raiseEvent);
+	false
+};
 params [
 	["_obj",objNull,[objNull]],
 	["_amount",0,[0]],
@@ -12,9 +17,9 @@ if (_array isEqualType false) exitWith {
 	false
 };
 {// remove all vars related to being a pool
-	[_obj,_x,_amount,_methods] call FUNC(alterPool);
+	[_obj,_x,_amount,_methods] call FUNC(alterPoolLocal);
 } forEach _array;
 // event
-[E_ALTEREDA,[_obj],1] call FUNC(raiseEvent);
+[E_ALTEREDA,[_obj],0] call FUNC(raiseEvent);
 RPT_BASIC(INFO,SJOIN5("Object",str _obj,"has had all resource pools altered by amount",str (abs floor _amount),"."," "));
 true

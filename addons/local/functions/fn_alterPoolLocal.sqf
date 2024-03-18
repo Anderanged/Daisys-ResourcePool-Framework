@@ -15,7 +15,11 @@ true on failure, resulting number on success
 
 Public: yes
 */
-
+if (isDedicated) exitWith {
+	RPT_DTAIL(INFO,"Local functions will not execute on dedicated server.",__FILE__,__LINE__);
+	[E_LOCSERV,[__FILE__],1] call FUNC(raiseEvent);
+	false
+};
 params [
 	["_obj",objNull,[objNull]], 		// default objNull
 	["_varName",QPVAR(pool),[""]], 		// default DSY_rpf_pool
@@ -65,6 +69,6 @@ if (_methodM) then {
 };
 // if no alter, return false
 if (_result isEqualType false) exitWith {false};
-_obj setVariable [_varName,_result,true];
-[E_ALTERED,_eParams,1] call FUNC(raiseEvent);
+_obj setVariable [_varName,_result];
+[E_ALTERED,_eParams,0] call FUNC(raiseEvent);
 _result

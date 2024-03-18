@@ -17,6 +17,11 @@ nothing
 
 Public: yes
 */
+if (isDedicated) exitWith {
+	RPT_DTAIL(INFO,"Local functions will not execute on dedicated server.",__FILE__,__LINE__);
+	[E_LOCSERV,[__FILE__],1] call FUNC(raiseEvent);
+	false
+};
 params [
 	["_obj",objNull,[objNull]],
 	["_varName",QPVAR(pool),[""]],
@@ -54,36 +59,36 @@ if !_result exitWith {
 };
 
 // init pool variable
-_obj setVariable [_varName,_limit,true];
+_obj setVariable [_varName,_limit];
 
 switch (_renew) do {
 	case 0 : { // no effect
-		_obj setVariable [SUJOIN(_varName,"RD_Array"),[0,[]],true]; // array in format: [Renew/Decay on, type, rate (amount,time)]
+		_obj setVariable [SUJOIN(_varName,"RD_Array"),[0,[]]]; // array in format: [Renew/Decay on, type, rate (amount,time)]
 	}; 
 	case 1 : { // renews
-		_obj setVariable [SUJOIN(_varName,"RD_Array"),[1,_rate],true];
-		[_obj,_varName] call FUNC(renewPool);
+		_obj setVariable [SUJOIN(_varName,"RD_Array"),[1,_rate]];
+		[_obj,_varName] call FUNC(renewPoolLocal);
 	};
 	case 2 : { // decays
-		_obj setVariable [SUJOIN(_varName,"RD_Array"),[2,_rate],true];
-		[_obj,_varName] call FUNC(decayPool);
+		_obj setVariable [SUJOIN(_varName,"RD_Array"),[2,_rate]];
+		[_obj,_varName] call FUNC(decayPoolLocal);
 	};
 	default {};
 };
 
 // init pool variable storage
-_obj setVariable [SUJOIN(_varName,"limit"),_limit,true];
-_obj setVariable [SUJOIN(_varName,"frozen"),false,true];	
+_obj setVariable [SUJOIN(_varName,"limit"),_limit];
+_obj setVariable [SUJOIN(_varName,"frozen"),false];
 
 _obj addEventHandler ["Killed",{
 	params ["_unit", "_killer", "_instigator", "_useEffects"];
 	private _array = [_unit,"r",[]] call FUNC(accessHash);
 	{// remove all vars related to being a pool
-		_unit setVariable [_x, nil,true];
-		_unit setVariable [SUJOIN(_x,"RD_Array"), nil,true];
-		_unit setVariable [SUJOIN(_x,"limit"), 	  nil,true];
-		_unit setVariable [SUJOIN(_x,"frozen"),   nil,true];
-		_unit setVariable [SUJOIN(_x,"poolInit"), nil,true];
+		_unit setVariable [_x, nil];
+		_unit setVariable [SUJOIN(_x,"RD_Array"), nil];
+		_unit setVariable [SUJOIN(_x,"limit"), 	  nil];
+		_unit setVariable [SUJOIN(_x,"frozen"),   nil];
+		_unit setVariable [SUJOIN(_x,"poolInit"), nil];
 	} forEach _array;
 	// remove from and update hashmap
 	[_unit,"d",[]] call FUNC(accessHash);
@@ -93,7 +98,6 @@ _obj addEventHandler ["Killed",{
 }];
 
 // if all other code above executes, the pool will get it's poolInit verification
-_obj setVariable [SUJOIN(_varName,"poolInit"),true,true];
+_obj setVariable [SUJOIN(_varName,"poolInit")];
 RPT_BASIC(INFO,SJOIN3("Object",str _obj,"has been initialized as a resource pool."," "));
-[E_CREATED,[_obj,_varName,_limit,[_renew,_rate]],1] call FUNC(raiseEvent);
 true

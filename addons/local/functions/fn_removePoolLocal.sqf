@@ -1,4 +1,9 @@
 #include "defines.hpp"
+if (isDedicated) exitWith {
+	RPT_DTAIL(INFO,"Local functions will not execute on dedicated server.",__FILE__,__LINE__);
+	[E_LOCSERV,[__FILE__],1] call FUNC(raiseEvent);
+	false
+};
 params [
 	["_obj",objNull,[objNull]],
 	["_varName",QPVAR(pool),[""]]
@@ -21,13 +26,13 @@ if (_index == -1) exitWith {
 	false
 };
 // remove vars
-_obj setVariable [SUJOIN(_varName,"limit"),    nil,true];
-_obj setVariable [SUJOIN(_varName,"frozen"),   nil,true];
-_obj setVariable [SUJOIN(_varName,"poolInit"), nil,true];
-_obj setVariable [SUJOIN(_varName,"RD_Array"), nil,true];
-_obj setVariable [_varName, nil,true];
+_obj setVariable [SUJOIN(_varName,"limit"),    nil];
+_obj setVariable [SUJOIN(_varName,"frozen"),   nil];
+_obj setVariable [SUJOIN(_varName,"poolInit"), nil];
+_obj setVariable [SUJOIN(_varName,"RD_Array"), nil];
+_obj setVariable [_varName, nil];
 // broadcast event
-[E_REMOVED,[_obj,_varName],1] call FUNC(raiseEvent);
+[E_REMOVED,[_obj,_varName],0] call FUNC(raiseEvent);
 // update hashmap with new array
 _array deleteAt _index;
 [_obj,"w",_array] call FUNC(accessHash);

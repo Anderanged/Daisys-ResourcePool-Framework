@@ -3,7 +3,11 @@
 take in obj, varname, and pass code to execute using CBA_fnc_waitAndExecute.
 recusively executes until Renew/Decay status changes.
 */
-
+if (isDedicated) exitWith {
+	RPT_DTAIL(INFO,"Local functions will not execute on dedicated server.",__FILE__,__LINE__);
+	[E_LOCSERV,[__FILE__],1] call FUNC(raiseEvent);
+	false
+};
 params [
 	["_obj",objNull,[objNull]],
 	["_varName",QPVAR(pool),[""]]
@@ -23,10 +27,9 @@ _array params [
 			RPT_DTAIL(INFO,SJOIN3("Pool",_varName,"does not have decay enabled. Exiting Loop."," "),__FILE__,__LINE__);
 		}; // if it aint renewable, BREAK THE CYCLE
 		// otherwise, take the blue pill
-		[_obj,_varName,(_rate # 0),SUB_CLAMP] call FUNC(alterPool);
-		[E_DECAYED,[_obj,_varName,_rate],1] call FUNC(raiseEvent);
-		[_obj,_varName] call FUNC(decayPool);
-
+		[_obj,_varName,(_rate # 0),SUB_CLAMP] call FUNC(alterPoolLocal);
+		[E_DECAYED,[_obj,_varName,_rate],0] call FUNC(raiseEvent);
+		[_obj,_varName] call FUNC(decayPoolLocal);
 	},
 	[
 		// arguments to pass to the above
