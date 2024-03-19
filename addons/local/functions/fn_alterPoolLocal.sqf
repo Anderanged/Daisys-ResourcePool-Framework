@@ -39,6 +39,12 @@ if (_obj == objNull) exitWith {
 	false
 };
 
+// is obj local?
+if !(local _obj) exitWith {
+	RPT_DTAIL(ERROR,SJOIN3("Object",str _obj,"is not local to the current machine. Aborting local function."," "),__FILE__,__LINE__);
+	false
+};
+
 // was pool init'd?
 if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
 	RPT_DTAIL(ERROR,SJOIN4("Pool ",_varName," not initialized on ",str _obj,""),__FILE__,__LINE__);
@@ -49,7 +55,7 @@ if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
 private _ice = _obj getVariable SUJOIN(_varName,"frozen");
 if (_ice) exitWith { // if so:
 	RPT_DTAIL(INFO,SJOIN5("Pool ",_varName," on object ",str _obj," is frozen. Alteration not performed.",""),__FILE__,__LINE__);
-	[E_ONICE,[_obj,_varName,_amount,_methods],1] call FUNC(raiseEvent);
+	[E_ONICE,[_obj,_varName,_amount,_methods],0] call FUNC(raiseEvent);
 	false
 };
 
@@ -62,10 +68,10 @@ private "_result";
 // if subtraction
 if (_methodM) then {
 	// call func
-	_result = [0,_cVal,_cVal - _amount,_methodO,_eParams] call FUNC(handleLess);
+	_result = [0,_cVal,_cVal - _amount,_methodO,_eParams] call FUNC(handleLessLocal);
 } else {
 	// else addition
-	_result = [_limit,_cVal,_cVal + _amount,_methodO,_eParams] call FUNC(handleGreater);
+	_result = [_limit,_cVal,_cVal + _amount,_methodO,_eParams] call FUNC(handleGreaterLocal);
 };
 // if no alter, return false
 if (_result isEqualType false) exitWith {false};

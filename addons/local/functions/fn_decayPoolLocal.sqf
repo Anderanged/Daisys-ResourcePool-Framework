@@ -13,6 +13,12 @@ params [
 	["_varName",QPVAR(pool),[""]]
 ];
 
+// is obj local?
+if !(local _obj) exitWith {
+	RPT_DTAIL(ERROR,SJOIN3("Object",str _obj,"is not local to the current machine. Aborting local function."," "),__FILE__,__LINE__);
+	false
+};
+
 private _array = _obj getVariable SUJOIN(_varName,"RD_Array"); // grab vars
 _array params [
 	"_renew",

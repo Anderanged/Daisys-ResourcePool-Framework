@@ -8,6 +8,15 @@ params [
 	["_obj",objNull,[objNull]],
 	["_varName",QPVAR(pool),[""]]
 ];
+if (_obj == objNull) exitWith {
+	RPT_DTAIL(ERROR,SJOIN("Invalid object specified: ",str _obj,""),__FILE__,__LINE__);
+	false
+};
+// is obj local?
+if !(local _obj) exitWith {
+	RPT_DTAIL(ERROR,SJOIN3("Object",str _obj,"is not local to the current machine. Aborting local function."," "),__FILE__,__LINE__);
+	false
+};
 // is pool init'd
 if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
 	RPT_DTAIL(ERROR,SJOIN4("Pool ",_varName," not initialized on ",str _obj,""),__FILE__,__LINE__);

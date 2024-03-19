@@ -7,7 +7,15 @@ if (isDedicated) exitWith {
 params [
 	["_obj",objNull,[objNull]]
 ];
-
+if (_obj == objNull) exitWith {
+	RPT_DTAIL(ERROR,SJOIN("Invalid object specified: ",str _obj,""),__FILE__,__LINE__);
+	false
+};
+// is obj local?
+if !(local _obj) exitWith {
+	RPT_DTAIL(ERROR,SJOIN3("Object",str _obj,"is not local to the current machine. Aborting local function."," "),__FILE__,__LINE__);
+	false
+};
 private _array = [_obj,"r"] call FUNC(accessHash);
 if (_array isEqualType false) exitWith {
 	RPT_BASIC(INFO,SJOIN3("Object",str _obj,"has no resource pools on it. Aborting removal.",""));

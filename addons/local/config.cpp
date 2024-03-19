@@ -28,6 +28,7 @@ class CfgFunctions {
 			class editPoolLocal;
 			class freezePoolLocal;
 			class initPoolLocal;
+			class publishLocalPool;
 			class removeAllPoolsLocal;
 			class removePoolLocal;
 			class renewPoolLocal;

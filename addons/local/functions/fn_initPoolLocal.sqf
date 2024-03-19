@@ -29,6 +29,11 @@ params [
 	["_renew",0,[0]],// default no effect
 	["_rate",[],[[]],2]
 ];
+// is obj local?
+if !(local _obj) exitWith {
+	RPT_DTAIL(ERROR,SJOIN3("Object",str _obj,"is not local to the current machine. Aborting local function."," "),__FILE__,__LINE__);
+	false
+};
 _rate params [
 	["_amount",2,[0]],
 	["_time",1,[0]]
