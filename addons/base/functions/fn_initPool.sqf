@@ -58,7 +58,7 @@ _obj setVariable [_varName,_limit,true];
 
 switch (_renew) do {
 	case 0 : { // no effect
-		_obj setVariable [SUJOIN(_varName,"RD_Array"),[0,[]],true]; // array in format: [Renew/Decay on, type, rate (amount,time)]
+		_obj setVariable [SUJOIN(_varName,"RD_Array"),[0,_rate],true]; // array in format: [Renew/Decay on, type, rate (amount,time)]
 	}; 
 	case 1 : { // renews
 		_obj setVariable [SUJOIN(_varName,"RD_Array"),[1,_rate],true];

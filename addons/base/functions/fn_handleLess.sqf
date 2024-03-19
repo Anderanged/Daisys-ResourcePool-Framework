@@ -9,7 +9,7 @@ params["_bound","_cVal","_total","_methodO","_eParams"];
 switch (true) do { // check if overflow: priority = bound, <= bound, > bound
 	case (_cVal == _bound) : { // is equal to bound?
 		// raise event only locally to the obj
-		[E_LBOUND,_eParams,0] call FUNC(raiseEvent);
+		[E_LBOUND,_eParams,1] call FUNC(raiseEvent);
 		// return value
 		false
 	};
@@ -19,11 +19,11 @@ switch (true) do { // check if overflow: priority = bound, <= bound, > bound
 	case (_total < _bound)  : { // is less than bound?
 		// reject
 		if (_methodO) exitWith {
-			[E_REJECT,_eParams,0] call FUNC(raiseEvent);
+			[E_REJECT,_eParams,1] call FUNC(raiseEvent);
 			false
 		};
 		// clamp
-		[E_CLAMP,_eParams,0] call FUNC(raiseEvent);
+		[E_CLAMP,_eParams,1] call FUNC(raiseEvent);
 		_bound
 	};
 	default {
