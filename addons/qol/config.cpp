@@ -23,6 +23,16 @@ class CfgFunctions {
 		tag=STR(PREFIX);
 		class COMPONENT {
 			file="qol\functions";
+			class poolSetDecay;
+			class poolSetLimit;
+			class poolSetRDArray;
+			class poolSetRenew;
+			class poolStopRD;
+			class poolSetDecayLocal;
+			class poolSetLimitLocal;
+			class poolSetRDArrayLocal;
+			class poolSetRenewLocal;
+			class poolStopRDLocal;
 		};
 	};
 };
