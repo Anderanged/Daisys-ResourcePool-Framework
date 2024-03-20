@@ -25,12 +25,11 @@ class CfgFunctions {
 			class alterAllPools;
 			class alterPool;
 			class decayPool;
-			class editPool;
 			class freezePool;
 			class handleGreater;
 			class handleLess;
 			class hashInit {preInit = 1;};
-			class initPool;
+			class createPool;
 			class raiseEvent;
 			class removeAllPools;
 			class removePool;
