@@ -34,8 +34,8 @@ _newRate 	= [_nAmount,_nTime];
 
 _obj setVariable [SUJOIN(_varName,"RD_Array"),[1,_newRate]];
 
-[QPVAR(setRenew),[_obj,_varName,_newRate],1] call FUNC(raiseEvent);
+[QPVAR(setRenew),[_obj,_varName,_newRate],0] call FUNC(raiseEvent);
 
-[_obj,_varName] call FUNC(renewPool);
+[_obj,_varName] call FUNC(renewPoolLocal);
 
 true

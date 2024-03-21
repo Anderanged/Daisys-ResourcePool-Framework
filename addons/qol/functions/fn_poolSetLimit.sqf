@@ -12,10 +12,13 @@ if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
 	RPT_DTAIL(ERROR,SJOIN4("Pool ",_varName," not initialized on ",str _obj,""),__FILE__,__LINE__);
 	false
 };
+private _cVal 		= _obj getVariable _varName;
 private _limit 		= _obj getVariable SUJOIN(_varName,"limit");
 private _newLimit 	= _this param [2,_limit,[0]];
 
 _newLimit = floor (abs _newLimit);
+
+if (_newLimit > RPFLIM_MAX) then {_newLimit = RPFLIM_MAX;};
 
 _obj setVariable [SUJOIN(_varName,"limit"),_newLimit,true];
 

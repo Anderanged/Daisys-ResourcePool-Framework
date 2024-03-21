@@ -33,8 +33,8 @@ _nTime 		= ceil (abs _nTime);
 _newRate 	= [_nAmount,_nTime];
 
 _obj setVariable [SUJOIN(_varName,"RD_Array"),[2,_newRate]];
-[_obj,_varName] call FUNC(decayPool);
+[_obj,_varName] call FUNC(decayPoolLocal);
 
-[QPVAR(setDecay),[_obj,_varName,_newRate],1] call FUNC(raiseEvent);
+[QPVAR(setDecay),[_obj,_varName,_newRate],0] call FUNC(raiseEvent);
 
 true

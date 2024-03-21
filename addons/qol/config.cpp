@@ -25,12 +25,12 @@ class CfgFunctions {
 			file="qol\functions";
 			class poolSetDecay;
 			class poolSetLimit;
-			class poolSetRDArray;
+			class poolSetRate;
 			class poolSetRenew;
 			class poolStopRD;
 			class poolSetDecayLocal;
 			class poolSetLimitLocal;
-			class poolSetRDArrayLocal;
+			class poolSetRateLocal;
 			class poolSetRenewLocal;
 			class poolStopRDLocal;
 		};

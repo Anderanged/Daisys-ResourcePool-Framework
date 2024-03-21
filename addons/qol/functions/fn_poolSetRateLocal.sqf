@@ -25,16 +25,15 @@ if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
 private _rdArray	= _obj getVariable SUJOIN(_varName,"RD_Array");
 private _rd			= _rdArray # 0;
 private _rate		= _rdArray # 1;
-private _nRD 		= _this param [2,_rd,[0]];
-private _nRate		= _this param [3,_rate,[[]]];
+private _nRate		= _this param [2,_rate,[[]]];
 if (count _nRate > 2 || count _nRate < 2) then {_nRate = _rate;};
-_nRate params ["_amnt","_time"];
+_nRate params [["_amnt",0,[0]],["_time",0,[0]]];
 _amnt 	= floor (abs _amnt);
 _time 	= ceil (abs _time);
 _nRate 	= [_amnt,_time];
 
-_obj setVariable [SUJOIN(_varName,"RD_Array"),[_nRD,_nRate]];
+_obj setVariable [SUJOIN(_varName,"RD_Array"),[_rd,_nRate]];
 
-[QPVAR(setRD),[_obj,_varName,[_nRD,_nRate]],1] call FUNC(raiseEvent);
+[QPVAR(setRate),[_obj,_varName,[_rd,_nRate]],0] call FUNC(raiseEvent);
 
 true

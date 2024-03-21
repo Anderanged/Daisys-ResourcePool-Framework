@@ -26,8 +26,10 @@ private _newLimit 	= _this param [2,_limit,[0]];
 
 _newLimit = floor (abs _newLimit);
 
+if (_newLimit > RPFLIM_MAX) then {_newLimit = RPFLIM_MAX;};
+
 _obj setVariable [SUJOIN(_varName,"limit"),_newLimit];
 
-[QPVAR(setLimit),[_obj,_varName,_newLimit],1] call FUNC(raiseEvent);
+[QPVAR(setLimit),[_obj,_varName,_newLimit],0] call FUNC(raiseEvent);
 
 true
