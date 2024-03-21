@@ -26,6 +26,7 @@ true if the pool has been frozen, false if it has been unfrozen
 
 DSY_rpf_frozen
 > raised if the pool was frozen
+
 DSY_rpf_unfrozen
 > raised if the pool was unfrozen
 

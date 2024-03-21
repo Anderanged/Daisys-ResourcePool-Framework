@@ -35,6 +35,7 @@ false on failure, true on success
 
 DSY_rpf_created
 > called at successful creation
+
 DSY_rpf_destroyed
 > called at destruction or killing of resource pool object
 

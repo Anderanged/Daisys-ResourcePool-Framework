@@ -34,14 +34,19 @@ false on failure, final altered amount on success
 
 DSY_rpf_onIce
 > raised on failure of alteration
+
 DSY_rpf_altered
 > raised after object alteration
+
 DSY_rpf_clamp
 > raised when value was clamped
+
 DSY_rpf_reject
 > raised when value was rejected
+
 DSY_rpf_lBound
 > raised when value exceeds lower bound (0)
+
 DSY_rpf_uBound
 > raised when value exceeds upper bound (_limit variable)
 
