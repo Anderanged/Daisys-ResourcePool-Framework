@@ -29,6 +29,7 @@ false on error, true on successful execution
 
 DSY_rpf_alteredAll
 > called once at the end of the alterAll execution
+
 DSY_rpf_altered
 > called for every alteration
 
