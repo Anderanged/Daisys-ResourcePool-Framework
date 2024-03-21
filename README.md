@@ -27,5 +27,6 @@ Feature and optimization suggestions, as well as general bug reports and feedbac
 > Provides functions specifically to work with GUI elements. Mainly supports smooth incrementation for both key actions and script calls.
 - modules
 > Provides modules to allow usage of the framework in non-scripting (Eden Editor) environments.
-
+- namespace
+> provides a script framework to create and manage resource pools within a namespace.
 
