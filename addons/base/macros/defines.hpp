@@ -1,7 +1,7 @@
 #define PREFIX DSY_rpf
 #include "macro_defines.hpp"
 
-#define RPFLIM_MAX 16384 // 2^14
+#define RPFLIM_MAX 65536 // 2^16
 #define ADD_CLAMP [false,false]
 #define SUB_CLAMP [true,false]
 #define ADD_REJCT [false,true]
@@ -24,5 +24,6 @@
 #define E_EDITED	QPVAR(edited)
 #define E_REPEATP	QPVAR(repeatPool)
 #define E_CREATED	QPVAR(created)
+#define E_DESTRYD	QPVAR(destroyed)
 #define E_ERROR		QPVAR(error)
 #define E_LOCSERV	QPVAR(locOnServer)

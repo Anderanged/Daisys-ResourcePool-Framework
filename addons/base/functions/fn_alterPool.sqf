@@ -5,10 +5,13 @@ Author: Daisy
 Description:  	alters energy pool by the amount and method given
 
 Params:
-_obj 
-_varName
-_amount
-_methods
+_obj 		object called on			<OBJECT>
+_varName	varName of pool to alter	<STRING>
+_amount		amount to alter pool by		<NUMBER>
+_methods	methods for alteration		<ARRAY>
+	_methods in format: [_mathOperation,_overflowMethod]
+		_mathOperation		true if subtraction, false if addition. default false. 	<BOOLEAN>
+		_overflowMethod		true if reject, false if clamp.	default false.			<BOOLEAN>
 
 Returns: 
 true on failure, resulting number on success
