@@ -29,6 +29,7 @@ class CfgFunctions {
 			class handleGreater;
 			class handleLess;
 			class hashInit {preInit = 1;};
+			class modInit {preStart = 1;};
 			class createPool;
 			class raiseEvent;
 			class removeAllPools;
