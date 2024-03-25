@@ -9,6 +9,10 @@ params [
 	["_amount",0,[0]],
 	["_methods",ADD_CLAMP,[[]],2]
 ];
+_methods params [	
+	["_methodM",false,[false,""]],				// default add
+	["_methodO",false,[false]]				// default clamp
+];
 if !(local _obj) exitWith {
 	RPT_DTAIL(ERROR,SJOIN3("Object",str _obj,"is not local to the current machine. Aborting local function."," "),__FILE__,__LINE__);
 	false

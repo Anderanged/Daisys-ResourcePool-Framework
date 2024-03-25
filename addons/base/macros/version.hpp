@@ -1,8 +1,8 @@
 #define MAJOR 1
-#define MINOR 0
+#define MINOR 1
 #define PATCH 0
 
-#define VERSION MAJOR.MINOR
-#define VERSION_PATCH MAJOR.MINOR.PATCH
+#define VERSION [MAJOR,MINOR] joinString "."
+#define VERSION_PATCH [MAJOR,MINOR,PATCH] joinString "."
 
 #define REQ_VERSION 2.1

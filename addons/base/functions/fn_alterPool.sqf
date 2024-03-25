@@ -26,7 +26,7 @@ params [
 	["_methods",[false,false],[[]],2]
 ];
 _methods params [	
-	["_methodM",false,[false]],				// default add
+	["_methodM",false,[false,""]],				// default add
 	["_methodO",false,[false]]				// default clamp
 ];
 
@@ -57,6 +57,19 @@ private _cVal 		= _obj getVariable _varName;
 private _limit 		= _obj getVariable SUJOIN(_varName,"limit");
 private _eParams 	= [_obj,_varName,_amount,_methods];
 private "_result";
+
+if (_methodM isEqualType "") then {
+	switch _methodM do {
+		case "s" : {_methodM = true;};
+		case "a" : {_methodM = false;};
+		default {
+			if true exitWith {
+				// add debug error
+				RPT_DTAIL(ERROR,SJOIN("Invalid math operation given:",_methodM," "),__FILE__,__LINE__);
+			};
+		};
+	};
+};
 
 // if subtraction
 if (_methodM) then {

@@ -4,6 +4,10 @@ params [
 	["_amount",0,[0]],
 	["_methods",ADD_CLAMP,[[]],2]
 ];
+_methods params [	
+	["_methodM",false,[false,""]],				// default add
+	["_methodO",false,[false]]				// default clamp
+];
 // grab from hash
 private _array = [_obj,"r"] call FUNC(accessHash);
 // abort if nothing in hash
