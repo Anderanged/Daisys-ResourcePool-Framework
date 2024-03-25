@@ -1,21 +1,44 @@
 #include "defines.hpp"
 /*
-Author: Daisy
+Function: DSY_rpf_fnc_createPool
 
-Description:  	initializes resource pool from options given.
+Description:
 
-Params:
-_obj
-_varName
-_limit
-_rd
-_rate
-[false,false]
+	Creates a resource pool with the given parameters.
+
+Parameters:
+
+	_obj -		object to create the resource pool on [Object]
+	_varName -	name of the pool you want to create [String]
+	_limit -	maximum amount of resource allowed in this pool
+	_rd	-		renew/decay ID number [Number] Can be 0, 1 or 2.
+		- 0 = Neither renew nor decay
+		- 1 = Renew
+		- 2 = Decay
+	_rate -		rate of renew/decay [Array]
+		- Array is in format: [_amount,_time]
+			- Index 0: amount of resource to add/subtract each time [Number]
+			- Index 1: interval (seconds) between additions/subtractions [Number]
 
 Returns: 
-nothing
 
-Public: yes
+false on failure, true on success
+
+Examples:
+    --- Code
+	// creates resource pool "pool" on object box1 with limit of 500
+	// will decay (subtract) 20 resources every 90 seconds
+    [box1, "pool", 500, 2, [20,90]] call DSY_rpf_fnc_createPool;
+    ---
+
+CBA Events:
+	- DSY_rpf_created
+	> called at successful creation
+
+	- DSY_rpf_destroyed
+	> called at destruction or killing of resource pool object
+
+Author: Daisy
 */
 params [
 	["_obj",objNull,[objNull]],

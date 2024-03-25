@@ -1,22 +1,38 @@
 #include "defines.hpp"
 /*
-Author: Daisy
+Function: DSY_rpf_fnc_alterPool
 
-Description:  	alters energy pool by the amount and method given
+Description:
 
-Params:
-_obj 		object called on			<OBJECT>
-_varName	varName of pool to alter	<STRING>
-_amount		amount to alter pool by		<NUMBER>
-_methods	methods for alteration		<ARRAY>
-	_methods in format: [_mathOperation,_overflowMethod]
-		_mathOperation		true if subtraction, false if addition. default false. 	<BOOLEAN>
-		_overflowMethod		true if reject, false if clamp.	default false.			<BOOLEAN>
+	Alters _varName pool on object _obj by _amount with _methods
+
+Parameters:
+
+	_obj - The object you want to alter all the pools of [Object]
+	_varName - The name of the pool you want to alter [String]
+	_amount - The amount which you want to alter each pool by [Number]
+	_methods - The methods of alteration [Array of methods]
+		- Array is in format: [_mathOperation,_overflowMethod]
+			- Index 0: True or `"s"` if subtraction, false or `"a"` if addition (default false) [Boolean or String]
+			- Index 1: True or `"r"` if reject an alteration over the limit, false or `"c"` if clamp the alteration to the limit (default false) [Boolean or String]
 
 Returns: 
-true on failure, resulting number on success
 
-Public: yes
+true on failure, final altered amount on success
+
+Examples:
+    --- Code
+	// subtracts 20 from "pool" on box1 and clamps if it exceeds the limits. 
+	// returns (current value of pool - 20) if not clamped, returns lower bound (always 0) if clamped
+	[box1,"pool",20,[true,false]] call DSY_rpf_fnc_alterPool;
+    ---
+	--- Code
+	// adds 45 to "pool" on bag12 and rejects it if it exceeds the limits. 
+	// returns (current value of pool + 45) if not rejected, false if rejected
+    [bag12,"pool",45,["a","r"]] call DSY_rpf_fnc_alterPool;
+	---
+
+Author: Daisy
 */
 
 params [
@@ -25,13 +41,6 @@ params [
 	["_amount",0,[0]],				// default [10,1]
 	["_methods",[false,false],[[]],2]
 ];
-_methods params [	
-	["_methodM",false,[false,""]],				// default add
-	["_methodO",false,[false]]				// default clamp
-];
-
-_amount = floor (abs _amount);
-
 // check obj
 if (_obj == objNull) exitWith {
 	RPT_DTAIL(ERROR,SJOIN("Invalid object specified: ",str _obj,""),__FILE__,__LINE__);
@@ -52,11 +61,10 @@ if (_ice) exitWith { // if so:
 	false
 };
 
-// grab and predef vars
-private _cVal 		= _obj getVariable _varName;
-private _limit 		= _obj getVariable SUJOIN(_varName,"limit");
-private _eParams 	= [_obj,_varName,_amount,_methods];
-private "_result";
+_methods params [	
+	["_methodM",false,[false,""]],				// default add
+	["_methodO",false,[false,""]]				// default clamp
+];
 
 if (_methodM isEqualType "") then {
 	switch _methodM do {
@@ -70,6 +78,26 @@ if (_methodM isEqualType "") then {
 		};
 	};
 };
+if (_methodO isEqualType "") then {
+	switch _methodO do {
+		case "r" : {_methodO = true;};
+		case "c" : {_methodO = false;};
+		default {
+			if true exitWith {
+				// add debug error
+				RPT_DTAIL(ERROR,SJOIN("Invalid overflow method given:",_methodO," "),__FILE__,__LINE__);
+			};
+		};
+	};
+};
+
+_amount = floor (abs _amount);
+
+// grab and predef vars
+private _cVal 		= _obj getVariable _varName;
+private _limit 		= _obj getVariable SUJOIN(_varName,"limit");
+private _eParams 	= [_obj,_varName,_amount,_methods];
+private "_result";
 
 // if subtraction
 if (_methodM) then {
@@ -79,6 +107,7 @@ if (_methodM) then {
 	// else addition
 	_result = [_limit,_cVal,_cVal + _amount,_methodO,_eParams] call FUNC(handleGreater);
 };
+
 // if no alter, return false
 if (_result isEqualType false) exitWith {false};
 _obj setVariable [_varName,_result,true];

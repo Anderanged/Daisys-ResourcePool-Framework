@@ -1,6 +1,32 @@
 #include "defines.hpp"
 /*
-sets RD_Array element 0 to 0, stopping renew/delay loop
+Function: DSY_rpf_fnc_poolStopRD
+
+Description:
+
+	Halts currently looping renew/decay function on a given pool by setting the renew/decay ID number to 0.
+
+Parameters:
+
+	_obj -		object that the pool you want to stop renew/decay looping is on [Object]
+	_varName -	name of the pool you want to stop renew/decay looping for [String]
+
+Returns: 
+
+false on failure, true on success
+
+Examples:
+    --- Code
+	// sets the renew/decay ID number to 0.
+    // this stops renew/decay loops, if either are present.
+    [box1,"pool"] call DSY_rpf_fnc_poolStopRD;
+	---
+
+CBA Events:
+	- DSY_rpf_poolStopRD
+	> raised upon successful execution of poolStopRD
+
+Author: Daisy
 */
 private _obj 		= _this param [0,objNull,[objNull]];
 if (_obj == objNull) exitWith {

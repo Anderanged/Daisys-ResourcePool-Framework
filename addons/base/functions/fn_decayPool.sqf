@@ -1,7 +1,36 @@
 #include "defines.hpp"
 /*
-take in obj, varname, and pass code to execute using CBA_fnc_waitAndExecute.
-recusively executes until Renew/Decay status changes.
+Function: DSY_rpf_fnc_decayPool
+
+	For a more convenient function, see <poolSetDecay: https://www.naturaldocs.org/getting_started/documenting_your_code/#the_basics>.
+	
+Description:
+
+	Subtracts from a pool given the pool's internally set rate. Loops until Renew/Decay ID number changes.
+
+Parameters:
+
+	_obj -		object that the pool you want to begin decaying is on [Object]
+	_varName -	name of the pool you want to decay [String]
+	
+Returns: 
+
+none
+
+Examples:
+    --- Code
+	// will decay by internally given rate
+    [box1, "pool"] call DSY_rpf_fnc_decayPool;
+    ---
+
+CBA Events:
+	- DSY_rpf_altered
+	> raised when pool is altered
+
+	- DSY_rpf_decayed
+	> raised upon successful execution of delayPool
+
+Author: Daisy
 */
 
 params [

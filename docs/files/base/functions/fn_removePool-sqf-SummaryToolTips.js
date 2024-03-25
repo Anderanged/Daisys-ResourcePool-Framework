@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:base/functions/fn_removePool.sqf",{12:"<div class=\"NDToolTip TFunction LSQF\"><div class=\"TTSummary\">Removes the pool with the given name from the object.</div></div>"});

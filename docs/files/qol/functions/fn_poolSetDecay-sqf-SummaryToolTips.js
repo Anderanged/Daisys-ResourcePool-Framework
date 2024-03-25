@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:qol/functions/fn_poolSetDecay.sqf",{22:"<div class=\"NDToolTip TFunction LSQF\"><div class=\"TTSummary\">Sets the pool\'s internal renew/decay status and calls &lt;decayPool: &gt; with a given rate.</div></div>"});

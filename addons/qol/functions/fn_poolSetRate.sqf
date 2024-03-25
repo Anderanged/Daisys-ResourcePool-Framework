@@ -1,6 +1,34 @@
 #include "defines.hpp"
 /*
-sets RD_Array to player given values without calling any functions
+Function: DSY_rpf_fnc_poolSetRate
+
+Description:
+
+	Changes the internally stored rate values without calling any additional functions.
+
+	Able to be used for altering the rate of renew/decay while the pool is renewing/decaying.
+
+Parameters:
+
+	_obj -		object that the pool whose rate you want to change is on [Object]
+	_varName -	name of the pool whose rate you want to change [String]
+	_newLimit - new maximum amount of resource allowed in this pool [Number]
+
+Returns: 
+
+false on failure, true on success
+
+Examples:
+    --- Code
+	// sets rate to 25 resources every 4 seconds.
+    [box1,"pool",[25,4]] call DSY_rpf_fnc_poolSetRate;
+	---
+
+CBA Events:
+	- DSY_rpf_setRate
+	> raised upon successful execution of poolSetRate
+
+Author: Daisy
 */
 private _obj 		= _this param [0,objNull,[objNull]];
 if (_obj == objNull) exitWith {

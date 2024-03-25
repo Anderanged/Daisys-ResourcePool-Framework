@@ -1,6 +1,40 @@
 #include "defines.hpp"
 /*
-given an obj, varname, and limit, updates varname pool on obj with given limit
+Function: DSY_rpf_fnc_poolSetLimit
+
+Description:
+
+	Sets the pool's internal limit variable to a new given value.
+
+	All limits will clamp to 2^16 (65,536). If you need more you should reconsider your situation.
+
+	Additionally, if the new limit is lower than the current value stored in the pool, it can be freely subtracted from. *However: If you use both the add & clamp methods, it will clamp to the new limit.*
+
+Parameters:
+
+	_obj -		object that the pool whose limit you want to change is on [Object]
+	_varName -	name of the pool whose limit you want to change [String]
+	_newLimit - new maximum amount of resource allowed in this pool [Number]
+
+Returns: 
+
+false on error, true on success
+
+Examples:
+    --- Code
+	// whatever the limit was before, it sets it to 5000
+    [box1,"pool",5000] call DSY_rpf_fnc_poolSetLimit;
+    ---
+	--- Code
+	// clamps to 65536
+    [box1,"pool",70000] call DSY_rpf_fnc_poolSetLimit;
+	---
+
+CBA Events:
+	- DSY_rpf_setLimit
+	> raised on successful execution of poolSetLimit
+
+Author: Daisy
 */
 private _obj 		= _this param [0,objNull,[objNull]];
 if (_obj == objNull) exitWith {

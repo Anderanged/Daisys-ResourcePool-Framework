@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:base/functions/fn_alterAllPools.sqf",{2:"<div class=\"NDToolTip TFunction LSQF\"><div class=\"TTSummary\">Alters all resource pools on an object by the given amount and methods.</div></div>"});

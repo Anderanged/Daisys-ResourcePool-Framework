@@ -1,4 +1,32 @@
 #include "defines.hpp"
+/*
+Function: DSY_rpf_fnc_removePool
+
+Description:
+
+	Removes the pool with the given name from the object.
+
+Parameters:
+
+	_obj -		object that you want to remove the pool from [Object]
+	_varName - The name of the pool you want to remove [String]
+
+Returns: 
+
+false on failure, true on success
+
+Examples:
+    --- Code
+	// removes "pool" resource pool from box1
+    [box1,"pool"] call DSY_rpf_fnc_removePool;
+    ---
+
+CBA Events:
+	- DSY_rpf_removed
+	> raised upon removal of a pool
+
+Author: Daisy
+*/
 params [
 	["_obj",objNull,[objNull]],
 	["_varName",QPVAR(pool),[""]]

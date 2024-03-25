@@ -1,4 +1,39 @@
 #include "defines.hpp"
+/*
+Function: DSY_rpf_fnc_freezePool
+
+Description:
+
+	Halts all alterations (addition/subtraction) on a given pool.
+
+	*Does not interrupt the delay/renew loop*, it only halts the alteration call they make.
+
+Parameters:
+
+	_obj -		object that the pool you want to freeze is on [Object]
+	_varName -	name of the pool you want to freeze [String]
+	
+Returns: 
+
+true if the pool has been frozen, false if it has been unfrozen
+
+Examples:
+    --- Code
+	// if not already frozen, returns true
+    [box1,"pool"] call DSY_rpf_fnc_freezePool;
+    // calling again after returns false
+    [box1,"pool"] call DSY_rpf_fnc_freezePool;
+    ---
+
+CBA Events:
+	- DSY_rpf_frozen
+	> raised if the pool was frozen
+
+	- DSY_rpf_unfrozen
+	> raised if the pool was unfrozen
+
+Author: Daisy
+*/
 params [
 	["_obj",objNull,[objNull]],
 	["_varName",QPVAR(pool),[""]]

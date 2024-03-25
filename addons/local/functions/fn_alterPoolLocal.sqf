@@ -26,13 +26,6 @@ params [
 	["_amount",0,[0]],				// default [10,1]
 	["_methods",[false,false],[[]],2]
 ];
-_methods params [	
-	["_methodM",false,[false,""]],				// default add
-	["_methodO",false,[false]]				// default clamp
-];
-
-_amount = floor (abs _amount);
-
 // check obj
 if (_obj == objNull) exitWith {
 	RPT_DTAIL(ERROR,SJOIN("Invalid object specified: ",str _obj,""),__FILE__,__LINE__);
@@ -59,12 +52,10 @@ if (_ice) exitWith { // if so:
 	false
 };
 
-// grab and predef vars
-private _cVal 		= _obj getVariable _varName;
-private _limit 		= _obj getVariable SUJOIN(_varName,"limit");
-private _eParams 	= [_obj,_varName,_amount,_methods];
-private "_result";
-
+_methods params [	
+	["_methodM",false,[false,""]],				// default add
+	["_methodO",false,[false,""]]				// default clamp
+];
 if (_methodM isEqualType "") then {
 	switch _methodM do {
 		case "s" : {_methodM = true;};
@@ -77,6 +68,26 @@ if (_methodM isEqualType "") then {
 		};
 	};
 };
+if (_methodO isEqualType "") then {
+	switch _methodO do {
+		case "r" : {_methodO = true;};
+		case "c" : {_methodO = false;};
+		default {
+			if true exitWith {
+				// add debug error
+				RPT_DTAIL(ERROR,SJOIN("Invalid overflow method given:",_methodO," "),__FILE__,__LINE__);
+			};
+		};
+	};
+};
+
+_amount = floor (abs _amount);
+
+// grab and predef vars
+private _cVal 		= _obj getVariable _varName;
+private _limit 		= _obj getVariable SUJOIN(_varName,"limit");
+private _eParams 	= [_obj,_varName,_amount,_methods];
+private "_result";
 
 // if subtraction
 if (_methodM) then {
@@ -86,6 +97,7 @@ if (_methodM) then {
 	// else addition
 	_result = [_limit,_cVal,_cVal + _amount,_methodO,_eParams] call FUNC(handleGreaterLocal);
 };
+
 // if no alter, return false
 if (_result isEqualType false) exitWith {false};
 _obj setVariable [_varName,_result];

@@ -1,9 +1,37 @@
 #include "defines.hpp"
 /*
-take in obj, varname, and pass code to execute using CBA_fnc_waitAndExecute.
-recusively executes until Renew/Decay status changes.
-*/
+Function: DSY_rpf_fnc_renewPool
 
+	For a more convenient function, see <poolSetRenew: https://www.naturaldocs.org/getting_started/documenting_your_code/#the_basics>.
+	
+Description:
+
+	Adds to a pool given the pool's internally set rate. Loops until the pool's internally set renew status changes.
+
+Parameters:
+
+	_obj -		object that the pool you want to begin renewing is on [Object]
+	_varName -	name of the pool you want to renew [String]
+	
+Returns: 
+
+none
+
+Examples:
+    --- Code
+	// will renew by internally given rate
+    [box1, "pool"] call DSY_rpf_fnc_renewPool;
+    ---
+
+CBA Events:
+	- DSY_rpf_altered
+	> raised when pool is altered
+
+	- DSY_rpf_renewed
+	> raised upon successful execution of renewPool
+
+Author: Daisy
+*/
 params [
 	["_obj",objNull,[objNull]],
 	["_varName",QPVAR(pool),[""]]

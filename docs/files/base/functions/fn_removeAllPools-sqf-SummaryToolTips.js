@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:base/functions/fn_removeAllPools.sqf",{14:"<div class=\"NDToolTip TFunction LSQF\"><div class=\"TTSummary\">Removes all pools from the given object.</div></div>"});
