@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:fn_createPool.sqf","fn_createPool.sqf");NDSummary.OnSummaryLoaded("File:fn_createPool.sqf",[["SQF","SQF"]],[["Functions","Function"],["Groups","Group"]],[[21,0,1,"Functions","Functions"],[22,0,0,"DSY_rpf_fnc_createPool","DSY_rpf_fnc_createPool"]]);

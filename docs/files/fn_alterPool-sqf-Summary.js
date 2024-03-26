@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:fn_alterPool.sqf","fn_alterPool.sqf");NDSummary.OnSummaryLoaded("File:fn_alterPool.sqf",[["SQF","SQF"]],[["Functions","Function"],["Groups","Group"]],[[23,0,1,"Functions","Functions"],[24,0,0,"DSY_rpf_fnc_alterPool","DSY_rpf_fnc_alterPool"]]);
