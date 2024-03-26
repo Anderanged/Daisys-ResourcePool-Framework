@@ -10,10 +10,6 @@
 
 <script type="text/javascript">var q = window.location.search;if (q.startsWith("?Theme=")){var t = q.slice(7);var e = t.indexOf(";");if (e != -1){  t = t.slice(0, e);  }document.documentElement.classList.add(t + "Theme")}</script>
 
-<a name="Functions"></a><a name="Topic17"></a><div class="CTopic TGroup LSQF first">
- <div class="CTitle">Functions</div>
-</div>
-
 <a name="DSY_rpf_fnc_freezePool"></a><a name="Topic18"></a><div class="CTopic TFunction LSQF last">
  <div class="CTitle">DSY_rpf_fnc_freezePool</div>
  <div class="CBody"><div class="CHeading">Description</div><p>Halts all alterations (addition/subtraction) on a given pool.</p><p><b>Does not interrupt the delay/renew loop</b>, it only halts the alteration call they make.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">_obj</td><td class="CDLDefinition"><p>object that the pool you want to freeze is on [Object]</p></td></tr><tr><td class="CDLEntry">_varName</td><td class="CDLDefinition"><p>name of the pool you want to freeze [String]</p></td></tr></table><div class="CHeading">Returns</div><p>true if the pool has been frozen, false if it has been unfrozen</p><div class="CHeading">Examples</div><pre class="CCode"><span class="SHComment">// if not already frozen, returns true</span><br />[box1,<span class="SHString">&quot;pool&quot;</span>] call DSY_rpf_fnc_freezePool;<br /><span class="SHComment">// calling again after returns false</span><br />[box1,<span class="SHString">&quot;pool&quot;</span>] call DSY_rpf_fnc_freezePool;</pre><div class="CHeading">CBA Events</div><ul><li><p>DSY_rpf_frozen</p></li></ul><pre class="CText">raised if the pool was frozen</pre><ul><li><p>DSY_rpf_unfrozen</p></li></ul><pre class="CText">raised if the pool was unfrozen</pre><p>Author: Daisy</p></div>
