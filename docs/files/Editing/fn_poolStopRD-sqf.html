@@ -14,9 +14,9 @@
  <div class="CTitle">Functions</div>
 </div>
 
-<a name="DSY_rpf_fnc_poolStopRD"></a><a name="Topic18"></a><div class="CTopic TFunction LSQF last">
- <div class="CTitle">DSY_rpf_fnc_poolStopRD</div>
- <div class="CBody"><div class="CHeading">Description</div><p>Halts currently looping renew/decay function on a given pool by setting the renew/decay ID number to 0.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">_obj</td><td class="CDLDefinition"><p>object that the pool you want to stop renew/decay looping is on [Object]</p></td></tr><tr><td class="CDLEntry">_varName</td><td class="CDLDefinition"><p>name of the pool you want to stop renew/decay looping for [String]</p></td></tr></table><div class="CHeading">Returns</div><p>false on failure, true on success</p><div class="CHeading">Examples</div><pre class="CCode"><span class="SHComment">// sets the renew/decay ID number to 0.</span><br /><span class="SHComment">// this stops renew/decay loops, if either are present.</span><br />[box1,<span class="SHString">&quot;pool&quot;</span>] call DSY_rpf_fnc_poolStopRD;</pre><div class="CHeading">CBA Events</div><ul><li><p>DSY_rpf_poolStopRD</p></li></ul><pre class="CText">raised upon successful execution of poolStopRD</pre><p>Author: Daisy</p></div>
+<a name="RPF_fnc_poolStopRD"></a><a name="Topic12"></a><div class="CTopic TFunction LSQF last">
+ <div class="CTitle">RPF_fnc_poolStopRD</div>
+ <div class="CBody"><div class="CHeading">Description</div><p>Halts currently looping renew/decay function on a given pool by setting the renew/decay ID number to 0.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">_obj</td><td class="CDLDefinition"><p>object that the pool you want to stop renew/decay looping is on [Object]</p></td></tr><tr><td class="CDLEntry">_varName</td><td class="CDLDefinition"><p>name of the pool you want to stop renew/decay looping for [String]</p></td></tr></table><div class="CHeading">Returns</div><p>false on failure, true on success</p><div class="CHeading">Examples</div><pre class="CCode"><span class="SHComment">// sets the renew/decay ID number to 0.</span><br /><span class="SHComment">// this stops renew/decay loops, if either are present.</span><br />[box1,<span class="SHString">&quot;pool&quot;</span>] call RPF_fnc_poolStopRD;</pre><div class="CHeading">CBA Events</div><ul><li><p>RPF_poolStopRD</p></li></ul><pre class="CText">raised upon successful execution of poolStopRD</pre><p>Author: Daisy</p></div>
 </div>
 
 </body></html>

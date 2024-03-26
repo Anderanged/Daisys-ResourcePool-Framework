@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:Altering/fn_freezePool.sqf",{8:"<div class=\"NDToolTip TFunction LSQF\"><div class=\"TTSummary\">Halts all alterations (addition/subtraction) on a given pool.</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:Altering/fn_freezePool.sqf",{27:"<div class=\"NDToolTip TFunction LSQF\"><div class=\"TTSummary\">Halts all alterations (addition/subtraction) on a given pool.</div></div>"});

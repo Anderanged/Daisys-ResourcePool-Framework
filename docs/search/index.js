@@ -1,1 +1,1 @@
-﻿NDSearch.OnPrefixIndexLoaded(["dsy"]);
+﻿NDSearch.OnPrefixIndexLoaded(["rpf"]);
