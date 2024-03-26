@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:fn_removePool.sqf","fn_removePool.sqf");NDSummary.OnSummaryLoaded("File:fn_removePool.sqf",[["SQF","SQF"]],[["Functions","Function"],["Groups","Group"]],[[1,0,1,"Functions","Functions"],[2,0,0,"DSY_rpf_fnc_removePool","DSY_rpf_fnc_removePool"]]);

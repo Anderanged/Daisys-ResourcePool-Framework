@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:fn_poolSetRate.sqf","fn_poolSetRate.sqf");NDSummary.OnSummaryLoaded("File:fn_poolSetRate.sqf",[["SQF","SQF"]],[["Functions","Function"],["Groups","Group"]],[[9,0,1,"Functions","Functions"],[10,0,0,"DSY_rpf_fnc_poolSetRate","DSY_rpf_fnc_poolSetRate"]]);

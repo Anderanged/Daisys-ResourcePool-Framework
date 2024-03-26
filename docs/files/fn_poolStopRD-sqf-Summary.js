@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:fn_poolStopRD.sqf","fn_poolStopRD.sqf");NDSummary.OnSummaryLoaded("File:fn_poolStopRD.sqf",[["SQF","SQF"]],[["Functions","Function"],["Groups","Group"]],[[3,0,1,"Functions","Functions"],[4,0,0,"DSY_rpf_fnc_poolStopRD","DSY_rpf_fnc_poolStopRD"]]);

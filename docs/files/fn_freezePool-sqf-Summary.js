@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:fn_freezePool.sqf","fn_freezePool.sqf");NDSummary.OnSummaryLoaded("File:fn_freezePool.sqf",[["SQF","SQF"]],[["Functions","Function"],["Groups","Group"]],[[17,0,1,"Functions","Functions"],[18,0,0,"DSY_rpf_fnc_freezePool","DSY_rpf_fnc_freezePool"]]);
