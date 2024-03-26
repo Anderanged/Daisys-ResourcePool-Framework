@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:qol/functions/fn_poolSetDecay.sqf","fn_poolSetDecay.sqf");NDSummary.OnSummaryLoaded("File:qol/functions/fn_poolSetDecay.sqf",[["SQF","SQF"]],[["Functions","Function"],["Groups","Group"]],[[21,0,1,"Functions","Functions"],[22,0,0,"DSY_rpf_fnc_poolSetDecay","DSY_rpf_fnc_poolSetDecay"]]);

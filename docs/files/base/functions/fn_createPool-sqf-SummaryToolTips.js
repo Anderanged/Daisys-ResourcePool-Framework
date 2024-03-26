@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:base/functions/fn_createPool.sqf",{19:"<div class=\"NDToolTip TFunction LSQF\"><div class=\"TTSummary\">Creates a resource pool with the given parameters.</div></div>"});

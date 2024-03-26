@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:base/functions/fn_renewPool.sqf",{8:"<div class=\"NDToolTip TFunction LSQF\"><div class=\"TTSummary\">For a more convenient function, see poolSetRenew.</div></div>"});
