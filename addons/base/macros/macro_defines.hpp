@@ -30,13 +30,13 @@ S will always stand for STRING. These macros only take strings as arguments.
 
 // concatenates fnc_ at the end of prefix
 #define PFNC UJOIN(PREFIX,fnc) // DSY_rpf_fnc
-#define FUNC(NAME) UJOIN(DSY_rpf_fnc,NAME) //DSY_rpf_fnc_NAME
+#define FUNC(NAME) UJOIN(RPF_fnc,NAME) //DSY_rpf_fnc_NAME
 
 // debug specific manipulation
 #define ERROR "[RPF:ERROR]"
 #define INFO "[RPF:INFO]"
 #define LOG(data) diag_log data
-#define LOGSEP " }{ "
+#define LOGSEP " | "
 
 // debug macros
 #define RPT_BASIC(label,info) LOG(SJOIN(label,info,LOGSEP))

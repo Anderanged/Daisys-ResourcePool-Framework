@@ -1,4 +1,4 @@
-#define PREFIX DSY_rpf
+#define PREFIX RPF
 #include "macro_defines.hpp"
 
 #define RPFLIM_MAX 65536 // 2^16
