@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:fn_alterPool.sqf",{24:"<div class=\"NDToolTip TFunction LSQF\"><div class=\"TTSummary\">Alters _varName pool on object _obj by _amount with _methods</div></div>"});

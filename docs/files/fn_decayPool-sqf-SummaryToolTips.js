@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:fn_decayPool.sqf",{20:"<div class=\"NDToolTip TFunction LSQF\"><div class=\"TTSummary\">For a more convenient function, see poolSetDecay.</div></div>"});

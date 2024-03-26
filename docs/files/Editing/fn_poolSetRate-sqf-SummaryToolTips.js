@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:Editing/fn_poolSetRate.sqf",{20:"<div class=\"NDToolTip TFunction LSQF\"><div class=\"TTSummary\">Changes the internally stored rate values without calling any additional functions.</div></div>"});
