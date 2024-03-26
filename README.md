@@ -13,7 +13,9 @@ Feature and optimization suggestions, as well as general bug reports and feedbac
 ## Links
 
 [Wiki](https://github.com/Anderanged/Daisys-ResourcePool-Framework/wiki)
+
 [Function Library](https://anderanged.github.io/Daisys-ResourcePool-Framework/)
+
 [Bug Reporting & Contributing](https://github.com/Anderanged/Daisys-ResourcePool-Framework/wiki/Bug-Reporting-and-Community-Contributions)
 
 ## Roadmap
