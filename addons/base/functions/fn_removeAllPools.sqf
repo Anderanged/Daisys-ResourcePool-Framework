@@ -1,6 +1,6 @@
 #include "defines.hpp"
 /*
-Function: DSY_rpf_fnc_removeAllPools
+Function: RPF_fnc_removeAllPools
 
 Description:
 
@@ -17,11 +17,11 @@ false on failure, true on success
 Examples:
     --- Code
 	// removes all pools from object box1
-    box1 call DSY_rpf_fnc_removeAllPools;
+    box1 call RPF_fnc_removeAllPools;
     ---
 
 CBA Events:
-	- DSY_rpf_removedAll
+	- RPF_removedAll
 	> raised upon removal of all pools from an object
 
 Author: Daisy

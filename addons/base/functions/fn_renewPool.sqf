@@ -1,6 +1,6 @@
 #include "defines.hpp"
 /*
-Function: DSY_rpf_fnc_renewPool
+Function: RPF_fnc_renewPool
 
 	For a more convenient function, see <poolSetRenew: https://www.naturaldocs.org/getting_started/documenting_your_code/#the_basics>.
 	
@@ -20,14 +20,14 @@ none
 Examples:
     --- Code
 	// will renew by internally given rate
-    [box1, "pool"] call DSY_rpf_fnc_renewPool;
+    [box1, "pool"] call RPF_fnc_renewPool;
     ---
 
 CBA Events:
-	- DSY_rpf_altered
+	- RPF_altered
 	> raised when pool is altered
 
-	- DSY_rpf_renewed
+	- RPF_renewed
 	> raised upon successful execution of renewPool
 
 Author: Daisy

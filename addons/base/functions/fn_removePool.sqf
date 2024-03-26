@@ -1,6 +1,6 @@
 #include "defines.hpp"
 /*
-Function: DSY_rpf_fnc_removePool
+Function: RPF_fnc_removePool
 
 Description:
 
@@ -18,11 +18,11 @@ false on failure, true on success
 Examples:
     --- Code
 	// removes "pool" resource pool from box1
-    [box1,"pool"] call DSY_rpf_fnc_removePool;
+    [box1,"pool"] call RPF_fnc_removePool;
     ---
 
 CBA Events:
-	- DSY_rpf_removed
+	- RPF_removed
 	> raised upon removal of a pool
 
 Author: Daisy

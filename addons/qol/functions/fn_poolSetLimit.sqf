@@ -1,6 +1,6 @@
 #include "defines.hpp"
 /*
-Function: DSY_rpf_fnc_poolSetLimit
+Function: RPF_fnc_poolSetLimit
 
 Description:
 
@@ -23,15 +23,15 @@ false on error, true on success
 Examples:
     --- Code
 	// whatever the limit was before, it sets it to 5000
-    [box1,"pool",5000] call DSY_rpf_fnc_poolSetLimit;
+    [box1,"pool",5000] call RPF_fnc_poolSetLimit;
     ---
 	--- Code
 	// clamps to 65536
-    [box1,"pool",70000] call DSY_rpf_fnc_poolSetLimit;
+    [box1,"pool",70000] call RPF_fnc_poolSetLimit;
 	---
 
 CBA Events:
-	- DSY_rpf_setLimit
+	- RPF_setLimit
 	> raised on successful execution of poolSetLimit
 
 Author: Daisy

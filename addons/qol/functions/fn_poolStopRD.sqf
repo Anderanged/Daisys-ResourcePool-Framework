@@ -1,6 +1,6 @@
 #include "defines.hpp"
 /*
-Function: DSY_rpf_fnc_poolStopRD
+Function: RPF_fnc_poolStopRD
 
 Description:
 
@@ -19,11 +19,11 @@ Examples:
     --- Code
 	// sets the renew/decay ID number to 0.
     // this stops renew/decay loops, if either are present.
-    [box1,"pool"] call DSY_rpf_fnc_poolStopRD;
+    [box1,"pool"] call RPF_fnc_poolStopRD;
 	---
 
 CBA Events:
-	- DSY_rpf_poolStopRD
+	- RPF_poolStopRD
 	> raised upon successful execution of poolStopRD
 
 Author: Daisy

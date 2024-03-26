@@ -1,6 +1,6 @@
 #include "defines.hpp"
 /*
-Function: DSY_rpf_fnc_decayPool
+Function: RPF_fnc_decayPool
 
 	For a more convenient function, see <poolSetDecay: https://www.naturaldocs.org/getting_started/documenting_your_code/#the_basics>.
 	
@@ -20,14 +20,14 @@ none
 Examples:
     --- Code
 	// will decay by internally given rate
-    [box1, "pool"] call DSY_rpf_fnc_decayPool;
+    [box1, "pool"] call RPF_fnc_decayPool;
     ---
 
 CBA Events:
-	- DSY_rpf_altered
+	- RPF_altered
 	> raised when pool is altered
 
-	- DSY_rpf_decayed
+	- RPF_decayed
 	> raised upon successful execution of delayPool
 
 Author: Daisy

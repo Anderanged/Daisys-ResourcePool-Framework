@@ -1,6 +1,6 @@
 #include "defines.hpp"
 /*
-Function: DSY_rpf_fnc_alterPool
+Function: RPF_fnc_alterPool
 
 Description:
 

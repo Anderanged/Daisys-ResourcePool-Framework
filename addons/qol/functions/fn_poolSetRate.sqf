@@ -1,6 +1,6 @@
 #include "defines.hpp"
 /*
-Function: DSY_rpf_fnc_poolSetRate
+Function: RPF_fnc_poolSetRate
 
 Description:
 
@@ -21,11 +21,11 @@ false on failure, true on success
 Examples:
     --- Code
 	// sets rate to 25 resources every 4 seconds.
-    [box1,"pool",[25,4]] call DSY_rpf_fnc_poolSetRate;
+    [box1,"pool",[25,4]] call RPF_fnc_poolSetRate;
 	---
 
 CBA Events:
-	- DSY_rpf_setRate
+	- RPF_setRate
 	> raised upon successful execution of poolSetRate
 
 Author: Daisy

@@ -1,6 +1,6 @@
 #include "defines.hpp"
 /*
-Function: DSY_rpf_fnc_poolSetDecay
+Function: RPF_fnc_poolSetDecay
 
 Description:
 
@@ -22,15 +22,15 @@ false on error, true on success
 Examples:
     --- Code
 	// adds 50 every 2 seconds
-    [box1,"pool",[50,2]] call DSY_rpf_fnc_poolSetRenew;
+    [box1,"pool",[50,2]] call RPF_fnc_poolSetRenew;
     ---
 	--- Code
 	// uses the internal array
-    [box1,"pool",[]] call DSY_rpf_fnc_poolSetRenew;
+    [box1,"pool",[]] call RPF_fnc_poolSetRenew;
 	---
 
 CBA Events:
-	- DSY_rpf_setRenew
+	- RPF_setRenew
 	> raised on successful execution of poolSetRenew
 
 Author: Daisy

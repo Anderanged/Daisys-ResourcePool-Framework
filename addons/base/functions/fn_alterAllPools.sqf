@@ -1,6 +1,6 @@
 #include "defines.hpp"
 /*
-Function: DSY_rpf_fnc_alterAllPools
+Function: RPF_fnc_alterAllPools
 
 Description:
 
@@ -23,18 +23,18 @@ Examples:
 	--- Code
 	// assuming box1 has pools: "pool", "pool1", and "pool2",
     // this code subtracts 30 from "pool", "pool1", and "pool2", and clamps it to 0 if the alteration would exceed it
-    [box1,30,[true,false]] call DSY_rpf_fnc_alterAllPools;
+    [box1,30,[true,false]] call RPF_fnc_alterAllPools;
     ---
 	--- Code 
 	// the code below does the same as the above, but uses human-readable arguments
-    [box1,30,["s","c"]] call DSY_rpf_fnc_alterAllPools;
+    [box1,30,["s","c"]] call RPF_fnc_alterAllPools;
 	---
 
 CBA Events:
-	- DSY_rpf_alteredAll
+	- RPF_alteredAll
 	> called once at the end of the alterAll execution
 
-	- DSY_rpf_altered
+	- RPF_altered
 	> called for every alteration
 
 Author: Daisy

@@ -1,6 +1,6 @@
 #include "defines.hpp"
 /*
-Function: DSY_rpf_fnc_createPool
+Function: RPF_fnc_createPool
 
 Description:
 
@@ -28,14 +28,14 @@ Examples:
     --- Code
 	// creates resource pool "pool" on object box1 with limit of 500
 	// will decay (subtract) 20 resources every 90 seconds
-    [box1, "pool", 500, 2, [20,90]] call DSY_rpf_fnc_createPool;
+    [box1, "pool", 500, 2, [20,90]] call RPF_fnc_createPool;
     ---
 
 CBA Events:
-	- DSY_rpf_created
+	- RPF_created
 	> called at successful creation
 
-	- DSY_rpf_destroyed
+	- RPF_destroyed
 	> called at destruction or killing of resource pool object
 
 Author: Daisy

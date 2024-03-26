@@ -1,6 +1,6 @@
 #include "defines.hpp"
 /*
-Function: DSY_rpf_fnc_freezePool
+Function: RPF_fnc_freezePool
 
 Description:
 
@@ -20,16 +20,16 @@ true if the pool has been frozen, false if it has been unfrozen
 Examples:
     --- Code
 	// if not already frozen, returns true
-    [box1,"pool"] call DSY_rpf_fnc_freezePool;
+    [box1,"pool"] call RPF_fnc_freezePool;
     // calling again after returns false
-    [box1,"pool"] call DSY_rpf_fnc_freezePool;
+    [box1,"pool"] call RPF_fnc_freezePool;
     ---
 
 CBA Events:
-	- DSY_rpf_frozen
+	- RPF_frozen
 	> raised if the pool was frozen
 
-	- DSY_rpf_unfrozen
+	- RPF_unfrozen
 	> raised if the pool was unfrozen
 
 Author: Daisy
