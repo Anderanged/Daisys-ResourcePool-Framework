@@ -9,7 +9,7 @@ class CfgPatches
 		requiredVersion=REQ_VERSION;
 		requiredAddons[]={
 			"cba_main",
-			"DSY_rpf_base"
+			QPVAR(base)
 		};
 		authors[]=
         {
