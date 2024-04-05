@@ -26,10 +26,7 @@ class CfgFunctions {
 			class alterPool;
 			class decayPool;
 			class freezePool;
-			class handleGreater;
-			class handleLess;
 			class hashInit {preInit = 1;};
-			class modInit {preStart = 1;};
 			class createPool;
 			class raiseEvent;
 			class removeAllPools;
@@ -38,3 +35,11 @@ class CfgFunctions {
 		};
 	};
 };
+
+class Extended_PreInit_EventHandlers 
+{
+	class PREFIX 
+	{
+		PVAR(init) = "call compileScript['x\Daisys-ResourcePool-Framework\addons\base\version.sqf']";
+	}
+}
