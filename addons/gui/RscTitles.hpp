@@ -1,12 +1,12 @@
-#include "\a3\ui_f\hpp\definecommongrids.inc"
-#include "\a3\ui_f\hpp\defineResincl.inc"
+#include "macros\definecommongrids.inc"
+#include "macros\defineResincl.inc"
 #include "gui_defines.hpp"
 
 class RscTitles
 {
 	class DSY_rpf_selfGui
 	{
-		idd = IDD_DSYRPF_SELFGUI_TEXT;
+		idd = IDD_RPF_TEST_TEXT;
 		fadein = 0;
 		fadeout = 0;
 		duration = 1e+011;
@@ -17,13 +17,13 @@ class RscTitles
 			class text
 			{
 				type = 0;
-				idc = IDC_DSYRPF_SELFGUI_TEXT;
+				idc = IDC_RPF_TEXT_1;
 				x = safeZoneX + safeZoneW * 0.91875;
 				y = safeZoneY + safeZoneH * 0.15185186;
 				w = safeZoneW * 0.0625;
 				h = safeZoneH * 0.04444445;
-				style = 0+64;
-				text = "";
+				style = ST_LEFT + ST_WITH_RECT;
+				text = "0";
 				colorBackground[] = {0,0,0,0};
 				colorText[] = {1,1,1,1};
 				font = "PuristaMedium";
@@ -37,7 +37,7 @@ class RscTitles
 	};
 	class DSY_rpf_selfGuiBar
 	{
-		idd = IDD_DSYRPF_SELFGUI_BAR;
+		idd = IDD_RPF_TEST_BAR;
 		fadein = 0;
 		fadeout = 0;
 		duration = 1e+011;
@@ -48,7 +48,7 @@ class RscTitles
 			class bar
 			{
 				type = 8;
-				idc = IDC_DSYRPF_SELFGUI_BAR;
+				idc = IDC_RPF_BAR_1;
 				x = safeZoneX + safeZoneW * 0.69791667;
 				y = safeZoneY + safeZoneH * 0.15185186;
 				w = safeZoneW * 0.2875;

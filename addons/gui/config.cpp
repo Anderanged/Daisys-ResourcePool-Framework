@@ -1,4 +1,4 @@
-#include "addon_defines.hpp"
+#include "macros\addon_defines.hpp"
 class CfgPatches
 {
 	class ADDON
@@ -8,7 +8,8 @@ class CfgPatches
 		weapons[]={};
 		requiredVersion=0.1;
 		requiredAddons[]={
-			"DSY_rpf_base"
+			QPVAR(base),
+			QPVAR(local),
 			"cba_main"
 		};
 		authors[]=
@@ -24,12 +25,23 @@ class CfgFunctions
         tag=STR(PREFIX);
 		class COMPONENT {
 			file="gui\functions";
-			class smoothGui;
+			class alterPoolSpoof;
+			class smoothHudNum;
+			class smoothHudExp;
 			class smoothKey;
 			class smoothKeyDown;
 			class smoothKeyUp;
 			class settings {preInit=1;};
 			class testKeys {preInit=1;};
+			//SQFC(alterPoolSpoof);
+			//SQFC(smoothHudNum);
+			//SQFC(smoothHudExp);
+			//SQFC(smoothKey);
+			//SQFC(smoothKeyDown);
+			//SQFC(smoothKeyUp);
+			//SQFC(settings);
+			//SQFC(testKeys);
 		};
     };
 };
+#include "RscTitles.hpp"

@@ -35,13 +35,16 @@ S will always stand for STRING. These macros only take strings as arguments.
 // debug specific manipulation
 #define ERROR "[RPF:ERROR]"
 #define INFO "[RPF:INFO]"
-#define LOG(data) diag_log (data)
+#define LOG(data) diag_log data
 #define LOGSEP " | "
 
 // debug macros
-#define RPT_BASIC(label,info) LOG(compile SJOIN(label,info,LOGSEP))
-#define RPT_DTAIL(label,info,file,line) LOG(compile SJOIN4(label,info,file,SJOIN("Line",line," "),LOGSEP))
+#define RPT_BASIC(label,info) LOG(SJOIN(label,info,LOGSEP))
+#define RPT_DTAIL(label,info,file,line) LOG(SJOIN4(label,info,file,SJOIN("Line",line," "),LOGSEP))
 #define HINT_BASIC(label,info) hint SJOIN(label,info,LOGSEP)
 #define HINT_DTAIL(label,info,file,line) hint SJOIN4(label,info,file,SJOIN("Line",line," "),LOGSEP))
 
 #define ADDON UJOIN(PREFIX,COMPONENT)
+
+#define RSCTITLE_SETTXT_STR(name,id,value) ((uiNamespace getVariable name) displayCtrl id) ctrlSetText value)
+#define RSCTITLE_SETTXT_NUM(name,id,value) RSCTITLE_SETTXT_STR(name,id,STR(value))
