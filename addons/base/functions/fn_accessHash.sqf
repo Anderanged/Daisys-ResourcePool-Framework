@@ -9,9 +9,11 @@ should take object as key and return:
 
 params [
 	["_obj",objNull,[objNull]],
-	["_access","r",[""]],
+	["_access","",[""]],
 	["_data",[],[[]]]
 ];
+
+if (_access == "") then {_access = "r";};
 
 // variable def
 private ["_hash","_key","_return","_varArray"];

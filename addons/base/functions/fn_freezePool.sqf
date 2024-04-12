@@ -55,14 +55,11 @@ private _ice = _obj getVariable SUJOIN(_varName,"frozen");
 //set var to opposite
 _obj setVariable [SUJOIN(_varName,"frozen"),!_ice,true];
 // broadcast events locally
-switch _ice do {
-	case (_ice):	   {
-		[E_UNFROZEN,[_obj,_varName],1] call FUNC(raiseEvent);
-	};
-	case (!_ice):	   {
-		[E_FROZEN,[_obj,_varName],1] call FUNC(raiseEvent)
-	};
-	default {};
+
+if (_ice) then {
+	[E_UNFROZEN,[_obj,_varName],1] call FUNC(raiseEvent);
+} else {
+	[E_FROZEN,[_obj,_varName],1] call FUNC(raiseEvent);
 };
-//return value that was set
+
 !_ice

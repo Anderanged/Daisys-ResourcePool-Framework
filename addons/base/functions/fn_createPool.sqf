@@ -40,9 +40,23 @@ CBA Events:
 
 Author: Daisy
 */
+private _obj = _this param [0,objNull,[objNull]];
+
+// check obj
+if (_obj == objNull) exitWith {
+	RPT_DTAIL(ERROR,SJOIN("Invalid object specified: ",str _obj,""),__FILE__,__LINE__);
+	false
+};
+
+private _varName = _this param [1,"",[""]];
+if (_varName == "") exitWith {
+	RPT_DTAIL(ERROR,SJOIN("Invalid (empty) pool varName specified on object: ",str _obj,""),__FILE__,__LINE__);
+	false
+};
+
 params [
 	["_obj",objNull,[objNull]],
-	["_varName",QPVAR(pool),[""]],
+	["_varName","",[""]],
 	["_limit",100,[0]], 
 	["_rd",0,[0]],// default no effect
 	["_rate",[],[[]],2]
@@ -104,16 +118,6 @@ if (_array isEqualType false) then { // only add the first time the obj is initi
 	_obj addEventHandler ["Killed",{
 		params ["_unit", "_killer", "_instigator", "_useEffects"];
 		_unit call FUNC(removeAllPools);
-		/*private _array = [_unit,"r",[]] call FUNC(accessHash);
-		{// remove all vars related to being a pool
-			_unit setVariable [_x, nil,true];
-			_unit setVariable [SUJOIN(_x,"RD_Array"), nil,true];
-			_unit setVariable [SUJOIN(_x,"limit"), 	  nil,true];
-			_unit setVariable [SUJOIN(_x,"frozen"),   nil,true];
-			_unit setVariable [SUJOIN(_x,"poolInit"), nil,true];
-		} forEach _array;
-		// remove from and update hashmap
-		[_unit,"d",[]] call FUNC(accessHash);*/
 		RPT_BASIC(INFO,SJOIN3("Object",str _unit,"has been destroyed or killed and has been removed as a resource pool."," "));
 		[E_DESTRYD,[_unit],1] call FUNC(raiseEvent;)
 		// remove this eventHandler
