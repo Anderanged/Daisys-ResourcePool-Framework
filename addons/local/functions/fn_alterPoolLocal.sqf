@@ -1,4 +1,62 @@
 #include "defines.hpp"
+private _fnc_handleGreater = {
+	params["_bound","_cVal","_total","_methodO","_eParams"];
+	switch (true) do { // check if overflow: priority = bound, <= bound, > bound
+		case (_cVal == _bound) : { // is equal to bound?
+			// raise event only locally to the obj
+			[E_UBOUND,_eParams,0] call FUNC(raiseEvent);
+			// return value
+			false
+		};
+		case (_total <= _bound)  : {
+			_total
+		};
+		case (_total > _bound)  : { // is greater to bound?
+			// reject
+			if (_methodO) exitWith {
+				[E_REJECT,_eParams,0] call FUNC(raiseEvent);
+				false
+			};
+			// clamp
+			[E_CLAMP,_eParams,0] call FUNC(raiseEvent);
+			_bound
+		};
+		default {
+			// debug here
+			RPT_DTAIL(ERROR,"How did you do that?",__FILE__,__LINE__);
+			[QPVAR(error),[__FILE__,__LINE__,"ERROR","How did you do that?"],0] call FUNC(raiseEvent);
+		};
+	};
+};
+private _fnc_handleLess = {
+	params["_bound","_cVal","_total","_methodO","_eParams"];
+	switch (true) do { // check if overflow: priority = bound, <= bound, > bound
+		case (_cVal == _bound) : { // is equal to bound?
+			// raise event only locally to the obj
+			[E_LBOUND,_eParams,0] call FUNC(raiseEvent);
+			// return value
+			false
+		};
+		case (_total >= _bound)  : {
+			_total
+		};
+		case (_total < _bound)  : { // is less than bound?
+			// reject
+			if (_methodO) exitWith {
+				[E_REJECT,_eParams,0] call FUNC(raiseEvent);
+				false
+			};
+			// clamp
+			[E_CLAMP,_eParams,0] call FUNC(raiseEvent);
+			_bound
+		};
+		default {
+			// debug here
+			RPT_DTAIL(ERROR,"How did you do that?",__FILE__,__LINE__);
+			[E_ERROR,[__FILE__,__LINE__,"ERROR","How did you do that?"],0] call FUNC(raiseEvent);
+		};
+	};
+};
 /*
 Author: Daisy
 
@@ -92,10 +150,10 @@ private "_result";
 // if subtraction
 if (_methodM) then {
 	// call func
-	_result = [0,_cVal,_cVal - _amount,_methodO,_eParams] call FUNC(handleLessLocal);
+	_result = [0,_cVal,_cVal - _amount,_methodO,_eParams] call _fnc_handleLess;
 } else {
 	// else addition
-	_result = [_limit,_cVal,_cVal + _amount,_methodO,_eParams] call FUNC(handleGreaterLocal);
+	_result = [_limit,_cVal,_cVal + _amount,_methodO,_eParams] call _fnc_handleGreater;
 };
 
 // if no alter, return false

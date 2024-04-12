@@ -24,9 +24,9 @@ class CfgFunctions {
 			file="local\functions";
 			class alterAllPoolsLocal;
 			class alterPoolLocal;
+			class createPoolLocal;
 			class decayPoolLocal;
 			class freezePoolLocal;
-			class createPoolLocal;
 			class publishLocalPool;
 			class removeAllPoolsLocal;
 			class removePoolLocal;
