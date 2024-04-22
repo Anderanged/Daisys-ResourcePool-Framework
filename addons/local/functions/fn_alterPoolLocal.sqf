@@ -78,38 +78,31 @@ if (isDedicated) exitWith {
 	[E_LOCSERV,[__FILE__],1] call FUNC(raiseEvent);
 	false
 };
-params [
-	["_obj",objNull,[objNull]], 		// default objNull
-	["_varName",QPVAR(pool),[""]], 		// default DSY_rpf_pool
-	["_amount",0,[0]],				// default [10,1]
-	["_methods",[false,false],[[]],2]
-];
+private _obj = _this param [0,objNull,[objNull]];
 // check obj
 if (_obj == objNull) exitWith {
 	RPT_DTAIL(ERROR,SJOIN("Invalid object specified: ",str _obj,""),__FILE__,__LINE__);
 	false
 };
-
-// is obj local?
 if !(local _obj) exitWith {
 	RPT_DTAIL(ERROR,SJOIN3("Object",str _obj,"is not local to the current machine. Aborting local function."," "),__FILE__,__LINE__);
 	false
 };
-
+private _varName = _this param [1,"",[""]];
 // was pool init'd?
 if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
 	RPT_DTAIL(ERROR,SJOIN4("Pool ",_varName," not initialized on ",str _obj,""),__FILE__,__LINE__);
 	false
 };
-
 // is pool frozen?
 private _ice = _obj getVariable SUJOIN(_varName,"frozen");
 if (_ice) exitWith { // if so:
-	RPT_DTAIL(INFO,SJOIN5("Pool ",_varName," on object ",str _obj," is frozen. Alteration not performed.",""),__FILE__,__LINE__);
-	[E_ONICE,[_obj,_varName,_amount,_methods],0] call FUNC(raiseEvent);
+	RPT_DTAIL(INFO,SJOIN5("Pool ",_varName," on object ",str _obj," is frozen. Smoothing not performed.",""),__FILE__,__LINE__);
+	[E_ONICE,[_obj,_varName],1] call FUNC(raiseEvent);
 	false
 };
-
+private _amount = _this param [2,0,[0]];
+private _methods = _this param [3,[false,false],[[]],2];
 _methods params [	
 	["_methodM",false,[false,""]],				// default add
 	["_methodO",false,[false,""]]				// default clamp

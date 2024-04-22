@@ -80,8 +80,19 @@ if (_limit > RPFLIM_MAX) then {
 	_limit = RPFLIM_MAX;
 };
 
-// hash not updating. Why.
-// lookup obj in mission hash log
+// add check for obj to not get overwhelmed with EHs
+private _array = [_obj,"r",[]] call FUNC(accessHash);
+if (_array isEqualType false) then { // only add the first time the obj is initialized
+	_obj addEventHandler ["Killed",{
+		params ["_unit", "_killer", "_instigator", "_useEffects"];
+		_unit call FUNC(removeAllPools);
+		RPT_BASIC(INFO,SJOIN3("Object",str _unit,"has been destroyed or killed and has been removed as a resource pool."," "));
+		[E_DESTRYD,[_unit],1] call FUNC(raiseEvent;)
+		// remove this eventHandler
+		_unit removeEventHandler _thisEventHandler;
+	}];
+};
+
 private _result = [_obj,"a",[_varName]] call FUNC(accessHash);
 
 if !_result exitWith {
@@ -111,19 +122,6 @@ switch (_rd) do {
 // init pool variable storage
 _obj setVariable [SUJOIN(_varName,"limit"),_limit,true];
 _obj setVariable [SUJOIN(_varName,"frozen"),false,true];	
-
-// add check for obj to not get overwhelmed with EHs
-private _array = [_obj,"r",[]] call FUNC(accessHash);
-if (_array isEqualType false) then { // only add the first time the obj is initialized
-	_obj addEventHandler ["Killed",{
-		params ["_unit", "_killer", "_instigator", "_useEffects"];
-		_unit call FUNC(removeAllPools);
-		RPT_BASIC(INFO,SJOIN3("Object",str _unit,"has been destroyed or killed and has been removed as a resource pool."," "));
-		[E_DESTRYD,[_unit],1] call FUNC(raiseEvent;)
-		// remove this eventHandler
-		_unit removeEventHandler _thisEventHandler;
-	}];
-};
 
 // if all other code above executes, the pool will get it's poolInit verification
 _obj setVariable [SUJOIN(_varName,"poolInit"),true,true];

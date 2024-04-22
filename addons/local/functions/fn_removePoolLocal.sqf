@@ -6,7 +6,7 @@ if (isDedicated) exitWith {
 };
 params [
 	["_obj",objNull,[objNull]],
-	["_varName",QPVAR(pool),[""]]
+	["_varName","",[""]]
 ];
 if (_obj == objNull) exitWith {
 	RPT_DTAIL(ERROR,SJOIN("Invalid object specified: ",str _obj,""),__FILE__,__LINE__);

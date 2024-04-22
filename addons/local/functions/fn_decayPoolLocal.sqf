@@ -10,16 +10,14 @@ if (isDedicated) exitWith {
 };
 params [
 	["_obj",objNull,[objNull]],
-	["_varName",QPVAR(pool),[""]]
+	["_varName","",[""]]
 ];
-
 // is obj local?
 if !(local _obj) exitWith {
 	RPT_DTAIL(ERROR,SJOIN3("Object",str _obj,"is not local to the current machine. Aborting local function."," "),__FILE__,__LINE__);
 	false
 };
 private _time = ((_obj getVariable SUJOIN(_varName,"RD_Array")) # 1) # 1;
-
 [
 	{
 		// to be ex

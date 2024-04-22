@@ -54,8 +54,6 @@ if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
 private _ice = _obj getVariable SUJOIN(_varName,"frozen");
 //set var to opposite
 _obj setVariable [SUJOIN(_varName,"frozen"),!_ice,true];
-// broadcast events locally
-
 if (_ice) then {
 	[E_UNFROZEN,[_obj,_varName],1] call FUNC(raiseEvent);
 } else {

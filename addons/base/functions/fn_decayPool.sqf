@@ -32,10 +32,9 @@ CBA Events:
 
 Author: Daisy
 */
-
 params [
 	["_obj",objNull,[objNull]],
-	["_varName",QPVAR(pool),[""]]
+	["_varName","",[""]]
 ];
 private _time = ((_obj getVariable SUJOIN(_varName,"RD_Array")) # 1) # 1;
 [

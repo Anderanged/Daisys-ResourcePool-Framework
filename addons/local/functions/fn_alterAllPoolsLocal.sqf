@@ -4,15 +4,16 @@ if (isDedicated) exitWith {
 	[E_LOCSERV,[__FILE__],1] call FUNC(raiseEvent);
 	false
 };
-params [
-	["_obj",objNull,[objNull]],
-	["_amount",0,[0]],
-	["_methods",ADD_CLAMP,[[]],2]
-];
+private _obj = _this param [0,objNull,[objNull]];
 if !(local _obj) exitWith {
 	RPT_DTAIL(ERROR,SJOIN3("Object",_obj,"is not local to the current machine. Aborting local function."," "),__FILE__,__LINE__);
 	false
 };
+params [
+	"_obj",
+	["_amount",0,[0]],
+	["_methods",ADD_CLAMP,[[]],2]
+];
 // grab from hash
 private _array = [_obj,"r"] call FUNC(accessHash);
 // abort if nothing in hash
