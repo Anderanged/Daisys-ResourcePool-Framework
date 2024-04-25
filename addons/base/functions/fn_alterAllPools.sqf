@@ -52,7 +52,7 @@ private _array = [_obj,"r"] call FUNC(accessHash);
 // abort if nothing in hash
 if (_array isEqualType false) exitWith {
 	_msg = format ["Error: Object (%1) has no resource pools on it. Alteration cancelled."];
-	RPT_BASIC(_msg);
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };
 params [

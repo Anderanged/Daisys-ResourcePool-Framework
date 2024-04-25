@@ -131,7 +131,6 @@ if (_methodM isEqualType "") then {
 		case "a" : {_methodM = false;};
 		default {
 			if true exitWith {
-				// add debug error
 				_msg = format ["Invalid math operation given: %1",_methodM];
 				RPT_DTAIL(_msg,__FILE__,__LINE__);
 			};
@@ -144,7 +143,6 @@ if (_methodO isEqualType "") then {
 		case "c" : {_methodO = false;};
 		default {
 			if true exitWith {
-				// add debug error
 				_msg = format ["Invalid overflow method given: %1",_methodO];
 				RPT_DTAIL(_msg,__FILE__,__LINE__);
 			};

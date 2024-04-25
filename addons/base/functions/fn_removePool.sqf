@@ -54,7 +54,7 @@ if (_array isEqualType false) exitWith {
 // find variable pool
 private _index 	= _array find _varName;
 if (_index == -1) exitWith {
-	_msg = format ["Error: Hashmap does not have variable %1 assigned to object %2.",_varName,_obj];
+	_msg = format ["Error: Hashmap does not have variable (%1) assigned to object (%2).",_varName,_obj];
 	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };
@@ -69,6 +69,4 @@ _obj setVariable [_varName, nil,true];
 // update hashmap with new array
 _array deleteAt _index;
 [_obj,"w",_array] call FUNC(accessHash);
-_msg = format ["Info: Object (%1) has had resource pool %2 manually removed.",_obj,_varName];
-RPT_BASIC(_msg);
 true
