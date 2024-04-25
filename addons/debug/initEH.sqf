@@ -138,4 +138,44 @@ _id = [
 ] call CBA_fnc_addEventHandler;
 _array pushBack [E_REMOVED,_id];
 
+_id = [
+	QPVAR(setDecay),{
+		_msg = format ["Debug: Object (%1), resource pool (%2) has had decay set with rate (%3).",_this#0,_this#1,_this#2];
+		RPT_BASIC(_msg);
+	}
+] call CBA_fnc_addEventHandler;
+_array pushBack [QPVAR(setDecay),_id];
+
+_id = [
+	QPVAR(setRenew),{
+		_msg = format ["Debug: Object (%1), resource pool (%2) has had renew set with rate (%3).",_this#0,_this#1,_this#2];
+		RPT_BASIC(_msg);
+	}
+] call CBA_fnc_addEventHandler;
+_array pushBack [QPVAR(setRenew),_id];
+
+_id = [
+	QPVAR(stopRD),{
+		_msg = format ["Debug: Object (%1), resource pool (%2) with rate (%3) has had its renew/decay loops deactivated.",_this#0,_this#1,_this#2];
+		RPT_BASIC(_msg);
+	}
+] call CBA_fnc_addEventHandler;
+_array pushBack [QPVAR(stopRD),_id];
+
+_id = [
+	QPVAR(setLimit),{
+		_msg = format ["Debug: Object (%1), resource pool (%2) has had limit set to (%3) from (%4).",_this#0,_this#1,_this#2,_this#3];
+		RPT_BASIC(_msg);
+	}
+] call CBA_fnc_addEventHandler;
+_array pushBack [QPVAR(setLimit),_id];
+
+_id = [
+	QPVAR(setRate),{
+		_msg = format ["Debug: Object (%1), resource pool (%2) has had rate set to (%3) from (%4).",_this#0,_this#1,_this#2,_this#3];
+		RPT_BASIC(_msg);
+	}
+] call CBA_fnc_addEventHandler;
+_array pushBack [QPVAR(setRate),_id];
+
 missionNamespace setVariable [QPVAR(debugArr),_array];
