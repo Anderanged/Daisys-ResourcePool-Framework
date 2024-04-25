@@ -1,6 +1,6 @@
 #include "defines.hpp"
 if (isDedicated) exitWith {
-	RPT_DTAIL(INFO,"Local functions will not execute on dedicated server.",__FILE__,__LINE__);
+	RPT_DTAIL("Error: Local functions will not execute on dedicated server.",__FILE__,__LINE__);
 	[E_LOCSERV,[__FILE__],1] call FUNC(raiseEvent);
 	false
 };
@@ -8,30 +8,35 @@ params [
 	["_obj",objNull,[objNull]],
 	["_varName","",[""]]
 ];
-if (_obj == objNull) exitWith {
-	RPT_DTAIL(ERROR,SJOIN("Invalid object specified: ",str _obj,""),__FILE__,__LINE__);
+private _msg = "";
+if (isNull _obj) exitWith {
+	_msg = format ["Error: Invalid object (%1) specified. Objects may not be of type null.",_obj];
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };
-// is obj local?
 if !(local _obj) exitWith {
-	RPT_DTAIL(ERROR,SJOIN3("Object",str _obj,"is not local to the current machine. Aborting local function."," "),__FILE__,__LINE__);
+	_msg = format ["Error: Object (%1) is not local to the current machine. Aborting local function."];
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };
 // is pool init'd
 if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
-	RPT_DTAIL(ERROR,SJOIN4("Pool ",_varName," not initialized on ",str _obj,""),__FILE__,__LINE__);
+	_msg = format ["Error: Pool (%1) not initialized on object (%2). Alteration failed.",_varName,_obj];
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };
 // get hash & check
 private _array 	= [_obj,"r"] call FUNC(accessHash);
 if (_array isEqualType false) exitWith {
-	RPT_DTAIL(ERROR,SJOIN3("Object ",str _obj," has no pools initialized.",""),__FILE__,__LINE__);
+	_msg = format ["Error: Object (%1) has no resource pools on it. Removal aborted.",_obj];
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };
 // find variable pool
 private _index 	= _array find _varName;
 if (_index == -1) exitWith {
-	RPT_DTAIL(ERROR,SJOIN4("Hashmap does not have variable ",_varName," assigned to ",str _obj,""),__FILE__,__LINE__);
+	_msg = format ["Error: Hashmap does not have variable (%1) assigned to object (%2).",_varName,_obj];
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };
 // remove vars
@@ -45,5 +50,4 @@ _obj setVariable [_varName, nil];
 // update hashmap with new array
 _array deleteAt _index;
 [_obj,"w",_array] call FUNC(accessHash);
-RPT_BASIC(INFO,SJOIN5("Object",str _obj,"has had resource pool",_varName,"manually removed."," "));
 true

@@ -23,8 +23,7 @@ private _fnc_handleGreater = {
 		};
 		default {
 			// debug here
-			RPT_DTAIL(ERROR,"How did you do that?",__FILE__,__LINE__);
-			[QPVAR(error),[__FILE__,__LINE__,"ERROR","How did you do that?"],0] call FUNC(raiseEvent);
+			RPT_DTAIL("Error: How did you do that?",__FILE__,__LINE__);
 		};
 	};
 };
@@ -52,8 +51,7 @@ private _fnc_handleLess = {
 		};
 		default {
 			// debug here
-			RPT_DTAIL(ERROR,"How did you do that?",__FILE__,__LINE__);
-			[E_ERROR,[__FILE__,__LINE__,"ERROR","How did you do that?"],0] call FUNC(raiseEvent);
+			RPT_DTAIL("Error: How did you do that?",__FILE__,__LINE__);
 		};
 	};
 };
@@ -74,31 +72,32 @@ true on failure, resulting number on success
 Public: yes
 */
 if (isDedicated) exitWith {
-	RPT_DTAIL(INFO,"Local functions will not execute on dedicated server.",__FILE__,__LINE__);
+	RPT_DTAIL("Error: Local functions will not execute on dedicated server.",__FILE__,__LINE__);
 	[E_LOCSERV,[__FILE__],1] call FUNC(raiseEvent);
 	false
 };
-private _obj = _this param [0,objNull,[objNull]];
-// check obj
-if (_obj == objNull) exitWith {
-	RPT_DTAIL(ERROR,SJOIN("Invalid object specified: ",str _obj,""),__FILE__,__LINE__);
+private _obj 		= _this param [0,objNull,[objNull]];
+private _msg = "";
+if (isNull _obj) exitWith {
+	_msg = format ["Error: Invalid object (%1) specified. Objects may not be of type null.",_obj];
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };
 if !(local _obj) exitWith {
-	RPT_DTAIL(ERROR,SJOIN3("Object",str _obj,"is not local to the current machine. Aborting local function."," "),__FILE__,__LINE__);
+	_msg = format ["Error: Object (%1) is not local to the current machine. Aborting local function."];
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };
 private _varName = _this param [1,"",[""]];
-// was pool init'd?
 if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
-	RPT_DTAIL(ERROR,SJOIN4("Pool ",_varName," not initialized on ",str _obj,""),__FILE__,__LINE__);
+	_msg = format ["Error: Pool (%1) not initialized on object (%2). Alteration failed.",_varName,_obj];
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };
 // is pool frozen?
 private _ice = _obj getVariable SUJOIN(_varName,"frozen");
 if (_ice) exitWith { // if so:
-	RPT_DTAIL(INFO,SJOIN5("Pool ",_varName," on object ",str _obj," is frozen. Smoothing not performed.",""),__FILE__,__LINE__);
-	[E_ONICE,[_obj,_varName],1] call FUNC(raiseEvent);
+	[E_ONICE,[_obj,_varName],0] call FUNC(raiseEvent);
 	false
 };
 private _amount = _this param [2,0,[0]];
@@ -113,8 +112,8 @@ if (_methodM isEqualType "") then {
 		case "a" : {_methodM = false;};
 		default {
 			if true exitWith {
-				// add debug error
-				RPT_DTAIL(ERROR,SJOIN("Invalid math operation given:",_methodM," "),__FILE__,__LINE__);
+				_msg = format ["Invalid math operation given: %1",_methodM];
+				RPT_DTAIL(_msg,__FILE__,__LINE__);
 			};
 		};
 	};
@@ -125,8 +124,8 @@ if (_methodO isEqualType "") then {
 		case "c" : {_methodO = false;};
 		default {
 			if true exitWith {
-				// add debug error
-				RPT_DTAIL(ERROR,SJOIN("Invalid overflow method given:",_methodO," "),__FILE__,__LINE__);
+				_msg = format ["Invalid overflow method given: %1",_methodO];
+				RPT_DTAIL(_msg,__FILE__,__LINE__);
 			};
 		};
 	};
