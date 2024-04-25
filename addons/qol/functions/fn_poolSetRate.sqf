@@ -31,13 +31,19 @@ CBA Events:
 Author: Daisy
 */
 private _obj 		= _this param [0,objNull,[objNull]];
-if (_obj == objNull) exitWith {
-	RPT_DTAIL(ERROR,SJOIN("Invalid object specified: ",str _obj,""),__FILE__,__LINE__);
+private _msg = "";
+// check obj
+if (isNull _obj) exitWith {
+	_msg = format ["Error: Invalid object (%1) specified. Objects may not be of type null.",_obj];
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };
-private _varName 	= _this param [1,QPVAR(pool),[""]];
+
+private _varName = _this param [1,"",[""]];
+// was pool init'd?
 if !(_obj getVariable [SUJOIN(_varName,"poolInit"),false]) exitWith { // if not:
-	RPT_DTAIL(ERROR,SJOIN4("Pool ",_varName," not initialized on ",str _obj,""),__FILE__,__LINE__);
+	_msg = format ["Error: Pool (%1) not initialized on object (%2). Alteration failed.",_varName,_obj];
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };
 
@@ -53,6 +59,6 @@ _nRate 	= [_amnt,_time];
 
 _obj setVariable [SUJOIN(_varName,"RD_Array"),[_rd,_nRate],true];
 
-[QPVAR(setRate),[_obj,_varName,_nRate],1] call FUNC(raiseEvent);
+[QPVAR(setRate),[_obj,_varName,_nRate,_rate],1] call FUNC(raiseEvent);
 
 true
