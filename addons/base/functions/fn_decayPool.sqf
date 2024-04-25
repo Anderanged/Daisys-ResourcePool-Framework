@@ -47,7 +47,7 @@ private _time = ((_obj getVariable SUJOIN(_varName,"RD_Array")) # 1) # 1;
 			"_rate"
 		];
 		if (_renew != 2) exitWith {
-			RPT_DTAIL(INFO,SJOIN3("Pool",_varName,"does not have decay enabled. Exiting Loop."," "),__FILE__,__LINE__);
+			[E_DECAYSTOP,[_obj,_varName,_rate],1] call FUNC(raiseEvent);
 		}; // if it aint renewable, BREAK THE CYCLE
 		// otherwise, take the blue pill
 		[_obj,_varName,(_rate # 0),SUB_CLAMP] call FUNC(alterPool);

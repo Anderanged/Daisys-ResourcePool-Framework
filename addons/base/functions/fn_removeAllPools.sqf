@@ -29,10 +29,17 @@ Author: Daisy
 params [
 	["_obj",objNull,[objNull]]
 ];
-
+private _msg = "";
+// check obj
+if (isNull _obj) exitWith {
+	_msg = format ["Error: Invalid object (%1) specified. Objects may not be of type null.",_obj];
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
+	false
+};
 private _array = [_obj,"r"] call FUNC(accessHash);
 if (_array isEqualType false) exitWith {
-	RPT_BASIC(INFO,SJOIN3("Object",str _obj,"has no resource pools on it. Aborting removal.",""));
+	_msg = format ["Error: Object (%1) has no resource pools on it. Removal aborted.",_obj];
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };
 {// remove all vars related to being a pool
@@ -44,7 +51,6 @@ if (_array isEqualType false) exitWith {
 } forEach _array;
 // event
 [E_REMOVEDA,[_obj],1] call FUNC(raiseEvent);
-RPT_BASIC(INFO,SJOIN3("Object",str _obj,"has had all resource pools removed."," "));
 // remove from and update hashmap
 [_obj,"d"] call FUNC(accessHash);
 true

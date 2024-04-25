@@ -41,16 +41,18 @@ CBA Events:
 Author: Daisy
 */
 private _obj = _this param [0,objNull,[objNull]];
-
+private _msg = "";
 // check obj
-if (_obj == objNull) exitWith {
-	RPT_DTAIL(ERROR,SJOIN("Invalid object specified: ",str _obj,""),__FILE__,__LINE__);
+if (isNull _obj) exitWith {
+	_msg = format ["Error: Invalid object (%1) specified. Objects may not be of type null.",_obj];
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };
 
 private _varName = _this param [1,"",[""]];
 if (_varName == "") exitWith {
-	RPT_DTAIL(ERROR,SJOIN("Invalid (empty) pool varName specified on object: ",str _obj,""),__FILE__,__LINE__);
+	_msg = "Error: Pool variable name may not be an empty string.";
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };
 
@@ -75,8 +77,9 @@ _time 	= ceil (abs _time);
 _rate 	= [_amount,_time];
 
 // check limit
-if (_limit > RPFLIM_MAX) then {
-	RPT_DTAIL(INFO,SJOIN3("Invalid limit (greater than 2^14): ",str _limit,". Clamped to 2^14.",""),__FILE__,__LINE__);
+if (_limit > RPFLIM_MAX || _limit == 0) then {
+	_msg = format ["Error: Invalid limit defined (%1). Limit may not be greater than 2^14, or equal to zero. Value clamped to 2^14.",_limit];
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	_limit = RPFLIM_MAX;
 };
 
@@ -86,7 +89,6 @@ if (_array isEqualType false) then { // only add the first time the obj is initi
 	_obj addEventHandler ["Killed",{
 		params ["_unit", "_killer", "_instigator", "_useEffects"];
 		_unit call FUNC(removeAllPools);
-		RPT_BASIC(INFO,SJOIN3("Object",str _unit,"has been destroyed or killed and has been removed as a resource pool."," "));
 		[E_DESTRYD,[_unit],1] call FUNC(raiseEvent;)
 		// remove this eventHandler
 		_unit removeEventHandler _thisEventHandler;
@@ -96,7 +98,8 @@ if (_array isEqualType false) then { // only add the first time the obj is initi
 private _result = [_obj,"a",[_varName]] call FUNC(accessHash);
 
 if !_result exitWith {
-	RPT_BASIC(INFO,SJOIN4("Object ",str _obj," already has a pool initialized under varName ",_varName,""));
+	_msg = format ["Error: Object (%1) already has a pool initialized under variable name (%2). Creation aborted.",_obj,_varName];
+	RPT_BASIC(_msg);
 	[E_REPEATP,[_obj,_varName,_limit,[_rd,_rate]],1] call FUNC(raiseEvent);
 	false
 };
@@ -125,6 +128,7 @@ _obj setVariable [SUJOIN(_varName,"frozen"),false,true];
 
 // if all other code above executes, the pool will get it's poolInit verification
 _obj setVariable [SUJOIN(_varName,"poolInit"),true,true];
-RPT_BASIC(INFO,SJOIN3("Object",str _obj,"has been initialized as a resource pool."," "));
+_msg = format ["Info: Object (%1) has been initialized as a resource pool.",_obj];
+RPT_BASIC(_msg);
 [E_CREATED,[_obj,_varName,_limit,[_rd,_rate]],1] call FUNC(raiseEvent);
 true

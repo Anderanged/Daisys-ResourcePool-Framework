@@ -1,4 +1,4 @@
-#include "macros\addon_defines.hpp"
+#include "macros\defines.hpp"
 class CfgPatches
 {
 	class ADDON
@@ -38,8 +38,8 @@ class CfgFunctions {
 
 class Extended_PreInit_EventHandlers 
 {
-	class PREFIX 
+	class ADDON
 	{
 		PVAR(init) = "call compileScript['x\Daisys-ResourcePool-Framework\addons\base\version.sqf']";
-	}
-}
+	};
+};

@@ -39,6 +39,22 @@ CBA Events:
 
 Author: Daisy
 */
+private _obj = _this param [0,objNull,[objNull]];
+private _msg = "";
+// check obj
+if (isNull _obj) exitWith {
+	_msg = format ["Error: Invalid object (%1) specified. Objects may not be of type null.",_obj];
+	RPT_DTAIL(_msg,__FILE__,__LINE__);
+	false
+};
+// grab from hash
+private _array = [_obj,"r"] call FUNC(accessHash);
+// abort if nothing in hash
+if (_array isEqualType false) exitWith {
+	_msg = format ["Error: Object (%1) has no resource pools on it. Alteration cancelled."];
+	RPT_BASIC(_msg);
+	false
+};
 params [
 	["_obj",objNull,[objNull]],
 	["_amount",0,[0]],
@@ -48,17 +64,9 @@ _methods params [
 	["_methodM",false,[false,""]],				// default add
 	["_methodO",false,[false,""]]				// default clamp
 ];
-// grab from hash
-private _array = [_obj,"r"] call FUNC(accessHash);
-// abort if nothing in hash
-if (_array isEqualType false) exitWith {
-	RPT_BASIC(INFO,SJOIN3("Object",str _obj,"has no resource pools on it. Aborting alteration.",""));
-	false
-};
 {// remove all vars related to being a pool
 	[_obj,_x,_amount,_methods] call FUNC(alterPool);
 } forEach _array;
 // event
-[E_ALTEREDA,[_obj],1] call FUNC(raiseEvent);
-RPT_BASIC(INFO,SJOIN5("Object",str _obj,"has had all resource pools altered by amount",str (abs floor _amount),"."," "));
+[E_ALTEREDA,[_obj,floor (abs _amount)],1] call FUNC(raiseEvent);
 true

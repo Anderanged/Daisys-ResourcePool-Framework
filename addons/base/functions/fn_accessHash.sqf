@@ -16,7 +16,7 @@ params [
 if (_access == "") then {_access = "r";};
 
 // variable def
-private ["_hash","_key","_return","_varArray"];
+private ["_hash","_key","_return","_varArray","_msg"];
 _hash 	= missionNamespace getVariable QPVAR(resourcePools);
 _key 	= str _obj;
 
@@ -37,7 +37,7 @@ switch _access do {
 		if (_varArray isEqualType false) exitWith {
 			_hash set [_key,_data,false];
 			missionNamespace setVariable [QPVAR(resourcePools),_hash,true];
-			RPT_DTAIL(INFO,"Hashmap had no key to append to. Data written.",__FILE__,__LINE__);
+			RPT_DTAIL("Info: Hashmap had no key to append to. Data written.",__FILE__,__LINE__);
 			true
 		};
 		private _check = false;
@@ -52,7 +52,8 @@ switch _access do {
 			missionNamespace setVariable [QPVAR(resourcePools),_hash,true];
 			_return = true;
 		} else {
-		RPT_DTAIL(INFO,SJOIN3("No new values found in ",str _data,". Append failed.",""),__FILE__,__LINE__);
+			_msg = format ["Error: Append failed, no new values found in data (%1).",_data];
+		RPT_DTAIL(_msg,__FILE__,__LINE__);
 		// otherwise return false. no data appended.
 		_return = false;
 		};
@@ -63,7 +64,8 @@ switch _access do {
 		_return = true;
 	};
 	default {
-		RPT_DTAIL(ERROR,SJOIN("Invalid argument for hash access: ",_access,""),__FILE__,__LINE__);
+		_msg = format ["Error: Invalid argument for hash access: %1",_access];
+		RPT_DTAIL(_msg,__FILE__,__LINE__);
 		_return = false;
 	};
 };

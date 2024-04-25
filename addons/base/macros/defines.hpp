@@ -1,4 +1,5 @@
 #define PREFIX RPF
+#include "addon_defines.hpp"
 #include "macro_defines.hpp"
 
 #define RPFLIM_MAX 65536 // 2^16
@@ -20,7 +21,9 @@
 #define E_REMOVED	QPVAR(removed)
 #define E_REMOVEDA	QPVAR(removedAll)
 #define E_RENEWED	QPVAR(renewed)
+#define E_RENEWSTOP QPVAR(renewStop)
 #define E_DECAYED	QPVAR(decayed)
+#define E_DECAYSTOP QPVAR(decayStop)
 #define E_EDITED	QPVAR(edited)
 #define E_REPEATP	QPVAR(repeatPool)
 #define E_CREATED	QPVAR(created)
