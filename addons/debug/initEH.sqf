@@ -1,4 +1,4 @@
-#include "macros/defines.hpp"
+#include "defines.hpp"
 if !(PVAR(debugSwitch)) exitWith {
 	private _array = missionNamespace getVariable [QPVAR(debugArr),false];
 	if (_array isEqualType false) exitWith {}; //stops initial run when first booted

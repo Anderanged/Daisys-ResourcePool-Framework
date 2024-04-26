@@ -1,1 +1,1 @@
-#define COMPONENT base
+#define COMPONENT debug

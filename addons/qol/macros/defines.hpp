@@ -1,4 +1,5 @@
 #define PREFIX RPF
+#include "addon_defines.hpp"
 #include "macro_defines.hpp"
 
 #define RPFLIM_MAX 65536 // 2^16

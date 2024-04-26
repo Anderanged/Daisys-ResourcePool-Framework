@@ -1,4 +1,4 @@
-#include "macros\addon_defines.hpp"
+#include "macros\defines.hpp"
 class CfgPatches
 {
 	class ADDON
@@ -9,7 +9,8 @@ class CfgPatches
 		requiredVersion=REQ_VERSION;
 		requiredAddons[]={
 			"cba_main",
-			"DSY_rpf_base"
+			QPVAR(base),
+			QPVAR(qol)
 		};
 		authors[]=
         {
@@ -21,6 +22,6 @@ class Extended_PreInit_EventHandlers
 {
 	class ADDON 
 	{
-		init = "call compileScript['x\Daisys-ResourcePool-Framework\addons\debug\initSettings.sqf'];call compileScript['x\Daisys-ResourcePool-Framework\addons\debug\initEH.sqf'];";
+		init = "call compileScript['\debug\initSettings.sqfc'];call compileScript['\debug\initEH.sqfc'];";
 	};
 };

@@ -1,6 +1,6 @@
 #define MAJOR 2
 #define MINOR 1
-#define PATCH 1
+#define PATCH 6
 
 #define VERSION [MAJOR,MINOR] joinString "."
 #define VERSION_PATCH [MAJOR,MINOR,PATCH] joinString "."

@@ -1,3 +1,3 @@
-#include "macros\defines.hpp"
+#include "macros\version.hpp"
 private _msg = format ["Version %1 loaded.",VERSION_PATCH];
-RPT_BASIC(_msg);
+diag_log text (format ["[%1] (%2) | %3 ","RPF","versioning",_msg]);

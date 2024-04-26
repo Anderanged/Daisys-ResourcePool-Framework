@@ -21,7 +21,7 @@ class CfgFunctions {
 	class PREFIX {
 		tag=STR(PREFIX);
 		class COMPONENT {
-			file="local\functions";
+			/*file="local\functions";
 			class alterAllPoolsLocal;
 			class alterPoolLocal;
 			class createPoolLocal;
@@ -30,7 +30,16 @@ class CfgFunctions {
 			class publishLocalPool;
 			class removeAllPoolsLocal;
 			class removePoolLocal;
-			class renewPoolLocal;
+			class renewPoolLocal;*/
+			SQFC(alterAllPoolsLocal);
+			SQFC(alterPoolLocal);
+			SQFC(createPoolLocal);
+			SQFC(decayPoolLocal);
+			SQFC(freezePoolLocal);
+			SQFC(publishLocalPool);
+			SQFC(removeAllPoolsLocal);
+			SQFC(removePoolLocal);
+			SQFC(renewPoolLocal);
 		};
 	};
 };

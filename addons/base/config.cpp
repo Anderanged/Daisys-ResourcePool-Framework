@@ -20,7 +20,7 @@ class CfgFunctions {
 	class PREFIX {
 		tag=STR(PREFIX);
 		class COMPONENT {
-			file="base\functions";
+			/*file="base\functions";
 			class accessHash;
 			class alterAllPools;
 			class alterPool;
@@ -31,7 +31,18 @@ class CfgFunctions {
 			class raiseEvent;
 			class removeAllPools;
 			class removePool;
-			class renewPool;
+			class renewPool;*/
+			SQFC(accessHash);
+			SQFC(alterAllPools);
+			SQFC(alterPool);
+			SQFC(decayPool);
+			SQFC(freezePool);
+			SQFC_PRE(hashInit);
+			SQFC(createPool);
+			SQFC(raiseEvent);
+			SQFC(removeAllPools);
+			SQFC(removePool);
+			SQFC(renewPool);
 		};
 	};
 };
@@ -40,6 +51,6 @@ class Extended_PreInit_EventHandlers
 {
 	class ADDON
 	{
-		PVAR(init) = "call compileScript['x\Daisys-ResourcePool-Framework\addons\base\version.sqf']";
+		init = "call compileScript['\base\version.sqf']";
 	};
 };
