@@ -8,7 +8,7 @@ This repository documents the addons for the Arma 3 Mod with the above name.
 
 ## Purpose
 
-Certain addons may want to incorporate an action or ability that has a cost, or draws from a pool of some resource. Generally, any incorporation of this cost-based ability requires in-mod development of its own system of a resource pool to draw from, a subtraction and/or addition function, limits, etc. This all results in many decentralized systems used to manage individual resource pools and their alterations. Daisy's Resource Pool Framework aims to centrilize all the systems necessary for creation, management, and interaction with resource pools into a scriptable framework that can be easily optimized with minimal change to dependent mods.
+Certain addons may want to incorporate an action or ability that has a cost, or draws from a pool of some resource. Generally, any incorporation of this cost-based ability requires in-mod development of its own system of a resource pool to draw from, a subtraction and/or addition function, limits, etc. This all results in many decentralized systems used to manage individual resource pools and their alterations. Resource Pool Framework aims to centrilize all the systems necessary for creation, management, and interaction with resource pools into a scriptable framework that can be easily optimized with minimal change to dependent mods.
 
 Feature and optimization suggestions, as well as general bug reports and feedback, are greatly [appreciated and encouraged.](https://github.com/Anderanged/Daisys-ResourcePool-Framework/wiki/Bug-Reporting-and-Community-Contributions) 
 
