@@ -2,7 +2,8 @@ This work is licensed under the Arma Public License - Share Alike <br><a rel="li
 
 # [RPF] Resource Pool Framework 
 
-![rpf_icon_128](https://github.com/Anderanged/Daisys-ResourcePool-Framework/assets/92063434/fc885392-e5a0-422b-8238-9041e78252a8)
+![rpf_clipLogo_256](https://github.com/Anderanged/Daisys-ResourcePool-Framework/assets/92063434/4b2c6fa9-0ca7-451e-83f6-02acf609471d)
+
 
 This repository documents the addons for the Arma 3 Mod with the above name. 
 
