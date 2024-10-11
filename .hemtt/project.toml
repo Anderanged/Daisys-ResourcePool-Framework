@@ -1,0 +1,10 @@
+name = "Daisy's modTemplate"
+prefix = "template"
+mainprefix = "x"
+
+[properties]
+author = "Daisy"
+url = "https://steamcommunity.com/id/da1sy__/"
+
+[version]   
+git_hash = 0

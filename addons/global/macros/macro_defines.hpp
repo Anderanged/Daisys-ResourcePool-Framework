@@ -3,31 +3,26 @@ Macros will be named for their job, for clarity of use.
 STANDARD PREFIX LETTERS:
 Q 	will always stand for QUOTE. These macros will change any data entered into type <STRING>
 P 	will always stand for PREFIX. These macros affix your defined PREFIX to the inputted variable.
-S 	will always stand for STRING. These macros only take strings as arguments.
-DBG is reserved for under-the-hood DEBUG macros. THese macros are not meant to be called directly.
+U	will always stand for UNDERSCORE. These macros perform concatenations between inputs with an underscore.
+S 	will always stand for STRING. These macros output, and generally take as input, strings.
+D 	will always stand for DELIMITER. These macros split/join inputs by/with a specified delimiter.
 */
 
 // creates a string from an inputted variable
 #undef QUOTE
 #define QUOTE(VAR) #VAR
-/* UNUSED ATM. KEPT FOR POSSIBLE NECESSITY
-// concatenating variables / strings
-#undef JOIN
-#undef QJOIN
-#define JOIN(VAR1,VAR2) VAR1##VAR2
-#define QJOIN(VAR1,VAR2) QUOTE(JOIN(VAR1,VAR2))
-*/
-// joining with joinString
-#undef SJOIN
-#undef SJOIN3
-#undef SJOIN4
-#undef SJOIN5
-#undef SJOIN6
-#define SJOIN(one,two,sep) ([one,two] joinString sep)
-#define SJOIN3(one,two,three,sep) ([one,two,three] joinString sep)
-#define SJOIN4(one,two,three,four,sep) ([one,two,three,four] joinString sep)
-#define SJOIN5(one,two,three,four,five,sep) ([one,two,three,four,five] joinString sep)
-#define SJOIN6(one,two,three,four,five,six,sep) ([one,two,three,four,five,six] joinString sep)
+
+// delimiter joining with joinString. returns string.
+#undef SDJOIN
+#undef SDJOIN3
+#undef SDJOIN4
+#undef SDJOIN5
+#undef SDJOIN6
+#define SDJOIN(one,two,sep) ([one,two] joinString sep)
+#define SDJOIN3(one,two,three,sep) ([one,two,three] joinString sep)
+#define SDJOIN4(one,two,three,four,sep) ([one,two,three,four] joinString sep)
+#define SDJOIN5(one,two,three,four,five,sep) ([one,two,three,four,five] joinString sep)
+#define SDJOIN6(one,two,three,four,five,six,sep) ([one,two,three,four,five,six] joinString sep)
 
 // joining with format
 #undef SFORM
@@ -47,7 +42,8 @@ DBG is reserved for under-the-hood DEBUG macros. THese macros are not meant to b
 #undef SUJOIN
 #define UJOIN(var1,var2) var1##_##var2
 #define QUJOIN(var1,var2) QUOTE(UJOIN(var1,var2))
-#define SUJOIN(str1,str2) SJOIN(str1,str2,"_")
+#define SUJOIN(str1,str2) str1+"_"+str2
+// the above is faster than SDJOIN(str1,str2,"_")
 
 #undef ADDON
 #undef CLASSDEF
@@ -71,23 +67,8 @@ DBG is reserved for under-the-hood DEBUG macros. THese macros are not meant to b
 #undef SLOG
 #undef HNT
 #define SLOG(string) diag_log text string
-#define HNT(string) hint text string
-/* ECLIPSED BY INFO,WARN,ERROR,FATAL
-#undef DBGFORM
-#undef DBGFORM_FILELINE
-#define DBGFORM(msg) (format ["[%1] (%2) :: %3 ",QUOTE(PREFIX),QUOTE(COMPONENT),msg])
-#define DBGFORM_FILELINE(msg,file,line) (format ["[%1] (%2) :: %3 |File %4, Line %5|",QUOTE(PREFIX),QUOTE(COMPONENT),msg,file,line])
+#define SHNT(string) hint text string
 
-// debug macros
-#undef RPT_BASIC
-#undef RPT_DTAIL
-#undef HINT_BASIC
-#undef HINT_DTAIL
-#define RPT_BASIC(msg) SLOG(DBGFORM(msg))
-#define RPT_DTAIL(msg,file,line) SLOG(DBGFORM_FILELINE(msg,file,line))
-#define HINT_BASIC(msg) HNT(DBGFORM(msg))
-#define HINT_DTAIL(msg,file,line) HNT(DBGFORM_FILELINE(msg,file,line))
-*/
 #undef INFO
 #undef WARN
 #undef ERROR
@@ -95,7 +76,7 @@ DBG is reserved for under-the-hood DEBUG macros. THese macros are not meant to b
 #define INFO(msg) SLOG((format ["[%1] (%2) INFO: %3 ",QUOTE(PREFIX),QUOTE(COMPONENT),msg]))
 #define WARN(msg) SLOG((format ["[%1] (%2) WARNING: %3 ",QUOTE(PREFIX),QUOTE(COMPONENT),msg]))
 #define ERROR(msg) SLOG((format ["[%1] (%2) ERROR: %3 ",QUOTE(PREFIX),QUOTE(COMPONENT),msg]))
-#define FATAL(msg,file,line) private _uMsg = (format ["[%1] (%2) FATAL: %3 |File %4, Line %5|",QUOTE(PREFIX),QUOTE(COMPONENT),msg,file,line])); SLOG(_uMsg); HNT(_uMsg)
+#define FATAL(msg,file,line) private _uMsg = format ["[%1] (%2) FATAL: %3 |File %4, Line %5|",QUOTE(PREFIX),QUOTE(COMPONENT),msg,file,line]; SLOG(_uMsg); SHNT(_uMsg)
 
 // cfgFunctions macros
 #undef FPATH

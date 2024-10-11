@@ -7,7 +7,8 @@ class CfgPatches {
 		weapons[]={};
 		requiredVersion=REQ_VERSION;
 		requiredAddons[]={
-			QPVAR(main)
+			"cba_main",
+			"database_main"
 		};
 		authors[]=
         {
@@ -15,11 +16,4 @@ class CfgPatches {
         };
     };
 };
-class CfgFunctions {
-	class PREFIX {
-		tag=QUOTE(ADDON);
-		class COMPONENT {
-			file="main\functions";
-		};
-	};
-};
+#include "xeh_preStart.hpp"

@@ -12,7 +12,7 @@ if (isNull _obj) exitWith {
 	false
 };
 if !(local _obj) exitWith {
-	_msg = format ["Error: Object (%1) is not local to the current machine. Aborting local function."];
+	_msg = format ["Error: Object (%1) is not local to the current machine. Aborting local function.",_obj];
 	RPT_DTAIL(_msg,__FILE__,__LINE__);
 	false
 };

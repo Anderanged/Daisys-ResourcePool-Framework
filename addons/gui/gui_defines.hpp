@@ -1,7 +1,0 @@
-#define IDD_RPF_TEST_TEXT	50630
-#define IDC_RPF_TEXT_1		101
-#define IDC_RPF_TEXT_2		102
-
-#define IDD_RPF_TEST_BAR	50631
-#define IDC_RPF_BAR_1		101
-#define IDC_RPF_BAR_2		102

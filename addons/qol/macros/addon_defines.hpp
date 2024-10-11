@@ -1,1 +1,0 @@
-#define COMPONENT qol
